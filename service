@@ -1,0 +1,36 @@
+package com.teashop.teashop_backend.service;
+
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.ArrayList;
+
+@Service
+public class ProductService {
+    
+    // TODO: Replace with actual database operations
+    public List<product> getFeaturedProducts() {
+        List<product> featuredProducts = new ArrayList<>();
+        // Add sample featured products
+        featuredProducts.add(new product(1, "Premium Green Tea", 12.99f, 100, 1, 1));
+        featuredProducts.add(new product(2, "Earl Grey Black Tea", 9.99f, 150, 1, 1));
+        return featuredProducts;
+    }
+    
+    public List<product> getProductsByCategory(int categoryId) {
+        // TODO: Implement database query
+        return new ArrayList<>();
+    }
+}
+
+@Service
+public class CategoryService {
+    
+    public List<category> getAllCategories() {
+        List<category> categories = new ArrayList<>();
+        // Add sample categories
+        categories.add(new category(1, "Black Tea", "Rich and full-bodied black teas"));
+        categories.add(new category(2, "Green Tea", "Light and refreshing green teas"));
+        categories.add(new category(3, "Herbal Tea", "Caffeine-free herbal infusions"));
+        return categories;
+    }
+}
