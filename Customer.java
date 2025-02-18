@@ -1,36 +1,38 @@
 package com.teashop.teashop_backend;
 
+import org.aspectj.apache.bcel.generic.INVOKEINTERFACE;
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "customer")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int customerID;
+    private Integer customerID;
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
     private String streetAddress;
     private String city;
     private String state;
-    private int zipCode;
+    private Integer zipcode;
+    private String password;
 
-    // Default constructor required by JPA
+    //Default constructor
     public Customer() {}
 
-    public Customer(int customerID, String firstName, String lastName, String email, 
-                   String password, String streetAddress, String city, String state, int zipCode) {
+    //Constructor
+    public Customer(Integer customerID, String firstName, String lastName, String email, String streetAddress, String city, String state, Integer zipcode, String password) {
         this.customerID = customerID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
         this.streetAddress = streetAddress;
         this.city = city;
         this.state = state;
-        this.zipCode = zipCode;
+        this.zipcode = zipcode;
+        this.password = password;
     }
 
     public int getCustomerID() {
@@ -90,11 +92,11 @@ public class Customer {
     }
 
     public int getZipCode() {
-        return zipCode;
+        return zipcode;
     }
 
     public void setZipCode(int zipCode) {
-        this.zipCode = zipCode;
+        this.zipcode = zipCode;
     }
 
     public String getName() {
@@ -107,9 +109,17 @@ public class Customer {
         this.lastName = nameParts[1];
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
-        return "customer{" +
+        return "Customer{" +
                 "customerID=" + customerID +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
