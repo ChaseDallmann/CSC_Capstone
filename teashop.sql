@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 13, 2025 at 01:31 AM
+-- Generation Time: Feb 18, 2025 at 01:25 AM
 -- Server version: 8.0.39
 -- PHP Version: 8.2.25
 
@@ -42,7 +42,7 @@ INSERT INTO `category` (`category_id`, `categoryName`, `categoryDescription`) VA
 (2, 'Green Tea', 'Green tea is a lighter tea that has a more delicate somewhat grassy flavor. Potential benefits include improved alertness, less headaches, and weight loss.'),
 (3, 'White Tea', 'White tea has a sweet aroma with a soft flavor. Potential health benefits include reduced cholesterol levels, lower stress, healthy skin, and an increased metabolism.'),
 (4, 'Oolong Tea', 'Oolong is similar to green tea with a lighter oxidation process. Potential health benefits include reduced chronic diseases, increased metabolism, and antioxidants.'),
-(5, 'Yellow Tea', 'Yellow tea is rare and has a mild taste similar to green and white tea. Potential health benefits include anti-inflammatory properties, antioxidants, and anti-cancer characteristics.'),
+(5, 'Herbal Tea', 'Herbal tea is made of herbs, fruit, and spices. There are various health benefits of herbal tea that are dependent on the ingredients used.'),
 (6, 'Pu-erh Tea', 'Pu-erh tea comes from the Yunnan province in China and has a rich, earthy flavor. Potential health benefits include an increased metabolism, anti-cancer properties, and boosted liver function.');
 
 -- --------------------------------------------------------
@@ -82,6 +82,15 @@ CREATE TABLE `manufacturer` (
   `manufacturerURL` varchar(150) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `manufacturer`
+--
+
+INSERT INTO `manufacturer` (`manufacturer_id`, `manufacturerName`, `manufacturerURL`) VALUES
+(1, 'Full Leaf Tea Co.', 'https://fullleafteacompany.com/'),
+(2, 'San Francisco Herb Co.', 'https://www.sfherb.com/'),
+(3, 'Harney & Sons', 'https://www.harney.com/');
+
 -- --------------------------------------------------------
 
 --
@@ -110,6 +119,21 @@ CREATE TABLE `product` (
   `category_id` int NOT NULL COMMENT 'fk',
   `manufacturer_id` int NOT NULL COMMENT 'fk'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`product_id`, `productDescription`, `price`, `productInventory`, `category_id`, `manufacturer_id`) VALUES
+(1, 'Organic Loose Leaf Tea, 1 OZ', 10.99, 10, 2, 1),
+(2, 'Organic Turmeric Loose Leaf 2 OZ', 11.99, 10, 2, 1),
+(3, 'Organic Earl Grey Loose Leaf 2 OZ', 14.99, 10, 1, 1),
+(4, 'Vanilla Loose Leaf 2 OZ', 12.99, 10, 1, 1),
+(5, 'Organic Oolong Loose Leaf 2 OZ', 16.99, 10, 4, 1),
+(6, 'Organic Royal Oolong Loose Leaf 2 OZ', 14.99, 10, 4, 1),
+(7, 'Mutan White Loose Leaf 1.5 OZ ', 11.00, 10, 3, 3),
+(8, 'Chamomile Tea Bags 8 OZ', 7.99, 10, 5, 2),
+(9, 'Pu-erh Loose Leaf 8 OZ', 12.99, 10, 6, 2);
 
 --
 -- Indexes for dumped tables
