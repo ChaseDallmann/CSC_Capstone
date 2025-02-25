@@ -24,12 +24,6 @@ public class MainController {
         this.manufacturerRepository = manufacturerRepository;
     }
 
-    @GetMapping("register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("customer", new Customer());
-        return "signup_form";
-    }
-
     /*@PostMapping("customerlogin")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         return customerRepository.findByEmail(loginRequest.getEmail())
