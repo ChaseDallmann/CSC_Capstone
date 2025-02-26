@@ -18,7 +18,15 @@
 		<license/>
 	</licenses>
 	<developers>
-		<developer/>
+		<developer>
+			<name>Chase Dallman</name>
+		</developer>
+		<developer>
+			<name>Natasha Czaplewski</name>
+		</developer>
+		<developer>
+			<name>Grace Nairn</name>
+		</developer>
 	</developers>
 	<scm>
 		<connection/>
@@ -51,10 +59,6 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
     		<groupId>mysql</groupId>
@@ -99,6 +103,10 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
    <dependency>
      <groupId>com.google.guava</groupId>
