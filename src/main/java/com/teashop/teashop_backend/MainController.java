@@ -12,13 +12,13 @@ import java.util.List;
 @RequestMapping("/")
 public class MainController {
 
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ManufacturerRepository manufacturerRepository;
 
-    public MainController(CustomerRepository customerRepository, ProductRepository productRepository, CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository) {
-        this.customerRepository = customerRepository;
+    public MainController(UserRepository userRepository, ProductRepository productRepository, CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository) {
+        this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.manufacturerRepository = manufacturerRepository;
@@ -32,14 +32,14 @@ public class MainController {
             .orElse(ResponseEntity.status(401).build());
     }*/
 
-    @GetMapping("customers")
-        public List<Customer> getAllCustomers() {
-            return customerRepository.findAll();
+    @GetMapping("users")
+        public List<User> getAllCustomers() {
+            return userRepository.findAll();
         }
 
     @GetMapping("customers/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable int id) {
-        return customerRepository.findById(id)
+    public ResponseEntity<User> getCustomerById(@PathVariable int id) {
+        return userRepository.findById(id)
             .map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.notFound().build());
     }

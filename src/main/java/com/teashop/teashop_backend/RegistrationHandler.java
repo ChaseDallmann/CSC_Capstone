@@ -16,7 +16,7 @@ public class RegistrationHandler {
 
     @PostMapping
     @ResponseBody
-    public String registerCustomer(@RequestBody Customer newCustomer) {
+    public String registerCustomer(@RequestBody User newCustomer) {
         // Log the registration attempt
         logger.info("Attempting to register customer: {}", newCustomer.getEmail());
 

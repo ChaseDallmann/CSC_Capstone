@@ -3,12 +3,20 @@ package com.teashop.teashop_backend;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "customer")
-public class Customer {
+@Table(name = "user")
+public class User {
+
+    // Add Role enum for different user roles
+    public enum Role {
+        customerService,
+        customer
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer customerID;
-
+    private Integer userID;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
     @Column(name = "firstName")
     private String firstName;
     @Column(name = "lastName")
@@ -26,12 +34,14 @@ public class Customer {
     @Column(name = "password")
     private String password;
 
+
     //Default constructor
-    public Customer() {}
+    public User() {}
 
     //Constructor
-    public Customer(Integer customerID, String firstName, String lastName, String email, String streetAddress, String city, String state, Integer zipcode, String password) {
-        this.customerID = customerID;
+    public User(Integer userID, Role role, String firstName, String lastName, String email, String streetAddress, String city, String state, Integer zipcode, String password) {
+        this.userID = userID;
+        this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -42,12 +52,20 @@ public class Customer {
         this.password = password;
     }
 
-    public int getCustomerID() {
-        return customerID;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public void setPassword(String password) {
@@ -126,8 +144,9 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "customerID=" + customerID +
+        return "User{" +
+                "userID=" + userID +
+                ", role=" + role + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

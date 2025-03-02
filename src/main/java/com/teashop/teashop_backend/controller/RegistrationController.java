@@ -11,15 +11,17 @@ import jakarta.persistence.Entity;
 import java.util.*;
 import com.teashop.teashop_backend.Customer;
 import com.teashop.teashop_backend.CustomerRepository;
+import com.teashop.teashop_backend.User;
+import com.teashop.teashop_backend.UserRepository;
 import com.teashop.teashop_backend.registration.SignUpDto;
 
 @Controller
 public class RegistrationController {
 
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
 
-    public RegistrationController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public RegistrationController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     // Display the registration form
@@ -38,22 +40,22 @@ public class RegistrationController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         password = passwordEncoder.encode(password);
 
-        Customer customer = new Customer();
-        customer.setEmail(email);
-        customer.setFirstName(firstName);
-        customer.setLastName(lastName);
-        customer.setName(fullName);
-        customer.setStreetAddress(address);
-        customer.setState(state);
-        customer.setCity(city);
-        customer.setZipCode(zipcode);
-        customer.setPassword(password);
+        User user = new User();
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setName(fullName);
+        user.setStreetAddress(address);
+        user.setState(state);
+        user.setCity(city);
+        user.setZipCode(zipcode);
+        user.setPassword(password);
 
         if (email == null || firstName == null || lastName == null || fullName == null || address == null || city == null || zipcode == null || state == null || password == null) {
             return ResponseEntity.badRequest().body("Fields are left blank");
         } else {
-            customerRepository.save(customer);
-            return ResponseEntity.ok().body("Registration successful " + customer.getName() + " " + customer.getEmail());
+            userRepository.save(user);
+            return ResponseEntity.ok().body("Registration successful " + user.getName() + " " + user.getEmail());
         }
     }
 }
