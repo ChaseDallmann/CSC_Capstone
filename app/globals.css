@@ -1,15 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap');
 
 /* General Styles */
 :root {
-  --background: #566348
+  --background: #566348;
+  --lightbackground: #dce4c6;
+  --text: #292e28;
 }
 
 body {
   background-color: var(--background);
-  padding-top: 100vh;
 }
 
 /* Hero Section */
@@ -218,4 +220,77 @@ body {
 
 .product-link:hover {
   text-decoration: underline;
+}
+
+/* Login page styles */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--lightbackground); 
+}
+
+.login-box {
+  background-color:var(--lightbackground);
+  padding: 40px 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.login-box h1 {
+  font-family: "Jim Nightshade", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 70px;
+  color: var(--text);
+}
+
+.login-box h2 {
+  font-size: 40px;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+
+.login-box form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-box label {
+  margin-bottom: 6px;
+  color: #555;
+  font-size: 14px;
+}
+
+.login-box input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.login-box button {
+  padding: 10px;
+  background-color: var(--background);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-box button:hover {
+  background-color: var(--text);
+}
+
+.kettle-ani {
+  width: 30%; 
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px;
 }

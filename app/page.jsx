@@ -4,6 +4,7 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Storefront from "./components/Storefront";
+import Hero from "./components/Hero";
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -26,15 +27,12 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <div className="hero">
-        <div className={`overlay ${scrolled ? "blur" : ""}`}></div>
-        <div className={`logo ${scrolled ? "shrink" : ""}`}>
-          <img src="/tea-logo2.png" alt="Tea Logo" className="logo-img" />
-        </div>
-      </div>
+      <Hero scrolled={scrolled} />
 
       {/* Main Content */}
       <div className={`background ${showBackground ? "show" : ""}`}>
+        <Storefront />
+        <Storefront />
         <Storefront />
         <Storefront />
       </div>
