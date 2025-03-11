@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import NavbarBasic from '../components/Navbar';
 import { Great_Vibes } from 'next/font/google';
 import axios from "axios";
-
-const
+import router from 'next/router';
 
 const greatVibes = Great_Vibes({
     subsets: ['latin'],
