@@ -6,14 +6,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.persistence.Entity;
 import java.util.*;
-import com.teashop.teashop_backend.Customer;
-import com.teashop.teashop_backend.CustomerRepository;
+
+import com.teashop.teashop_backend.model.customer.Customer;
+import com.teashop.teashop_backend.model.customer.CustomerRepository;
 import com.teashop.teashop_backend.registration.SignUpDto;
 
-@Controller
+@RestController
 public class RegistrationController {
 
     private final CustomerRepository customerRepository;
@@ -34,6 +36,7 @@ public class RegistrationController {
         Integer zipcode = signUpDto.getZipcode();
         String state = signUpDto.getState();
         String password = signUpDto.getPassword();
+        String role = "ROLE_USER";  // Default role
         //Encrypting the password
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         password = passwordEncoder.encode(password);
@@ -48,8 +51,9 @@ public class RegistrationController {
         customer.setCity(city);
         customer.setZipCode(zipcode);
         customer.setPassword(password);
+        customer.setRole(role);
 
-        if (email == null || firstName == null || lastName == null || fullName == null || address == null || city == null || zipcode == null || state == null || password == null) {
+        if (email == null || firstName == null || lastName == null || fullName == null || address == null || city == null || zipcode == null || state == null || password == null || role == null) {
             return ResponseEntity.badRequest().body("Fields are left blank");
         } else {
             customerRepository.save(customer);
