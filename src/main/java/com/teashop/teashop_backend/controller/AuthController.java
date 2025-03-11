@@ -6,16 +6,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import com.teashop.teashop_backend.config.JwtUtil; // Add JWT Utility
 import com.teashop.teashop_backend.login.LoginDto;
 import com.teashop.teashop_backend.login.LoginResponse;
-import com.teashop.teashop_backend.model.customer.Customer;
-import com.teashop.teashop_backend.model.customer.CustomerDto;
+import com.teashop.teashop_backend.model.user.User;
+import com.teashop.teashop_backend.model.user.UserDto;
 import com.teashop.teashop_backend.security.UserDetailsImpl;
 
 @RestController
@@ -23,16 +22,17 @@ import com.teashop.teashop_backend.security.UserDetailsImpl;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil; // Add JWT Util for token generation
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager) {
+    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
         try {
-            // Authenticate user credentials
             Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                     loginDto.getEmail(),
@@ -40,13 +40,13 @@ public class AuthController {
                 )
             );
 
-            // Check if authentication was successful
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-            Customer customer = userDetails.getCustomer(); // Get the customer object from the UserDetailsImpl
+            User user = userDetails.getUser();
 
-            // Spring Security will automatically manage the session and session ID for the user
-            // Returning customer information as part of the response
-            return ResponseEntity.ok(new CustomerDto(customer)); // Convert to DTO if needed
+            // Generate JWT token
+            String token = jwtUtil.generateToken(userDetails);
+
+            return ResponseEntity.ok(new LoginResponse(token, new UserDto(user)));
 
         } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().body(new LoginResponse("Invalid credentials"));

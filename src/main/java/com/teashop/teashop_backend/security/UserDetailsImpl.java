@@ -7,36 +7,37 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.teashop.teashop_backend.model.customer.Customer;
+import com.teashop.teashop_backend.model.user.User;
+import com.teashop.teashop_backend.model.user.User.Role;
 
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
     
-    private final Customer customer;
+    private final User user;
     
-    public UserDetailsImpl(Customer customer) {
-        this.customer = customer;
+    public UserDetailsImpl(User user) {
+        this.user = user;
     }
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String role = customer.getRole();
-        if (role == null || role.isEmpty()) {
-            role = "ROLE_USER"; // Default role
-        } else if (!role.startsWith("ROLE_")) {
-            role = "ROLE_" + role;
+        Role role = user.getRole();
+        if (role == null) {
+            role = Role.customer; // Default role
+        } else {
+            role = Role.customerService;
         }
-        return Collections.singletonList(new SimpleGrantedAuthority(role));
+        return Collections.singletonList(new SimpleGrantedAuthority(role.toString()));
     }
     
     @Override
     public String getPassword() {
-        return customer.getPassword();
+        return user.getPassword();
     }
     
     @Override
     public String getUsername() {
-        return customer.getEmail();
+        return user.getEmail();
     }
     
     @Override
@@ -60,7 +61,7 @@ public class UserDetailsImpl implements UserDetails {
     }
     
     // Add this getter to access the customer from AuthController
-    public Customer getCustomer() {
-        return customer;
+    public User getUser() {
+        return user;
     }
 }

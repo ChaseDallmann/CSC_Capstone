@@ -1,6 +1,6 @@
 package com.teashop.teashop_backend.login;
 
-import com.teashop.teashop_backend.model.customer.CustomerDto;
+import com.teashop.teashop_backend.model.user.UserDto;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
 public class LoginResponse {
     private String message;
     private boolean success;
-    private CustomerDto customer;
+    private UserDto user;
 
     // Constructor for error responses
     public LoginResponse(String message) {
@@ -17,9 +17,9 @@ public class LoginResponse {
     }
 
     // Constructor for successful logins
-    public LoginResponse(String message, CustomerDto customer) {
+    public LoginResponse(String message, UserDto user) {
         this.message = message;
         this.success = true;
-        this.customer = customer;
+        this.user = user;
     }
 }

@@ -1,7 +1,7 @@
 package com.teashop.teashop_backend.model.product;
 
-import com.teashop.teashop_backend.Manufacturer;
 import com.teashop.teashop_backend.model.category.Category;
+import com.teashop.teashop_backend.model.manufacturer.Manufacturer;
 
 import jakarta.persistence.*;
 

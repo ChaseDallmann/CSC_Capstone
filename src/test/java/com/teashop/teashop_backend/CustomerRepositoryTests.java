@@ -10,8 +10,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 
 import com.teashop.teashop_backend.model.category.Category;
+import com.teashop.teashop_backend.model.category.CategoryRepository;
 import com.teashop.teashop_backend.model.customer.Customer;
 import com.teashop.teashop_backend.model.customer.CustomerRepository;
+import com.teashop.teashop_backend.model.manufacturer.Manufacturer;
+import com.teashop.teashop_backend.model.manufacturer.ManufacturerRepository;
 import com.teashop.teashop_backend.model.product.Product;
 import com.teashop.teashop_backend.model.product.ProductRepository;
 

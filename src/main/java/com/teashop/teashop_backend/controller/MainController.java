@@ -1,61 +1,55 @@
 package com.teashop.teashop_backend.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.ui.Model;
 
-import com.teashop.teashop_backend.CategoryRepository;
-import com.teashop.teashop_backend.Manufacturer;
-import com.teashop.teashop_backend.ManufacturerRepository;
 import com.teashop.teashop_backend.model.category.Category;
-import com.teashop.teashop_backend.model.customer.Customer;
-import com.teashop.teashop_backend.model.customer.CustomerRepository;
+import com.teashop.teashop_backend.model.category.CategoryRepository;
+import com.teashop.teashop_backend.model.manufacturer.ManufacturerRepository;
 import com.teashop.teashop_backend.model.product.Product;
 import com.teashop.teashop_backend.model.product.ProductRepository;
-import com.teashop.teashop_backend.registration.*;
+import com.teashop.teashop_backend.model.user.User;
+import com.teashop.teashop_backend.model.user.UserRepository;
+
+import org.springframework.ui.Model;
 
 import java.util.Optional;
 import java.util.List;
-
 
 
 @RestController
 @RequestMapping("/")
 public class MainController {
 
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ManufacturerRepository manufacturerRepository;
 
-    public MainController(CustomerRepository customerRepository, ProductRepository productRepository, CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository) {
-        this.customerRepository = customerRepository;
+    public MainController(UserRepository userRepository, ProductRepository productRepository, CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository) {
+        this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.manufacturerRepository = manufacturerRepository;
     }
 
-    @GetMapping("manufacturers")
-    public List<Manufacturer> getAllManufacturers() {
-        return manufacturerRepository.findAll();
-    }
+    /*@PostMapping("customerlogin")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        return customerRepository.findByEmail(loginRequest.getEmail())
+            .filter(customer -> customer.getPassword().equals(loginRequest.getPassword()))
+            .map(customer -> ResponseEntity.ok().body(customer))
+            .orElse(ResponseEntity.status(401).build());
+    }*/
 
-    @GetMapping("manufacturers/{id}")
-    public ResponseEntity<Manufacturer> getManufacturerById(@PathVariable int id) {
-        Optional<Manufacturer> manufacturer = manufacturerRepository.findById(id);
-        return manufacturer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("customers")
-        public List<Customer> getAllCustomers() {
-            return customerRepository.findAll();
+    @GetMapping("users")
+        public List<User> getAllCustomers() {
+            return userRepository.findAll();
         }
 
     @GetMapping("customers/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable int id) {
-        return customerRepository.findById(id)
+    public ResponseEntity<User> getCustomerById(@PathVariable int id) {
+        return userRepository.findById(id)
             .map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
