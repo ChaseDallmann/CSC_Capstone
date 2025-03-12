@@ -34,14 +34,6 @@ public class MainController {
         this.manufacturerRepository = manufacturerRepository;
     }
 
-    /*@PostMapping("customerlogin")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        return customerRepository.findByEmail(loginRequest.getEmail())
-            .filter(customer -> customer.getPassword().equals(loginRequest.getPassword()))
-            .map(customer -> ResponseEntity.ok().body(customer))
-            .orElse(ResponseEntity.status(401).build());
-    }*/
-
     @GetMapping("users")
         public List<User> getAllCustomers() {
             return userRepository.findAll();

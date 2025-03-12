@@ -58,3 +58,44 @@
 }.__className_3081c8 {font-family: 'Great Vibes', 'Great Vibes Fallback';font-weight: 400;font-style: normal
 }
 
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[3]!./app/components/NavbarBasic/NavbarBasic.module.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************/
+/* Navbar */
+.NavbarBasic_navbarBasic__UOKjz {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4rem;
+    background: var(--background);
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+  }
+  
+  /* Navbar Logo */
+  .NavbarBasic_logoImg__Bww0h {
+    width: 60px;
+    height: auto;
+    margin-right: 1rem;
+  }
+  
+  /* Links container */
+  .NavbarBasic_navLinks__MFQLy {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  /* Links styling */
+  .NavbarBasic_navLinks__MFQLy a {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+    transition: color 0.2s;
+  }
+  
+  .NavbarBasic_navLinks__MFQLy a:hover {
+    color: #007bff;
+  }  

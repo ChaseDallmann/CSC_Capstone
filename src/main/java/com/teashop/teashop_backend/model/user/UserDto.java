@@ -1,4 +1,4 @@
-package com.teashop.teashop_backend.model.user;   
+package com.teashop.teashop_backend.model.user;
 
 import com.teashop.teashop_backend.model.user.User.Role;
 
@@ -18,6 +18,5 @@ public class UserDto {
         this.email = user.getEmail();
         this.name = user.getName();
         this.role = user.getRole();
-        // Map other fields as needed
     }
 }

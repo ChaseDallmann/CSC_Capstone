@@ -8,8 +8,8 @@ public class User {
 
     // Add Role enum for different user roles
     public enum Role {
-        customerService,
-        customer;
+        CUSTOMER_SERVICE,
+        CUSTOMER;
     }
 
     @Id
@@ -42,7 +42,7 @@ public class User {
     //Constructor
     public User(Integer userID, String firstName, String lastName, String email, String streetAddress, String city, String state, Integer zipcode, String password) {
         this.userID = userID;
-        this.role = Role.customer;
+        this.role = Role.CUSTOMER;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

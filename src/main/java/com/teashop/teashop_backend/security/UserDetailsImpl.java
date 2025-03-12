@@ -23,9 +23,9 @@ public class UserDetailsImpl implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Role role = user.getRole();
         if (role == null) {
-            role = Role.customer; // Default role
+            role = Role.CUSTOMER; // Default role
         } else {
-            role = Role.customerService;
+            role = Role.CUSTOMER_SERVICE;
         }
         return Collections.singletonList(new SimpleGrantedAuthority(role.toString()));
     }

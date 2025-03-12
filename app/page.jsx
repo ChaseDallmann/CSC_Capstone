@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Storefront from "./components/Storefront";
 import Hero from "./components/Hero";
+import MissionCard from "./components/MissionCard/MissionCard";
+import Logo from "./components/Logo/Logo";
+import FarmerCard from "./components/FarmerCard/FarmerCard";
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -31,8 +34,17 @@ export default function Home() {
 
       {/* Main Content */}
       <div className={`background ${showBackground ? "show" : ""}`}>
-        <Storefront />
-        <Storefront />
+        <div>
+          <Logo />
+        </div>
+        <div>
+          <MissionCard
+          title="Our Mission"
+          text="We aim to bring the joy of tea to every home. Indulge with thoughfully curated blends, prizewinning teas, and handmade teaware."
+          imageSrc="/teastuff.jpg"
+          imageAlt="A cup of tea being brewed"
+       />
+      </div>
         <Storefront />
         <Storefront />
       </div>

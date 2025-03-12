@@ -53,7 +53,7 @@ public class RegistrationController {
         user.setCity(city);
         user.setZipCode(zipcode);
         user.setPassword(password);
-        user.setRole(Role.customer);
+        user.setRole(Role.CUSTOMER);
 
         if (email == null || firstName == null || lastName == null || fullName == null || address == null || city == null || zipcode == null || state == null || password == null) {
             return ResponseEntity.badRequest().body("Fields are left blank");

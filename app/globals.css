@@ -12,6 +12,7 @@
 
 body {
   background-color: var(--background);
+  font-family: var(--font-domine), serif;
 }
 
 /* Hero Section */
@@ -114,45 +115,31 @@ body {
   height: auto;
   margin-right: 1rem;
   opacity: 0;
-  animation: fadeIn 0.5s ease-in-out forwards; 
-  animation-delay: 0.3s; 
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  transform: translateY(-10px);
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.navbar.scrolled .nav-logo {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.fade-in {
-  animation-play-state: running;
-}
-
+/* Navbar Links */
 .nav-links {
   display: flex;
   gap: 1.5rem;
+  margin-left: 0;
   transition: margin-left 0.5s ease-in-out;
 }
-
-/* Links styling */
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-  transition: margin-left 0.4s ease-in-out;
-}
-
 .nav-links a {
   text-decoration: none;
-  color: black;
+  color: (var(--text));
   font-size: 1rem;
   transition: color 0.2s;
 }
 
 .nav-links a:hover {
-  color: #007bff;
+  color: var(--lightbackground);
 }
 
 /* Storefront Section */
@@ -171,7 +158,7 @@ body {
 .storefront-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 3rem;
   max-width: 1000px;
   justify-items: center;
   margin: 0 auto;
@@ -250,7 +237,7 @@ body {
 
 .login-box h2 {
   font-size: 40px;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
   color: var(--text);
 }
 
@@ -261,8 +248,8 @@ body {
 
 .login-box label {
   margin-bottom: 6px;
-  color: #555;
-  font-size: 14px;
+  color: var(--background);
+  font-size: 20px;
 }
 
 .login-box input {
@@ -293,4 +280,34 @@ body {
   height: auto;
   object-fit: cover;
   border-radius: 12px;
+}
+
+/* Footer Styles */
+
+.site-footer {
+  background-color: var(--background);
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--lightbackground);
+}
+
+.footer-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.footer-links {
+  margin-top: 1rem;
+}
+
+.footer-links a {
+  margin: 0 1rem;
+  color: var(--lightbackground);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--text);
 }

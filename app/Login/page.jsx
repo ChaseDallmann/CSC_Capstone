@@ -1,107 +1,94 @@
-"use client"
+'use client';
 
-import React, { Component } from 'react';
-import NavbarBasic from '../components/Navbar';
-import { Great_Vibes } from 'next/font/google';
+import React, { useState } from "react";
 import axios from "axios";
-import router from 'next/router';
+import { Great_Vibes } from 'next/font/google';
+import Router, { useRouter } from "next/navigation";
+import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
+import Link from "next/link";
 
 const greatVibes = Great_Vibes({
-    subsets: ['latin'],
-    weight: '400',
-})
+  subsets: ['latin'],
+  weight: '400',
+});
 
-class LoginPage extends Component {
-  constructor(props) {
-    super(props);
+const LoginPage = () => {
 
-    this.state = {
-      email: "",
-      password: "",
-      loginErrors: ""
-    };
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginErrors, setLoginErrors] = useState('');
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
+  // Handle form submission
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/auth/login",
+        {
+          email: email,
+          password: password,
+        },
+        { withCredentials: true }
+      );
 
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-  
-  handleSubmit(event) {
-    const { email, password } = this.state;
-
-    axios
-    .post(
-      "http://localhost:8080/auth/login",
-      { email, password },
-      {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      }
-    )
-    .then(response => {
-      if (response.data.logged_in) {
-        console.log("Login successful", response.data);
-        localStorage.setItem("authToken", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.customer));
-        handleLogin(response.data.user)
+      if (response.status === 200) {
         router.push("/");
       }
-    })
-    .catch(error => {
-      console.log("Login error", error);
-    });
+    } catch (error) {
+      setLoginErrors('Invalid credentials');
+      console.log("login error", error);
+    }
+  };
 
-  event.preventDefault();
+  return (
+    <>
+      <NavbarBasic />
+      <div className="login-container">
+        <div className="login-box">
+          <h1 style={{ fontFamily: greatVibes.style.fontFamily }}>Welcome Back!</h1>
+          <h2>We've put the kettle on for you!</h2>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-  }
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
 
-  render() {
-    return (
-      <>
-        <NavbarBasic />
-        <div className="login-container">
-          <div className="login-box">
-            <h1 style={{ fontFamily: greatVibes.style.fontFamily }}>Welcome!</h1>
-            <h2>We've put the kettle on for you!</h2>
-            <form onSubmit={this.handleSubmit}>
-              <label htmlFor="email">Email or Username</label>
-              <input 
-                type="text" 
-                id="email" 
-                name="email"
-                value={this.state.email}
-                onChange={this.handleChange}
-                placeholder="Enter your email or username" 
-              />
+            <button type="submit">Login</button>
+            
+            <br />
+            <div className="text-center">
+              <Link href="/Registration" className="text-indigo-600 hover:text-indigo-800">
+                Don't have an account? Sign up
+              </Link>
+            </div>
+          </form>
 
-              <label htmlFor="password">Password</label>
-              <input 
-                type="password" 
-                id="password"
-                name="password" 
-                value={this.state.password}
-                onChange={this.handleChange}
-                placeholder="Enter your password" 
-              />
-
-              <button type="submit">Login</button>
-            </form>
-          </div>
-
-          <img 
-            src="/placeholder.png"
-            className="kettle-ani"
-            alt="Kettle animation"
-          />
+          {loginErrors && <p className="error">{loginErrors}</p>}
         </div>
-      </>
-    );
-  }
-}
+
+        <img src="/placeholder.png" className="kettle-ani" />
+      </div>
+    </>
+  );
+};
 
 export default LoginPage;
