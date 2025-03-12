@@ -1,6 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap');
 
 /* General Styles */
@@ -12,7 +9,6 @@
 
 body {
   background-color: var(--background);
-  font-family: var(--font-domine), serif;
 }
 
 /* Hero Section */
@@ -115,31 +111,45 @@ body {
   height: auto;
   margin-right: 1rem;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-  transform: translateY(-10px);
+  animation: fadeIn 0.5s ease-in-out forwards; 
+  animation-delay: 0.3s; 
 }
 
-.navbar.scrolled .nav-logo {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-/* Navbar Links */
+.fade-in {
+  animation-play-state: running;
+}
+
 .nav-links {
   display: flex;
   gap: 1.5rem;
-  margin-left: 0;
   transition: margin-left 0.5s ease-in-out;
 }
+
+/* Links styling */
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  transition: margin-left 0.4s ease-in-out;
+}
+
 .nav-links a {
   text-decoration: none;
-  color: (var(--text));
+  color: black;
   font-size: 1rem;
   transition: color 0.2s;
 }
 
 .nav-links a:hover {
-  color: var(--lightbackground);
+  color: #007bff;
 }
 
 /* Storefront Section */
@@ -237,7 +247,7 @@ body {
 
 .login-box h2 {
   font-size: 40px;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
   color: var(--text);
 }
 
@@ -248,8 +258,8 @@ body {
 
 .login-box label {
   margin-bottom: 6px;
-  color: var(--background);
-  font-size: 20px;
+  color: #555;
+  font-size: 14px;
 }
 
 .login-box input {
