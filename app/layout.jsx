@@ -12,7 +12,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Tea Shop",
+  title: "Ace Teas",
+  icons: {
+    icon: "tea-icon.ico"
+  }
 };
 
 export default function RootLayout({ children }) {
@@ -20,6 +23,17 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         {children}
+        <footer className="site-footer">
+          <div className="footer-content">
+            <p>&copy; {new Date().getFullYear()} Ace Teas. All rights reserved.</p>
+          <div className="footer-links">
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy">Privacy Policy</a>
+          </div>
+          </div>
+        </footer>
+
       </body>
     </html>
   );

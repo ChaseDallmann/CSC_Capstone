@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Storefront from "./components/Storefront";
 import Hero from "./components/Hero";
+import MissionCard from "./components/MissionCard/MissionCard";
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -31,9 +32,21 @@ export default function Home() {
 
       {/* Main Content */}
       <div className={`background ${showBackground ? "show" : ""}`}>
-        <Storefront />
-        <Storefront />
-        <Storefront />
+        <div className="logo-container">
+          <img
+            src="/tea-logo2.png"
+            alt="Website logo"
+            className="main.logo"
+          ></img>
+        </div>
+        <div>
+          <MissionCard
+          title="Our Mission"
+          text="We aim to bring the joy of tea to every home. Indulge with thoughfully curated blends, prizewinning teas, and handmade teaware."
+          imageSrc="/teastuff.jpg"
+          imageAlt="A cup of tea being brewed"
+       />
+    </div>
         <Storefront />
       </div>
     </div>

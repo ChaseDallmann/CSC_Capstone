@@ -11,7 +11,7 @@ const LoginPage = () => {
   return (
     <><NavbarBasic /><div className="login-container">
           <div className="login-box">
-              <h1 style={{ fontFamily: greatVibes.style.fontFamily }}>Welcome!</h1>
+              <h1 style={{ fontFamily: greatVibes.style.fontFamily }}>Welcome Back!</h1>
               <h2>We've put the kettle on for you!</h2>
               <form>
                   <label htmlFor="username">Email or Username</label>
