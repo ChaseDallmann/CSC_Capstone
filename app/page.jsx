@@ -6,6 +6,8 @@ import Navbar from "./components/Navbar";
 import Storefront from "./components/Storefront";
 import Hero from "./components/Hero";
 import MissionCard from "./components/MissionCard/MissionCard";
+import Logo from "./components/Logo/Logo";
+import FarmerCard from "./components/FarmerCard/FarmerCard";
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -32,12 +34,8 @@ export default function Home() {
 
       {/* Main Content */}
       <div className={`background ${showBackground ? "show" : ""}`}>
-        <div className="logo-container">
-          <img
-            src="/tea-logo2.png"
-            alt="Website logo"
-            className="main.logo"
-          ></img>
+        <div>
+          <Logo />
         </div>
         <div>
           <MissionCard
@@ -46,7 +44,8 @@ export default function Home() {
           imageSrc="/teastuff.jpg"
           imageAlt="A cup of tea being brewed"
        />
-    </div>
+      </div>
+        <Storefront />
         <Storefront />
       </div>
     </div>
