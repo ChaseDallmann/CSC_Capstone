@@ -18,6 +18,9 @@ public class Manufacturer {
     String manufacturerName;
     @Column(name = "manufacturerURL")
     String manufacturerURL;
+
+    public Manufacturer() {
+    }
  
     public Manufacturer(int manufacturerID, String manufacturerName, String manufacturerURL) {
         this.manufacturerID = manufacturerID;

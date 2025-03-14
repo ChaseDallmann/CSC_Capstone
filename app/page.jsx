@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React from 'react';
 import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Storefront from "./components/Storefront";

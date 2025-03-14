@@ -17,7 +17,7 @@ public class LoginResponse {
     }
 
     // Constructor for successful logins
-    public LoginResponse(String message, UserDto customer) {
+    public LoginResponse(String message, UserDto user) {
         this.message = message;
         this.success = true;
         this.user = user;
