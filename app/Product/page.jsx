@@ -53,6 +53,7 @@ const ProductPage = () => {
                                     key={product.productID} // Unique key to avoid React warnings
                                     title={product.productName}
                                     description={product.productDescription}
+                                    manufacturer={product.manufacturer.manufacturerName}
                                     price={product.price} // Ensure `DisplayCard` supports price
                                 />
                             ))

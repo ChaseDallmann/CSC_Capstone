@@ -8,20 +8,21 @@ type DisplayCardProps = {
   price: string;
   description: string;
   link: string;
+  manufacturer: string;
 };
 
-export default function DisplayCard({ title, imageSrc, price, description }: DisplayCardProps) {
+export default function DisplayCard({ title, imageSrc, price, description, manufacturer }: DisplayCardProps) {
   return (
     <div className="display-card">
-      <Image src={imageSrc} alt={title} width={200} height={200} className="product-image" />
+    {imageSrc ? (
+            <Image src={imageSrc} alt={title} width={200} height={200} className="product-image" />
+          ) : (
+            <p>No image available</p>
+          )}
       <h3 className="product-title">{title}</h3>
-      <p className="product-price">{price}</p>
-      <p className="product-description">{description}</p>
-      {imageSrc ? (
-        <Image src={imageSrc} alt={title} width={200} height={200} className="product-image" />
-      ) : (
-        <p>No image available</p>
-      )}
+      <p className="product-description">Description: {description}</p>
+      <p className="product-manufacturer">{manufacturer}</p>
+      <p className="product-price">Price: {price}</p>
     </div>
   );
 }
