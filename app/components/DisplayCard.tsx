@@ -9,9 +9,10 @@ type DisplayCardProps = {
   description: string;
   link: string;
   manufacturer: string;
+  stock: number;
 };
 
-export default function DisplayCard({ title, imageSrc, price, description, manufacturer }: DisplayCardProps) {
+export default function DisplayCard({ title, imageSrc, price, description, manufacturer, stock }: DisplayCardProps) {
   return (
     <div className="display-card">
     {imageSrc ? (
@@ -23,6 +24,8 @@ export default function DisplayCard({ title, imageSrc, price, description, manuf
       <p className="product-description">Description: {description}</p>
       <p className="product-manufacturer">{manufacturer}</p>
       <p className="product-price">Price: {price}</p>
+      <p className="product-stock">Stock: {stock}</p>
+      <button className="product-button">Add to cart</button>
     </div>
   );
 }

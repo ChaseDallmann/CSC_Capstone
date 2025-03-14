@@ -54,9 +54,11 @@ const ProductPage = () => {
                                     title={product.productName}
                                     description={product.productDescription}
                                     manufacturer={product.manufacturer.manufacturerName}
+                                    stock={product.productInventory}
                                     price={product.price} // Ensure `DisplayCard` supports price
                                 />
-                            ))
+                            )
+                        )
                         ) : (
                             <p>Loading products...</p>
                         )}
