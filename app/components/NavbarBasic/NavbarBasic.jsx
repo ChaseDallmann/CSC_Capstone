@@ -1,33 +1,46 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import styles from './NavbarBasic.module.css';
+import React from 'react';
+import Link from 'next/link';
+import { useAuth } from '../../context/AuthProvider';
 
-export default function NavbarBasic() {
-  const [scrolled, setScrolled] = useState(false);
+const NavbarBasic = () => {
+  const { isAuthenticated, user, logout } = useAuth();
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const handleLogout = () => {
+    logout();
+    // Optionally redirect to home or login page
+  };
 
   return (
-    <nav className={`${styles.navbarBasic} ${scrolled ? styles.scrolled : ""}`}>
-      <img
-        src="/tea-logo2.png"
-        alt="Tea Logo"
-        className={`${styles.logoImg} ${scrolled ? styles.fadeIn : ""}`}
-      />
-      {/* Navigation links */}
-      <div className={styles.navLinks}>
-        <Link href="/" className={styles.navLink}>Home</Link>
-        <Link href="/Product" className={styles.navLink}>Product</Link>
-        <Link href="/Login" className={styles.navLink}>Login</Link>
-        <Link href="/Registration" className={styles.navLink}>Registration</Link>
-        <Link href="/Dashboard" className={styles.navLink}>Dashboard</Link>
+    <nav className="navbar">
+      <div className="navbar-logo">
+        <Link href="/">TeaShop</Link>
+      </div>
+      <div className="navbar-links">
+        <Link href="/">Home</Link>
+        <Link href="/products">Products</Link>
+        
+        {isAuthenticated ? (
+          <>
+            <Link href="/profile">
+              Welcome, {user?.firstName || 'User'}
+            </Link>
+            <Link href="/orders">My Orders</Link>
+            <button onClick={handleLogout} className="logout-btn">
+              Log out
+            </button>
+          </>
+        ) : (
+          <>
+            <Link href="/Login">Login</Link>
+            <Link href="/Registration">Register</Link>
+          </>
+        )}
+        <Link href="/cart">Cart</Link>
       </div>
     </nav>
   );
-}
+};
+
+export default NavbarBasic;

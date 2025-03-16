@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "./context/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,21 +23,20 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {children}
-        <footer className="site-footer">
-          <div className="footer-content">
-            <p>&copy; {new Date().getFullYear()} Ace Teas. All rights reserved.</p>
-          <div className="footer-links">
-            <a href="/about">About</a>
-            <a href="/contact">Contact</a>
-            <a href="/privacy">Privacy Policy</a>
-          </div>
-          </div>
-        </footer>
-
+        <AuthProvider>
+          {children}
+          <footer className="site-footer">
+            <div className="footer-content">
+              <p>&copy; {new Date().getFullYear()} Ace Teas. All rights reserved.</p>
+              <div className="footer-links">
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/privacy">Privacy Policy</a>
+              </div>
+            </div>
+          </footer>
+        </AuthProvider>
       </body>
     </html>
   );
 }
-
-//put components that apply to all pages (headers, footers, nav bar etc.)

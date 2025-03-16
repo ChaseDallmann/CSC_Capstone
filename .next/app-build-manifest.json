@@ -6,17 +6,17 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/page.css",
-      "static/chunks/app/page.js"
-    ],
     "/Login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/Login/page.css",
       "static/chunks/app/Login/page.js"
+    ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/page.css",
+      "static/chunks/app/page.js"
     ],
     "/Registration/page": [
       "static/chunks/webpack.js",
@@ -27,7 +27,6 @@
     "/Product/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/Product/page.css",
       "static/chunks/app/Product/page.js"
     ]
   }

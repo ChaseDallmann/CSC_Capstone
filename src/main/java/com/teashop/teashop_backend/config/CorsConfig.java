@@ -19,7 +19,7 @@ public class CorsConfig {
         config.setAllowedOrigins(List.of("http://localhost:3000")); // Your Next.js frontend
         config.setAllowedHeaders(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowCredentials(true);
+        config.setAllowCredentials(true);  // Add this line for withCredentials
         config.setMaxAge(3600L);
 
         source.registerCorsConfiguration("/**", config);

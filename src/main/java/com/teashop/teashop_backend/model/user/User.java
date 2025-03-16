@@ -1,10 +1,15 @@
 package com.teashop.teashop_backend.model.user;
 
+import java.util.List;
+import java.util.Collection;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements UserDetails {
 
     // Add Role enum for different user roles
     public enum Role {
@@ -51,6 +56,34 @@ public class User {
         this.state = state;
         this.zipcode = zipcode;
         this.password = password;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    public boolean isEnabled() {
+        return true;
     }
 
     public int getUserID() {

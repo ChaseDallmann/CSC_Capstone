@@ -1,18 +1,16 @@
 package com.teashop.teashop_backend.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.teashop.teashop_backend.model.category.Category;
 import com.teashop.teashop_backend.model.category.CategoryRepository;
+import com.teashop.teashop_backend.model.manufacturer.Manufacturer;
 import com.teashop.teashop_backend.model.manufacturer.ManufacturerRepository;
 import com.teashop.teashop_backend.model.product.Product;
 import com.teashop.teashop_backend.model.product.ProductRepository;
 import com.teashop.teashop_backend.model.user.User;
 import com.teashop.teashop_backend.model.user.UserRepository;
-
-import org.springframework.ui.Model;
 
 import java.util.Optional;
 import java.util.List;
@@ -60,6 +58,11 @@ public class MainController {
     @GetMapping("categories")
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
+    }
+
+    @GetMapping("manufacturers")
+    public List<Manufacturer> getAllManufacturers() {
+        return manufacturerRepository.findAll();
     }
     
 }

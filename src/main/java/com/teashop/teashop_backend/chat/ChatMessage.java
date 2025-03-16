@@ -1,7 +1,5 @@
 package com.teashop.teashop_backend.chat;
 
-import com.google.protobuf.Extension.MessageType;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,9 +11,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class ChatMessage {
     private String content;
     private String sender;
     private MessageType type;
+    
+    // Define your own MessageType enum
+    public enum MessageType {
+        CHAT,
+        JOIN,
+        LEAVE
+        // Add other message types as needed
+    }
 }

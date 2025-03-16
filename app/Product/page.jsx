@@ -1,3 +1,5 @@
+//https://letsreact.org/how-to-fetch-data-from-json-files-in-react-and-display-it-in-a-component/
+
 'use client'
 
 import { useState, useEffect } from "react";

@@ -34,9 +34,10 @@ const RegistrationPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/register",
+        "http://localhost:8080/auth/register",
         {
-            name: firstName + " " + lastName,
+            firstName: firstName,
+            lastName: lastName,
             address: address1 + " " + address2,
             city: city,
             state: state,

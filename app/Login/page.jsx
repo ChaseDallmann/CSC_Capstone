@@ -3,9 +3,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Great_Vibes } from 'next/font/google';
-import Router, { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
 import Link from "next/link";
+import { useAuth } from "../context/AuthProvider";
+
 
 const greatVibes = Great_Vibes({
   subsets: ['latin'],
@@ -13,8 +15,8 @@ const greatVibes = Great_Vibes({
 });
 
 const LoginPage = () => {
-
   const router = useRouter();
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginErrors, setLoginErrors] = useState('');
@@ -33,7 +35,11 @@ const LoginPage = () => {
         { withCredentials: true }
       );
 
-      if (response.status === 200) {
+      if (response.status === 200 && response.data) {
+        // Use the context's login function
+        localStorage.setItem('authToken', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        login(response.data.user, response.data.token);
         router.push("/");
       }
     } catch (error) {
