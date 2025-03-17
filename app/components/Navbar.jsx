@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useAuth } from "../context/AuthProvider";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const { isAuthenticated, user, logout } = useAuth();
+  const { loggedInStatus, user, handleLogout } = React.useContext(AuthContext);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -25,15 +25,14 @@ export default function Navbar() {
       <div className="nav-links">
         <Link href="/">Home</Link>
         <Link href="/Product">Product</Link>
-        {isAuthenticated ? (
+        {loggedInStatus === "LOGGED_IN" ? (
           <>
-            <Link href="/profile">
-              Welcome, {user?.firstName || 'User'}
-            </Link>
-            <Link href="/orders">My Orders</Link>
+            <Link href="/Orders">My Orders</Link>
+            <Link href="/Cart">Cart</Link>
             <button onClick={handleLogout} className="logout-btn">
               Log out
             </button>
+            <Link href="/Profile" className="user-profile">Welcome, {user?.name || "User"}</Link>
           </>
         ) : (
           <>
@@ -41,7 +40,6 @@ export default function Navbar() {
             <Link href="/Registration">Register</Link>
           </>
         )}
-        <Link href="/Dashboard">Dashboard</Link>
       </div>
     </nav>
   );

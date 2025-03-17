@@ -8,18 +8,27 @@ export default function Storefront() {
       imageSrc: "/smithTea.png",
       price: "$19.99",
       link: "/product1",
+      description: "A rich and robust black tea.",
+      manufacturer: "Smith Tea",
+      stock: 10,
     },
     {
       title: "Oolong Tea",
       imageSrc: "/smithTea.png",
       price: "$19.99",
       link: "/product2",
+      description: "A fragrant and floral oolong tea.",
+      manufacturer: "Smith Tea",
+      stock: 5,
     },
     {
       title: "Calming Herbal Tea",
       imageSrc: "/smithTea.png",
       price: "$19.99",
       link: "/product3",
+      description: "A soothing herbal tea blend.",
+      manufacturer: "Smith Tea",
+      stock: 7,
     },
   ];
 

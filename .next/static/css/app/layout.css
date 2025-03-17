@@ -34,6 +34,36 @@ body {
   background: rgba(0, 0, 0, 0.3);
   transition: backdrop-filter 0.5s ease;
 }
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.user-profile {
+  color: white;
+  margin-left: 65%;
+  font-weight: 500;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.logout-btn:hover {
+  color: #007bff;
+}
 
 .blur {
   backdrop-filter: blur(5px);

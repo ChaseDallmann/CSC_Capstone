@@ -1,30 +1,22 @@
-'use client';
+"use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
-import { Great_Vibes } from 'next/font/google';
 import { useRouter } from "next/navigation";
-import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
+import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import Link from "next/link";
-import { useAuth } from "../context/AuthProvider";
-
-
-const greatVibes = Great_Vibes({
-  subsets: ['latin'],
-  weight: '400',
-});
+import { AuthContext } from "../context/AuthContext";
 
 const LoginPage = () => {
   const router = useRouter();
-  const { login } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loginErrors, setLoginErrors] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginErrors, setLoginErrors] = useState("");
+  const { handleLogin } = useContext(AuthContext);
 
-  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     try {
       const response = await axios.post(
         "http://localhost:8080/auth/login",
@@ -36,15 +28,14 @@ const LoginPage = () => {
       );
 
       if (response.status === 200 && response.data) {
-        // Use the context's login function
-        localStorage.setItem('authToken', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        login(response.data.user, response.data.token);
+        localStorage.setItem("authToken", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        handleLogin(response.data.user, response.data.token); // Call handleLogin here
         router.push("/");
       }
     } catch (error) {
-      setLoginErrors('Invalid credentials');
-      console.log("login error", error);
+      setLoginErrors("Invalid credentials");
+      console.log("Login error", error);
     }
   };
 
@@ -53,7 +44,7 @@ const LoginPage = () => {
       <NavbarBasic />
       <div className="login-container">
         <div className="login-box">
-          <h1 style={{ fontFamily: greatVibes.style.fontFamily }}>Welcome Back!</h1>
+          <h1>Welcome Back!</h1>
           <h2>We've put the kettle on for you!</h2>
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">Email</label>
@@ -79,19 +70,15 @@ const LoginPage = () => {
             />
 
             <button type="submit">Login</button>
-            
+
             <br />
             <div className="text-center">
-              <Link href="/Registration" className="text-indigo-600 hover:text-indigo-800">
-                Don't have an account? Sign up
-              </Link>
+              <Link href="/Registration">Don't have an account? Sign up</Link>
             </div>
           </form>
 
           {loginErrors && <p className="error">{loginErrors}</p>}
         </div>
-
-        <img src="/placeholder.png" className="kettle-ani" />
       </div>
     </>
   );
