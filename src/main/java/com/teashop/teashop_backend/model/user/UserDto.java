@@ -10,9 +10,7 @@ public class UserDto {
     private String email;
     private String name;
     private Role role;
-    // Add other non-sensitive fields you want to return
-    
-    // Constructor to create from User entity
+
     public UserDto(User user) {
         this.id = user.getUserID();
         this.email = user.getEmail();

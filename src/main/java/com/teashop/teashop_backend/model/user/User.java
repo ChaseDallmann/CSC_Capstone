@@ -11,7 +11,6 @@ import jakarta.persistence.*;
 @Table(name = "user")
 public class User implements UserDetails {
 
-    // Add Role enum for different user roles
     public enum Role {
         CUSTOMER_SERVICE,
         CUSTOMER;

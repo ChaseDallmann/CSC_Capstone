@@ -10,7 +10,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.authentication.AuthenticationProvider;
 import com.teashop.teashop_backend.config.JwtAuthenticationFilter;
 
-// Update your SecurityConfig class
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

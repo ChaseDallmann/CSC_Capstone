@@ -60,7 +60,7 @@ public class LoginResponse {
         this.success = success;
     }
 
-    public String getToken() { // Fixed method name
+    public String getToken() {
         return token;
     }
 

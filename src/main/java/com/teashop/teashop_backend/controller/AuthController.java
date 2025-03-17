@@ -46,12 +46,12 @@ public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
         response.setExpiresIn(jwtService.getExpirationTime());
         response.setSuccess(true);
         response.setMessage("Login successful");
-        response.setUser(new UserDto(authenticatedUser)); // Include user data
+        response.setUser(new UserDto(authenticatedUser));
         return ResponseEntity.ok(response);
 
     } catch (AuthenticationException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-            .body(new LoginResponse("Invalid credentials")); // This constructor sets success=false
+            .body(new LoginResponse("Invalid credentials"));
         }
     }
 }
