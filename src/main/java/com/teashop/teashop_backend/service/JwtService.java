@@ -57,7 +57,7 @@ public class JwtService {
             .subject(userDetails.getUsername())
             .issuedAt(Date.from(Instant.now()))
             .expiration(Date.from(Instant.now().plusMillis(expiration)))
-            .signWith(getSignInKey()) // Remove algorithm parameter
+            .signWith(getSignInKey())
             .compact();
     }
     

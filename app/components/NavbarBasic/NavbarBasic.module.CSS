@@ -1,6 +1,6 @@
 /* Navbar */
 .navbarBasic {
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -35,4 +35,4 @@
 
 .navLinks a:hover {
   color: #007bff;
-}  
+}

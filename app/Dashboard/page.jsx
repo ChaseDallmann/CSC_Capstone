@@ -1,42 +1,33 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
 import Link from 'next/link';
+import { AuthContext, AuthProvider } from '../context/AuthContext';
 
 export default function Dashboard() {
-  const { user, loading } = useUser();
   const router = useRouter();
+  const { loggedInStatus, user, userRole, handleLogout } = React.useContext(AuthContext);
 
-  // Redirect to login if not authenticated
   useEffect(() => {
-    if (!loading && !user) {
-      router.push('/Login');
+    localStorage.getItem(userRole);
+    if (loggedInStatus !== "LOGGED_IN" && userRole !== "CUSTOMER_SERVICE") {
+        router.push("/Login");
     }
-  }, [user, loading, router]);
-
-  // Show loading state while checking authentication
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  // Don't render the page content if user is not authenticated
-  if (!user) {
-    return null;
-  }
+}, []);
 
   return (
     <>
       <NavbarBasic />
       <div className="dashboard-container">
-        <h1>Welcome to Your Dashboard, {user.firstName || user.email?.split('@')[0] || 'User'}</h1>
+        <h1>Welcome to Your Dashboard, {user?.name || "User"}</h1>
         
         <div className="dashboard-content">
           <div className="dashboard-card">
             <h2>My Account</h2>
-            <p>Email: {user.email}</p>
-            {user.firstName && <p>Name: {user.firstName} {user.lastName}</p>}
+            <p>Email: {user?.email}</p>
+            {user?.name && <p>Name: {user.name}</p>}
             <button className="edit-profile-btn">Edit Profile</button>
           </div>
           
@@ -55,52 +46,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .dashboard-container {
-          max-width: 1200px;
-          margin: 120px auto 40px;
-          padding: 0 20px;
-        }
-        
-        h1 {
-          margin-bottom: 40px;
-          color: #2c3e50;
-        }
-        
-        .dashboard-content {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: 20px;
-        }
-        
-        .dashboard-card {
-          background: white;
-          border-radius: 8px;
-          padding: 20px;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .dashboard-card h2 {
-          color: #2c3e50;
-          margin-bottom: 15px;
-        }
-        
-        button {
-          background-color: #4b6584;
-          color: white;
-          border: none;
-          padding: 10px 15px;
-          border-radius: 4px;
-          cursor: pointer;
-          margin-top: 15px;
-          transition: background-color 0.3s;
-        }
-        
-        button:hover {
-          background-color: #3d5166;
-        }
-      `}</style>
     </>
   );
 }

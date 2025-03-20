@@ -6,12 +6,19 @@ import Navbar from "./components/Navbar";
 import Storefront from "./components/Storefront";
 import Hero from "./components/Hero";
 import MissionCard from "./components/MissionCard/MissionCard";
+import { AuthContext, AuthProvider } from './context/AuthContext';
+import Router, { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
+  const { loggedInStatus, user, userRole, handleLogout } = React.useContext(AuthContext);
 
   useEffect(() => {
+    { userRole === "CUSTOMER_SERVICE" &&
+      router.refresh;
+    }
     const handleScroll = () => {
       setScrolled(window.scrollY > 300);
       setShowBackground(window.scrollY > 500);

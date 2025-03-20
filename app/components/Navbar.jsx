@@ -6,13 +6,19 @@ import { AuthContext } from "../context/AuthContext";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const { loggedInStatus, user, handleLogout } = React.useContext(AuthContext);
+  const { loggedInStatus, user, userRole, setUserRole, handleLogout } = React.useContext(AuthContext);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
+    
+    // Check if userRole is null but user exists and has a role
+    if (!userRole && user && user.role) {
+      setUserRole(user.role);
+    }
+    
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [user, userRole, setUserRole]);
 
   return (
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
@@ -32,7 +38,8 @@ export default function Navbar() {
             <button onClick={handleLogout} className="logout-btn">
               Log out
             </button>
-            <Link href="/Profile" className="user-profile">Welcome, {user?.name || "User"}</Link>
+            {user?.role === "CUSTOMER_SERVICE" && <Link href="/customerService/User">Find User</Link>}
+            <Link id="user-profile" href="/Dashboard" className="user-profile">Welcome, {user?.name || "User"}</Link>
           </>
         ) : (
           <>

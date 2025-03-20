@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import Link from "next/link";
 import { AuthContext } from "../context/AuthContext";
+import { createSession } from '../context/Session';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ const LoginPage = () => {
       if (response.status === 200 && response.data) {
         localStorage.setItem("authToken", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        handleLogin(response.data.user, response.data.token); // Call handleLogin here
+        handleLogin(response.data.user, response.data.token);
         router.push("/");
       }
     } catch (error) {

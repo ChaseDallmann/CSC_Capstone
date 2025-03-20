@@ -3,16 +3,22 @@
 'use client'
 
 import { useState, useEffect } from "react";
-import Navbar from "../components/NavbarBasic/NavbarBasic";
+import React from "react";
+import Navbar from "../components/Navbar";
 import DisplayCard from "../components/DisplayCard";
 import axios from "axios";
 import Logo from "../../public/tea-logo.png";
+import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
+import Hero from "../components/Hero";
+import { AuthContext, AuthProvider } from "../context/AuthContext";
 
 const ProductPage = () => {
+    const { loggedInStatus, user, userRole, handleLogout } = React.useContext(AuthContext);
     const [scrolled, setScrolled] = useState(false);
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
+        localStorage.getItem(userRole);
         const handleScroll = () => {
             setScrolled(window.scrollY > 0);
         };
@@ -39,35 +45,34 @@ const ProductPage = () => {
     }, []); 
 
     return (
+        <>
+        <NavbarBasic />
         <div>
-            <div className="relative">
-                <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
-                    <Navbar />
-                </nav>
-
                 {/* Main Content */}
-                <div className="products">
-                    <h1 className="text-2xl font-bold">Our Products</h1>
-                    <div className="grid grid-cols-3 gap-4 p-4">
-                        {products.length > 0 ? (
-                            products.map((product, index) => (
-                                <DisplayCard 
-                                    key={product.productID} // Unique key to avoid React warnings
-                                    title={product.productName}
-                                    description={product.productDescription}
-                                    manufacturer={product.manufacturer.manufacturerName}
-                                    stock={product.productInventory}
-                                    price={product.price} // Ensure `DisplayCard` supports price
-                                />
+                <div className="product-container">
+                    <div className="product-box">
+                        <h1 className="product-title">Our Products</h1>
+                        <div className="product-cards">
+                            {products.length > 0 ? (
+                                products.map((product, index) => (
+                                    <DisplayCard 
+                                        key={product.productID}
+                                        title={product.productName}
+                                        description={product.productDescription}
+                                        manufacturer={product.manufacturer.manufacturerName}
+                                        stock={product.productInventory}
+                                        price={product.price}
+                                    />
+                                )
                             )
-                        )
-                        ) : (
-                            <p>Loading products...</p>
-                        )}
+                            ) : (
+                                <p>Loading products...</p>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+    </>
     );
 };
 

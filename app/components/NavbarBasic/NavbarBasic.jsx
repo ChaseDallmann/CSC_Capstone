@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import styles from './NavbarBasic.module.css';
+import styles from '../NavbarBasic/NavbarBasic.module.css';
 import { AuthContext } from "../../context/AuthContext";
 
 export default function NavbarBasic() {
   const [scrolled, setScrolled] = useState(false);
-  const { loggedInStatus, user, handleLogout } = React.useContext(AuthContext);
+  const { loggedInStatus, user, userRole, handleLogout } = React.useContext(AuthContext);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -29,17 +29,18 @@ export default function NavbarBasic() {
         
         {loggedInStatus === "LOGGED_IN" ? (
           <>
-            <Link href="/Profile" className={styles.navLink}>Welcome, {user?.firstName || "User"}</Link>
-            <Link href="/Orders" className={styles.navLink}>My Orders</Link>
-            <Link href="/Cart" className={styles.navLink}>Cart</Link>
-            <button onClick={handleLogout} className={styles.logoutBtn}>
+            <Link href="/Orders">My Orders</Link>
+            <Link href="/Cart">Cart</Link>
+            <button onClick={handleLogout} className="logout-btn">
               Log out
             </button>
+            {userRole === "CUSTOMER_SERVICE" && <Link href="/customerService/User">Find User</Link>}
+            <Link id="user-profile" href="/Dashboard" className="user-profile">Welcome, {user?.name || "User"}</Link>
           </>
         ) : (
           <>
-            <Link href="/Login" className={styles.navLink}>Login</Link>
-            <Link href="/Registration" className={styles.navLink}>Register</Link>
+            <Link href="/Login">Login</Link>
+            <Link href="/Registration">Register</Link>
           </>
         )}
       </div>

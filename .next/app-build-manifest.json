@@ -18,6 +18,24 @@
       "static/css/app/Login/page.css",
       "static/chunks/app/Login/page.js"
     ],
+    "/Registration/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Registration/page.css",
+      "static/chunks/app/Registration/page.js"
+    ],
+    "/Dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Dashboard/page.css",
+      "static/chunks/app/Dashboard/page.js"
+    ],
+    "/Product/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Product/page.css",
+      "static/chunks/app/Product/page.js"
+    ],
     "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
