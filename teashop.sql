@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 02, 2025 at 02:37 AM
+-- Generation Time: Mar 19, 2025 at 04:05 PM
 -- Server version: 8.0.39
--- PHP Version: 8.2.25
+-- PHP Version: 8.2.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -119,7 +119,7 @@ INSERT INTO `product` (`productID`, `productName`, `productDescription`, `price`
 
 CREATE TABLE `user` (
   `userID` int NOT NULL,
-  `role` enum('customer','customerService') COLLATE utf8mb4_general_ci NOT NULL,
+  `role` enum('CUSTOMER','CUSTOMER_SERVICE') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `firstName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `lastName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -135,35 +135,19 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userID`, `role`, `firstName`, `lastName`, `email`, `streetAddress`, `city`, `state`, `zipcode`, `password`) VALUES
-(1, 'customerService', 'Natasha', 'Czaplewski', 'czaplewn@csp.edu', '123 Main Street', 'Winona', 'Minnesota', 55987, 'admin'),
-(11, 'customer', 'FRYPD', 'RKROL', 'VI938@hotmail.com', '732 QQRX', 'VMMVF', 'NFE', 28785, 'QDXBU395'),
-(13, 'customer', 'REOPK', 'OAUVT', 'WZ567@hotmail.com', '163 TWNS', 'QCNKR', 'BYZ', 93872, 'KRZTM782'),
-(15, 'customer', 'NZMEM', 'HZXMY', 'ZN289@yahoo.com', '496 LWJP', 'NNYSF', 'RUP', 67386, 'IFOVZ038'),
-(17, 'customer', 'UPLSN', 'LTRGA', 'ZQ929@hotmail.com', '256 DNIQ', 'GFHGB', 'RCB', 70480, 'DMWBP584'),
-(19, 'customer', 'IOGKY', 'XEIDG', 'WX881@aol.com', '511 EKNW', 'EHCFY', 'SXO', 90761, 'TEWKS239');
+(1, 'CUSTOMER', 'Natasha', 'Czaplewski', 'czaplewn@csp.edu', '123 Main Street', 'Winona', 'Minnesota', 55987, 'admin'),
+(11, 'CUSTOMER', 'FRYPD', 'RKROL', 'VI938@hotmail.com', '732 QQRX', 'VMMVF', 'NFE', 28785, 'QDXBU395'),
+(13, 'CUSTOMER', 'REOPK', 'OAUVT', 'WZ567@hotmail.com', '163 TWNS', 'QCNKR', 'BYZ', 93872, 'KRZTM782'),
+(15, 'CUSTOMER', 'NZMEM', 'HZXMY', 'ZN289@yahoo.com', '496 LWJP', 'NNYSF', 'RUP', 67386, 'IFOVZ038'),
+(17, 'CUSTOMER', 'UPLSN', 'LTRGA', 'ZQ929@hotmail.com', '256 DNIQ', 'GFHGB', 'RCB', 70480, 'DMWBP584'),
+(19, 'CUSTOMER', 'IOGKY', 'XEIDG', 'WX881@aol.com', '511 EKNW', 'EHCFY', 'SXO', 90761, 'TEWKS239'),
+(27, 'CUSTOMER_SERVICE', 'Chase', 'Dallmann', 'dallmanc@csp.edu', '11720 Vermillion St Ne Unit D ', 'Blaine', 'MN', 55449, '$2a$10$jgA2/T/iCH3kornkHbOzLu0kRPKDmFLlZSazE5jxBDNkbxKVs3rnK'),
+(28, 'CUSTOMER', 'Chase', 'Dallmann', 'testuser@csp.edu', '11720 Vermillion St Ne Unit D', 'Blaine', 'MN', 55449, '$2a$10$BdPlZ4fgbbHu3TtdinBF0eL/JZ4VojF77aymvdoYU.jwVOarg0kfi'),
+(29, 'CUSTOMER_SERVICE', 'Test', 'User', 'testuser@yahoo.com', '1234 Fake St ', 'Blaine', 'MN', 55449, '$2a$10$cE/yLg6XNmvSVHSiknyVX.7iql3sNtcsfY0ZhraTH/7/2brVnLAGW');
 
 --
 -- Indexes for dumped tables
 --
-
--- Table structure for table `chatTranscript`
-CREATE TABLE `chatTranscript` (
-  `chatTranscriptID` int NOT NULL,
-  `sender` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `receiver` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `status` enum('JOIN', 'MESSAGE', 'LEAVE') COLLATE utf8mb4_general_ci NOT NULL,
-  `timestamp` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- Indexes for table `chatTranscript`
-ALTER TABLE `chatTranscript`
-  ADD PRIMARY KEY (`chatTranscriptID`);
-
--- AUTO_INCREMENT for table `chatTranscript`
-ALTER TABLE `chatTranscript`
-  MODIFY `chatTranscriptID` int NOT NULL AUTO_INCREMENT;
-
 
 --
 -- Indexes for table `category`
@@ -231,7 +215,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `userID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Constraints for dumped tables
