@@ -1,6 +1,4 @@
-package com.teashop.teashop_backend.chat;
-
-import com.google.protobuf.Extension.MessageType;
+package com.teashop.teashop_backend.model.chat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,5 +15,8 @@ import lombok.Setter;
 public class ChatMessage {
     private String content;
     private String sender;
-    private MessageType type;
+    private String receiver;
+    private String senderRole;
+    private String receiverRole; 
+    private Status status;
 }

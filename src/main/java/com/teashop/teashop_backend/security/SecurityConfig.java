@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.disable()) // Use your CORS filter
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for API requests
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/auth/login", "/register").permitAll()
+                    .requestMatchers("/auth/login", "/register", "/ms/**").permitAll()
                     .anyRequest().authenticated()
                 );
             return http.build();
