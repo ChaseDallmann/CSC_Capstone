@@ -13,7 +13,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginErrors, setLoginErrors] = useState("");
-  const { handleLogin } = useContext(AuthContext);
+  const { handleLogin, authenticatedUser } = useContext(AuthContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

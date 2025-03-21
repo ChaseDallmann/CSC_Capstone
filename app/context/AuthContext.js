@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { redirect, useRouter, usePathname } from "next/navigation";
 import { createSession, deleteSession } from '../context/Session';
 import { create } from "domain";
 
@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
     const [loggedInStatus, setLoggedInStatus] = useState("NOT_LOGGED_IN");
     const [user, setUser] = useState(null);
     const [userRole, setUserRole] = useState(null);
+    const [authenticatedUser, setAuthenticatedUser] = useState(false);
     
     // Check login status on mount and route change
     useEffect(() => {
@@ -31,6 +32,7 @@ export function AuthProvider({ children }) {
                 const parsedUser = JSON.parse(storedUser);
                 setLoggedInStatus("LOGGED_IN");
                 setUser(parsedUser);
+                setAuthenticatedUser(true);
                 
                 // Ensure userRole is also set from localStorage or from the user object
                 if (storedRole) {
@@ -47,6 +49,7 @@ export function AuthProvider({ children }) {
                 setLoggedInStatus("NOT_LOGGED_IN");
                 setUser(null);
                 setUserRole(null);
+                setAuthenticatedUser(false);
             }
         }
     };
@@ -55,6 +58,7 @@ export function AuthProvider({ children }) {
         localStorage.setItem("authToken", token);
         localStorage.setItem("user", JSON.stringify(userData));
         localStorage.setItem("userRole", userData.role);
+        setAuthenticatedUser(true);
         setLoggedInStatus("LOGGED_IN");
         setUserRole(userData.role);
         setUser(userData);
@@ -65,6 +69,7 @@ export function AuthProvider({ children }) {
         localStorage.removeItem("authToken");
         localStorage.removeItem("user");
         localStorage.removeItem("userRole");
+        setAuthenticatedUser(false);
         setLoggedInStatus("NOT_LOGGED_IN");
         setUser(null);
         setUserRole(null);
@@ -75,8 +80,9 @@ export function AuthProvider({ children }) {
         <AuthContext.Provider value={{ 
             loggedInStatus, 
             user, 
-            userRole, 
-            setUserRole, // Export this so components can update the role if needed
+            userRole,
+            authenticatedUser, 
+            setUserRole,
             handleLogin, 
             handleLogout 
         }}>

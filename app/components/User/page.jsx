@@ -10,7 +10,7 @@ import axios from "axios";
 
 export default function findUser() {
     const router = useRouter();
-    const { loggedInStatus, user, userRole, handleLogout } = React.useContext(AuthContext);
+    const { loggedInStatus, authenticactedUser, user, userRole, handleLogout } = React.useContext(AuthContext);
     const [search, setSearch] = useState("");
     const [userList, setUserList] = useState([]);
     const [error, setError] = useState(null);

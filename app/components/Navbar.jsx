@@ -6,7 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const { loggedInStatus, user, userRole, setUserRole, handleLogout } = React.useContext(AuthContext);
+  const { loggedInStatus, user, authenticatedUser, userRole, setUserRole, handleLogout } = React.useContext(AuthContext);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -31,7 +31,7 @@ export default function Navbar() {
       <div className="nav-links">
         <Link href="/">Home</Link>
         <Link href="/Product">Product</Link>
-        {loggedInStatus === "LOGGED_IN" ? (
+        {loggedInStatus === "LOGGED_IN" && authenticatedUser === true ? (
           <>
             <Link href="/Orders">My Orders</Link>
             <Link href="/Cart">Cart</Link>

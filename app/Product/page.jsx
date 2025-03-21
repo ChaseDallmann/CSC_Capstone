@@ -13,7 +13,7 @@ import Hero from "../components/Hero";
 import { AuthContext, AuthProvider } from "../context/AuthContext";
 
 const ProductPage = () => {
-    const { loggedInStatus, user, userRole, handleLogout } = React.useContext(AuthContext);
+    const { loggedInStatus, authenticatedUser, user, userRole, handleLogout } = React.useContext(AuthContext);
     const [scrolled, setScrolled] = useState(false);
     const [products, setProducts] = useState([]);
 
