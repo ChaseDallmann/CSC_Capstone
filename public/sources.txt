@@ -1,0 +1,17 @@
+React Auth
+
+https://dev.to/miracool/how-to-manage-user-authentication-with-react-js-3ic5
+https://nextjs.org/docs/pages/building-your-application/authentication
+
+JWT construction
+
+https://nextjs.org/docs/app/building-your-application/authenticationhttps://medium.com/@poojithairosha/spring-boot-3-authenticate-websocket-connections-with-jwt-tokens-2b4ff60532b6
+
+
+Storing a cookie
+
+https://medium.com/@ryanchenkie_40935/react-authentication-how-to-store-jwt-in-a-cookie-346519310e81
+
+Building the teashop_backend
+
+https://github.com/jordanhudgens/react-auth-app/blob/master/src/components/app.js

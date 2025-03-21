@@ -27,7 +27,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     return new UserDetailsImpl(user);
 }
 
-    // Keep your other methods...
     public User loadCustomerByEmail(String email) {
         return userRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));

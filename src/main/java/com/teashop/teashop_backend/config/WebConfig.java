@@ -7,5 +7,4 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
-    // This class enables proper request mapping to controllers
 }
