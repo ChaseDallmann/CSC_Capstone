@@ -225,6 +225,7 @@ body {
   transform: translateY(-10px);
 }
 
+/* Product Styles */
 .product-container {
   display: flex;
   justify-content: center;
@@ -265,8 +266,16 @@ body {
   margin-top: 2rem;
 }
 
+.productpage-title {
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--text);
+
+}
+
 .product-price {
-  color: #007bff;
+  color: var(--text);
   font-size: 1.125rem;
   margin-top: 0.5rem;
 }
@@ -280,6 +289,39 @@ body {
 
 .product-link:hover {
   text-decoration: underline;
+}
+
+/* Dropdown Styling */
+.filter-dropdown {
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #e0e0e0;
+}
+
+.filter-dropdown label {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.filter-dropdown select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.filter-dropdown select:hover {
+  background-color: #e6ebdc;
 }
 
 /* Login page styles */
@@ -380,7 +422,7 @@ h1 {
 }
 
 button {
-  background-color: #4b6584;
+  background-color: var(--background);
   color: white;
   border: none;
   padding: 10px 15px;
@@ -391,7 +433,7 @@ button {
 }
 
 button:hover {
-  background-color: #3d5166;
+  background-color: var(--text);
 }
 
 .kettle-ani {
