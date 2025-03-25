@@ -5,8 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import Link from "next/link";
-import { AuthContext } from "../context/AuthContext";
-import { createSession } from '../context/Session';
+import { AuthContext } from "../Context/AuthContext";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -29,8 +28,6 @@ const LoginPage = () => {
       );
 
       if (response.status === 200 && response.data) {
-        localStorage.setItem("authToken", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
         handleLogin(response.data.user, response.data.token);
         router.push("/");
       }

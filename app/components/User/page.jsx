@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { AuthContext, AuthProvider } from "@/app/context/AuthContext";
+import { AuthContext, AuthProvider } from "@/app/Context/AuthContext";
 import NavbarBasic from "@/app/components/NavbarBasic/NavbarBasic";
 import Link from "next/link";
 import axios from "axios";

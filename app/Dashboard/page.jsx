@@ -4,7 +4,7 @@ import React, { useContext, useEffect } from 'react';
 import { redirect, useRouter } from 'next/navigation';
 import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
 import Link from 'next/link';
-import { AuthContext, AuthProvider } from '../context/AuthContext';
+import { AuthContext, AuthProvider } from '../Context/AuthContext';
 
 export default function Dashboard() {
   const { loggedInStatus, authenticatedUser, user, userRole, handleLogout } = React.useContext(AuthContext);
@@ -24,9 +24,8 @@ export default function Dashboard() {
               <h2>My Account</h2>
               <p>Email: {user?.email}</p>
               {user?.name && <p>Name: {user.name}</p>}
-              <button className="edit-profile-btn">Edit Profile</button>
+              <button onClick={() => redirect("/Dashboard/PullInfo")} className="edit-profile-btn">Edit Profile</button>
             </div>
-            
             <div className="dashboard-card">
               <h2>My Orders</h2>
               <p>You have no orders yet.</p>

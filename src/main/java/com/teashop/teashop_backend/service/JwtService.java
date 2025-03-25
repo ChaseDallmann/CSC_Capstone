@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-// Remove this import: import io.jsonwebtoken.security.SignatureAlgorithm;
 
 import java.time.Instant;
 import java.util.Date;

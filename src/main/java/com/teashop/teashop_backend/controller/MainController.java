@@ -37,7 +37,7 @@ public class MainController {
             return userRepository.findAll();
         }
 
-    @GetMapping("customers/{id}")
+    @GetMapping("users/{id}")
     public ResponseEntity<User> getCustomerById(@PathVariable int id) {
         return userRepository.findById(id)
             .map(ResponseEntity::ok)
