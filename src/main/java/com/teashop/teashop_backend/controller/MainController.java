@@ -15,7 +15,7 @@ import com.teashop.teashop_backend.model.user.UserRepository;
 import java.util.Optional;
 import java.util.List;
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/")
 public class MainController {
@@ -37,7 +37,7 @@ public class MainController {
             return userRepository.findAll();
         }
 
-    @GetMapping("users/{id}")
+    @GetMapping("user/{id}")
     public ResponseEntity<User> getCustomerById(@PathVariable int id) {
         return userRepository.findById(id)
             .map(ResponseEntity::ok)

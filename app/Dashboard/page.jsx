@@ -7,9 +7,9 @@ import Link from 'next/link';
 import { AuthContext, AuthProvider } from '../Context/AuthContext';
 
 export default function Dashboard() {
-  const { loggedInStatus, authenticatedUser, user, userRole, handleLogout } = React.useContext(AuthContext);
+  const { isAuthenticated, user, userRole, handleLogout } = React.useContext(AuthContext);
 
-  if(!authenticatedUser) {
+  if(!isAuthenticated) {
     redirect('/')
   }
 

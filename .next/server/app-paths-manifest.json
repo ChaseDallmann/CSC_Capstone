@@ -1,4 +1,6 @@
 {
+  "/Dashboard/PullInfo/page": "app/Dashboard/PullInfo/page.js",
   "/Login/page": "app/Login/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/Dashboard/page": "app/Dashboard/page.js"
 }

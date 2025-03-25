@@ -17,8 +17,7 @@ export function createClientSession(userData, token) {
     path: '/'
   });
   
-  // Store minimal user data
-  // Don't store sensitive data in client-accessible cookies
+  
   Cookies.set('userData', JSON.stringify({
     id: userData.id,
     name: userData.name,
