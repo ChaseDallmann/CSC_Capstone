@@ -49,7 +49,7 @@ export default function Home() {
         <div>
           <MissionCard
           title="Our Mission"
-          text="We aim to bring the joy of tea to every home. Indulge with thoughfully curated blends, prizewinning teas, and handmade teaware."
+          text="We aim to bring the joy of tea to every home. Indulge with thoughtfully curated blends, prize winning teas, and handmade teaware."
           imageSrc="/teastuff.jpg"
           imageAlt="A cup of tea being brewed"
        />

@@ -145,6 +145,24 @@ INSERT INTO `user` (`userID`, `role`, `firstName`, `lastName`, `email`, `streetA
 (28, 'CUSTOMER', 'Chase', 'Dallmann', 'testuser@csp.edu', '11720 Vermillion St Ne Unit D', 'Blaine', 'MN', 55449, '$2a$10$BdPlZ4fgbbHu3TtdinBF0eL/JZ4VojF77aymvdoYU.jwVOarg0kfi'),
 (29, 'CUSTOMER_SERVICE', 'Test', 'User', 'testuser@yahoo.com', '1234 Fake St ', 'Blaine', 'MN', 55449, '$2a$10$cE/yLg6XNmvSVHSiknyVX.7iql3sNtcsfY0ZhraTH/7/2brVnLAGW');
 
+-- Table structure for table `chatTranscript`
+CREATE TABLE `chatTranscript` (
+  `chatTranscriptID` int NOT NULL,
+  `sender` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `receiver` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `status` enum('JOIN', 'MESSAGE', 'LEAVE') COLLATE utf8mb4_general_ci NOT NULL,
+  `timestamp` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Indexes for table `chatTranscript`
+ALTER TABLE `chatTranscript`
+  ADD PRIMARY KEY (`chatTranscriptID`);
+
+-- AUTO_INCREMENT for table `chatTranscript`
+ALTER TABLE `chatTranscript`
+  MODIFY `chatTranscriptID` int NOT NULL AUTO_INCREMENT;
+
 --
 -- Indexes for dumped tables
 --
@@ -235,6 +253,14 @@ ALTER TABLE `product`
   ADD CONSTRAINT `fk_category` FOREIGN KEY (`categoryid`) REFERENCES `category` (`categoryID`),
   ADD CONSTRAINT `fk_manufacturer` FOREIGN KEY (`manufacturerid`) REFERENCES `manufacturer` (`manufacturerID`);
 COMMIT;
+
+--
+-- Constraints for table 'chatTranscript'
+--
+ALTER TABLE `chat_transcript`
+  ADD CONSTRAINT `fk_sender_user` FOREIGN KEY (`sender`) REFERENCES `users`(`username`);
+  ADD CONSTRAINT `fk_receiver_user` FOREIGN KEY (`receiver`) REFERENCES `users`(`username`);
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

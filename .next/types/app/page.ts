@@ -1,4 +1,4 @@
-// File: /Users/chasedallmann/Documents/GitHub/CSC_Capstone/app/page.jsx
+// File: C:\Users\natas\Documents\GitHub\CSC_Capstone-Chase-Changes\app\page.jsx
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
