@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 import Storefront from "./components/Storefront";
 import Hero from "./components/Hero";
 import MissionCard from "./components/MissionCard/MissionCard";
-import { AuthContext, AuthProvider } from './context/AuthContext';
+import { AuthContext, AuthProvider } from './Context/AuthContext';
 import Router, { useRouter } from 'next/navigation';
 
 export default function Home() {

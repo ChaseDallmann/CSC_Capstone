@@ -6,19 +6,13 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/page.css",
-      "static/chunks/app/page.js"
-    ],
     "/Login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/Login/page.css",
       "static/chunks/app/Login/page.js"
     ],
-    "/Registration/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/Registration/page.css",
@@ -28,7 +22,9 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/Chat/page.css",
-      "static/chunks/app/Chat/page.js"
+      "static/chunks/app/Chat/page.js",
+      "static/css/app/page.css",
+      "static/chunks/app/page.js"
     ]
   }
 }

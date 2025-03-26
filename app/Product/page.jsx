@@ -10,7 +10,7 @@ import axios from "axios";
 import Logo from "../../public/tea-logo.png";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import Hero from "../components/Hero";
-import { AuthContext, AuthProvider } from "../context/AuthContext";
+import { AuthContext, AuthProvider } from "../Context/AuthContext";
 
 const ProductPage = () => {
     const { loggedInStatus, authenticatedUser, user, userRole, handleLogout } = React.useContext(AuthContext);
@@ -18,7 +18,6 @@ const ProductPage = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        localStorage.getItem(userRole);
         const handleScroll = () => {
             setScrolled(window.scrollY > 0);
         };
