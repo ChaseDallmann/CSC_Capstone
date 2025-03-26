@@ -45,6 +45,7 @@ export default function Navbar() {
           <>
             <Link href="/Login">Login</Link>
             <Link href="/Registration">Register</Link>
+            <Link href="/Chat" className="chat-link">Chat</Link>
           </>
         )}
       </div>
