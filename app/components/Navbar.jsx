@@ -25,15 +25,16 @@ export default function Navbar() {
       {/* Navigation links */}
       <div className="nav-links">
         <Link href="/">Home</Link>
-        <Link href="/Product">Product</Link>
+        <Link href="/Product">Products</Link>
         {isAuthenticated ? (
           <>
             <Link href="/Orders">My Orders</Link>
             <Link href="/Cart">Cart</Link>
+            <Link href="/Chat" className="chat-link">Chat</Link>
             <button onClick={handleLogout} className="logout-btn">
               Log out
             </button>
-            {userRole === "CUSTOMER_SERVICE" && <Link href="/customerService/User">Find User</Link>}
+            {userRole === "CUSTOMER_SERVICE" && <Link href="/User">Find User</Link>}
             <Link id="user-profile" href="/Dashboard" className="user-profile">Welcome, {user?.name || "User"}</Link>
           </>
         ) : (

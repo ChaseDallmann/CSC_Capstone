@@ -22,6 +22,9 @@ public class Product {
     @Column(name = "price", nullable = false)
     private float price;
 
+    @Column(name = "imageURL", nullable = true)
+    private String imageURL;
+
     @Column(name = "productInventory", nullable = false)
     private int productInventory;
 
@@ -36,10 +39,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(String productName, String productDescription, float price, int productInventory, Category category, Manufacturer manufacturer) {
+    public Product(String productName, String productDescription, String imageURL, float price, int productInventory, Category category, Manufacturer manufacturer) {
         this.productName = productName;
         this.productDescription = productDescription;
         this.price = price;
+        this.imageURL = imageURL;
         this.productInventory = productInventory;
         this.category = category;
         this.manufacturer = manufacturer;
@@ -71,6 +75,14 @@ public class Product {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public int getProductInventory() {

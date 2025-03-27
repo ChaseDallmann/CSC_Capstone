@@ -44,6 +44,38 @@ public class MainController {
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PutMapping("user/{id}")
+        public ResponseEntity<?> updateUser(@PathVariable int id, @RequestBody User updatedUser) {
+            return userRepository.findById(id)
+                .map(existingUser -> {
+                    if (updatedUser.getName() != null) {
+                        existingUser.setName(updatedUser.getName());
+                    }
+                    
+                    if (updatedUser.getEmail() != null) {
+                        existingUser.setEmail(updatedUser.getEmail());
+                    }
+                    
+                    if (updatedUser.getStreetAddress() != null) {
+                        existingUser.setStreetAddress(updatedUser.getStreetAddress());
+                    }
+                    
+                    if (updatedUser.getCity() != null) {
+                        existingUser.setCity(updatedUser.getCity());
+                    }
+                    
+                    if (updatedUser.getZipCode() != 0) {
+                        existingUser.setZipCode(updatedUser.getZipCode());
+                    }
+                    
+                    // Save the updated user
+                    User savedUser = userRepository.save(existingUser);
+                    
+                    return ResponseEntity.ok(savedUser);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+        }
+
     @GetMapping("products")
     public List<Product> getAllProducts() {
         return productRepository.findAll();

@@ -42,11 +42,10 @@ export function AuthProvider({ children }) {
           return;
         }
 
+        //Setting the user values from the session cookie
         setUser(session.user);
         setUserRole(session.user.role);
         setIsAuthenticated(true);
-
-        // Optionally update session to reset expiration
         updateClientSession();
       } catch (error) {
         handleLogout();

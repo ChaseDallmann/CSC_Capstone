@@ -1,6 +1,9 @@
 {
-  "/Dashboard/PullInfo/page": "app/Dashboard/PullInfo/page.js",
-  "/Login/page": "app/Login/page.js",
   "/page": "app/page.js",
-  "/Dashboard/page": "app/Dashboard/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/Dashboard/page": "app/Dashboard/page.js",
+  "/Login/page": "app/Login/page.js",
+  "/Dashboard/ChangeInfo/page": "app/Dashboard/ChangeInfo/page.js",
+  "/Product/page": "app/Product/page.js",
+  "/Registration/page": "app/Registration/page.js"
 }

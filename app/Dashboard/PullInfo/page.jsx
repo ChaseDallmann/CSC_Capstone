@@ -5,8 +5,26 @@ import { AuthContext } from "../../Context/AuthContext";
 import React, { useEffect, useState, useContext } from 'react';
 import NavbarBasic from "../../components/NavbarBasic/NavbarBasic";
 import { redirect, useRouter } from 'next/navigation';
-import { getClientSession } from "../../Context/Session";
 import Cookies from 'js-cookie';
+
+export const fetchAccountInfo = async (userId) => {
+    const token = Cookies.get('authToken');
+
+    try {
+        const response = await axios.get(`http://localhost:8080/user/${userId}`, {
+            headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true
+        });
+        
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch account info:', error);
+        throw error;
+    }
+};
 
 const AccountInfo = () => {
     const [accountInfo, setAccountInfo] = useState(null);
@@ -15,74 +33,39 @@ const AccountInfo = () => {
     const { isAuthenticated, user, handleLogout } = useContext(AuthContext);
     const router = useRouter();
 
-    const fetchAccountInfo = async () => {
+    const loadAccountInfo = async () => {
         try {
-            // Retrieve the token directly from cookies
-            const token = Cookies.get('authToken');
-            
-            console.log('Fetching user info with detailed diagnostics:', {
-                userId: user?.id,
-                tokenPresent: !!token,
-                tokenLength: token?.length,
-                tokenFirstChars: token?.substring(0, 10),
-                tokenLastChars: token?.slice(-10)
-            });
-
-            const response = await axios.get(`http://localhost:8080/user/${user.id}`, {
-                headers: { 
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true
-            });
-            
-            console.log('Fetch Response:', response.data);
-            setAccountInfo(response.data);
-            setIsLoading(false);
-        } catch (error) {
-            console.error('Detailed Fetch Error:', {
-                message: error.message,
-                response: error.response?.data,
-                status: error.response?.status,
-                headers: error.response?.headers,
-                requestHeaders: error.config?.headers
-            });
-
-            // More specific error handling
-            if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                if (error.response.status === 401) {
-                    console.warn('Unauthorized: Token might be invalid or expired');
-                    handleLogout(); // Use the logout method from context
-                } else if (error.response.status === 403) {
-                    console.warn('Forbidden: Insufficient permissions');
-                }
-            } else if (error.request) {
-                // The request was made but no response was received
-                console.warn('No response received from server');
-            } else {
-                // Something happened in setting up the request that triggered an Error
-                console.warn('Error setting up the request', error.message);
+            if (user?.id) {
+                const data = await fetchAccountInfo(user.id);
+                setAccountInfo(data);
+                setIsLoading(false);
             }
-
-            setError(error.message || "Failed to fetch account information");
+        } catch (error) {
+            console.error('Failed to fetch account info:', error);
+            setError(error);
             setIsLoading(false);
+            // Optionally redirect to login or show error
+            router.push('/Login');
         }
     };
 
     useEffect(() => {
         // Only fetch if authenticated and user exists
         if (isAuthenticated && user) {
-            fetchAccountInfo();
+            loadAccountInfo();
         } else {
-            console.warn('Not authenticated or no user object');
             setIsLoading(false);
-            router.push('/Login');
+            redirect('/Login');
         }
     }, [isAuthenticated, user]);
 
-    // Rest of the component remains the same...
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error loading account information</div>;
+    }
     
     return (
         <>
