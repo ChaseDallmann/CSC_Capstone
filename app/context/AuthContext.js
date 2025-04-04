@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, redirect } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import { 
   createClientSession, 
@@ -28,7 +28,7 @@ export function AuthProvider({ children }) {
   // Check authentication on mount and route changes
   useEffect(() => {
     checkAuthStatus();
-  }, [pathname]);
+  }, []);
 
   const checkAuthStatus = () => {
     const session = getClientSession();
@@ -53,6 +53,7 @@ export function AuthProvider({ children }) {
     }
   };
 
+  //Handling a user Login
   const handleLogin = (userData, token) => {
     createClientSession(userData, token);
     setUser(userData);
@@ -61,14 +62,15 @@ export function AuthProvider({ children }) {
     router.push("/");
   };
 
+  //Handling a user Logout
   const handleLogout = () => {
     deleteClientSession();
     setUser(null);
     setUserRole(null);
     setIsAuthenticated(false);
-    router.push("/Login");
   };
 
+  //Returning the context to be used throughout react
   return (
     <AuthContext.Provider value={{ 
       user, 

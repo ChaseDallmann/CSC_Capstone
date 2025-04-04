@@ -1,20 +1,22 @@
 'use client';
 
 import React, { useState, useContext, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { AuthContext } from '../../Context/AuthContext';
+import { AuthContext, AuthProvider } from '../../Context/AuthContext';
 import NavbarBasic from '../../components/NavbarBasic/NavbarBasic';
 
 const ChangeInfoPage = () => {
-    const { user, isAuthenticated } = useContext(AuthContext);
+    const { user, isAuthenticated, handleLogout } = useContext(AuthContext);
     const router = useRouter();
 
+    const [emailData, setEmailData] = useState({
+        email: ''
+    })
     // Form state
-    const [formData, setFormData] = useState({
+    const [userData, setUserData] = useState({
         name: '',
-        email: '',
         streetAddress: '',
         city: '',
         zipCode: ''
@@ -26,6 +28,36 @@ const ChangeInfoPage = () => {
     const [submitError, setSubmitError] = useState(null);
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [isDataLoading, setIsDataLoading] = useState(true);
+
+    // Check if email already exists
+    const emailDuplicateCheck = async () => {
+        try {
+            // Only check for duplicate if the email has been changed
+            if (user?.email == emailData.email) {
+                return false; // Not a duplicate if unchanged
+            }
+            
+            const token = Cookies.get('authToken');
+            // Make a GET request to check if the email exists
+            // Check to see if the emailData.email is a dupliate of a database entry
+            const response = await axios.get(`http://localhost:8080/user/email?email=${encodeURIComponent(emailData.email)}`, {
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            });
+            
+            console.log("Email check response:", response.data);
+            // If response is true, email exists (is duplicate)
+            return response.data;
+        }
+        catch (error) {
+            console.error('Error checking email:', error);
+            setSubmitError('Failed to check email availability. Please try again.');
+            return true; // Prevent submission on error
+        }
+    };
 
     // Fetch user data when component mounts
     useEffect(() => {
@@ -43,10 +75,13 @@ const ChangeInfoPage = () => {
                     withCredentials: true
                 });
 
+                setEmailData({
+                    email: response.data.email || ''
+                });
+
                 // Update form data with fetched user information
-                setFormData({
+                setUserData({
                     name: response.data.name || '',
-                    email: response.data.email || '',
                     streetAddress: response.data.streetAddress || '',
                     city: response.data.city || '',
                     zipCode: response.data.zipCode ? response.data.zipCode.toString() : ''
@@ -67,20 +102,20 @@ const ChangeInfoPage = () => {
         const newErrors = {};
 
         // Name validation
-        if (!formData.name || formData.name.trim().length < 2) {
+        if (!userData.name || userData.name.trim().length < 2) {
             newErrors.name = 'Name must be at least 2 characters long';
         }
 
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!formData.email || !emailRegex.test(formData.email)) {
+        if (!emailData.email || !emailRegex.test(emailData.email)) {
             newErrors.email = 'Please enter a valid email address';
         }
 
         // Zip code validation (if provided)
-        if (formData.zipCode) {
+        if (userData.zipCode) {
             const zipCodeRegex = /^\d{5}(-\d{4})?$/;
-            if (!zipCodeRegex.test(formData.zipCode)) {
+            if (!zipCodeRegex.test(userData.zipCode)) {
                 newErrors.zipCode = 'Please enter a valid zip code';
             }
         }
@@ -92,7 +127,11 @@ const ChangeInfoPage = () => {
     // Handle input changes
     const handleChange = (element) => {
         const { name, value } = element.target;
-        setFormData(prevState => ({
+        setEmailData(prevState => ({
+            ...prevState,
+            [name]: value
+        }))
+        setuserData(prevState => ({
             ...prevState,
             [name]: value
         }));
@@ -107,9 +146,63 @@ const ChangeInfoPage = () => {
         }
     };
 
+    //Email change handler
+    const handleSubmitEmailChange = async (event) => {
+        event.preventDefault();
+        setSubmitError(null);
+        setSubmitSuccess(false);
+
+        //Checking to see if the email is a duplicate email
+        if(emailDuplicateCheck()) {
+            setSubmitError('Email already exists');
+            setIsLoading(false);
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            const token = Cookies.get('authToken');
+
+            const submissionData = {
+                ...emailData
+            };
+
+            const response = await axios.put(
+                `http://localhost:8080/user/${user.id}`,
+                submissionData,
+                {
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true
+                }
+            );
+
+            setSubmitSuccess(true);
+
+            // Show success message for 2 seconds then redirect to Dashboard
+            setTimeout(() => {
+                handleLogout();
+                redirect('/Login');
+            }, 2000);
+
+
+        } catch (error) {
+            // Handle errors
+            console.error('Update failed:', error);
+            setSubmitError(error.response?.data?.message || 'Failed to update profile. Please try again.');
+        } finally {
+            // Only stop loading
+            setIsLoading(false);
+            // DO NOT clear form data or reset other states here
+        }
+    }
+
     // Submit handler
-    const handleSubmit = async (element) => {
-        element.preventDefault();
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         setSubmitError(null);
         setSubmitSuccess(false);
 
@@ -127,8 +220,8 @@ const ChangeInfoPage = () => {
 
             // Prepare data for submission (convert zipCode to number)
             const submissionData = {
-                ...formData,
-                zipCode: formData.zipCode ? parseInt(formData.zipCode) : 0
+                ...userData,
+                zipCode: userData.zipCode ? parseInt(userData.zipCode) : 0
             };
 
             // Send update request
@@ -147,9 +240,10 @@ const ChangeInfoPage = () => {
             // Handle successful update
             setSubmitSuccess(true);
             
-            // Optional: redirect or show success message
+            // Show success message for 2 seconds then redirect to Dashboard
             setTimeout(() => {
-                router.push('/Dashboard');
+                handleLogout();
+                redirect('/Login');
             }, 2000);
 
         } catch (error) {
@@ -157,8 +251,9 @@ const ChangeInfoPage = () => {
             console.error('Update failed:', error);
             setSubmitError(error.response?.data?.message || 'Failed to update profile. Please try again.');
         } finally {
-            // Stop loading
+            // Only stop loading
             setIsLoading(false);
+            // DO NOT clear form data or reset other states here
         }
     };
 
@@ -198,9 +293,32 @@ const ChangeInfoPage = () => {
 
                     {submitSuccess && (
                         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                            Profile updated successfully!
+                            Profile updated successfully! Redirecting...
                         </div>
                     )}
+
+                    <div className='email-container'>
+                        <form onSubmit={handleSubmitEmailChange}>
+                            <label htmlFor="email">Email Address</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={emailData.email}
+                                    onChange={handleChange}
+                                />
+                                {errors.email && (
+                                    <p className="text-red-500 text-sm mb-2">{errors.email}</p>
+                                )}
+                        </form>
+                        <button 
+                            type="submit" 
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'Updating...' : 'Update Email'}
+                        </button>
+                        <br />
+                    </div>
 
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="name">Full Name</label>
@@ -208,31 +326,19 @@ const ChangeInfoPage = () => {
                             type="text"
                             id="name"
                             name="name"
-                            value={formData.name}
+                            value={userData.name}
                             onChange={handleChange}
                         />
                         {errors.name && (
                             <p className="text-red-500 text-sm mb-2">{errors.name}</p>
                         )}
 
-                        <label htmlFor="email">Email Address</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                        />
-                        {errors.email && (
-                            <p className="text-red-500 text-sm mb-2">{errors.email}</p>
-                        )}
-
-                        <label htmlFor="streetAddress">Street Address (Optional)</label>
+                        <label htmlFor="streetAddress">Street Address</label>
                         <input
                             type="text"
                             id="streetAddress"
                             name="streetAddress"
-                            value={formData.streetAddress}
+                            value={userData.streetAddress}
                             onChange={handleChange}
                         />
 
@@ -241,7 +347,7 @@ const ChangeInfoPage = () => {
                             type="text"
                             id="city"
                             name="city"
-                            value={formData.city}
+                            value={userData.city}
                             onChange={handleChange}
                         />
 
@@ -250,7 +356,7 @@ const ChangeInfoPage = () => {
                             type="text"
                             id="zipCode"
                             name="zipCode"
-                            value={formData.zipCode}
+                            value={userData.zipCode}
                             onChange={handleChange}
                         />
                         {errors.zipCode && (
@@ -261,23 +367,21 @@ const ChangeInfoPage = () => {
                             type="submit" 
                             disabled={isLoading}
                         >
-                            {isLoading ? 'Updating...' : 'Update Profile'}
+                            {isLoading ? 'Updating...' : 'Update Info'}
                         </button>
 
                         <div className="password-container">
-                <div className="password-box">
-                    <h2>Change Password</h2>
-                    <form>
-                        <label htmlFor="currentPassword">Current Password</label>
-                        <input type="password" id="currentPassword" name="currentPassword" />
-                        <label htmlFor="newPassword">New Password</label>
-                        <input type="password" id="newPassword" name="newPassword" />
-                        <label htmlFor="confirmPassword">Confirm New Password</label>
-                        <input type="password" id="confirmPassword" name="confirmPassword" />
-                        <button type='submit' disabled={isLoading}> {isLoading ? "Updating..." : "Change Password"}</button>
-                    </form>
-                </div>
-            </div> 
+                            <div className="password-box">
+                                <h2>Change Password</h2>
+                                <label htmlFor="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" name="currentPassword" />
+                                <label htmlFor="newPassword">New Password</label>
+                                <input type="password" id="newPassword" name="newPassword" />
+                                <label htmlFor="confirmPassword">Confirm New Password</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword" />
+                                <button type='button' disabled={isLoading}> {isLoading ? "Updating..." : "Change Password"}</button>
+                            </div>
+                        </div> 
                     </form>
                 </div>
             </div> 

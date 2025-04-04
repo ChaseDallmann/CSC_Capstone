@@ -7,13 +7,24 @@ import com.teashop.teashop_backend.model.category.Category;
 import com.teashop.teashop_backend.model.category.CategoryRepository;
 import com.teashop.teashop_backend.model.manufacturer.Manufacturer;
 import com.teashop.teashop_backend.model.manufacturer.ManufacturerRepository;
+import com.teashop.teashop_backend.model.order.Order;
+import com.teashop.teashop_backend.model.order.OrderDetails;
+import com.teashop.teashop_backend.model.order.OrderDetailsRepository;
+import com.teashop.teashop_backend.model.order.OrderRepository;
 import com.teashop.teashop_backend.model.product.Product;
 import com.teashop.teashop_backend.model.product.ProductRepository;
 import com.teashop.teashop_backend.model.user.User;
 import com.teashop.teashop_backend.model.user.UserRepository;
 
 import java.util.Optional;
+import java.lang.foreign.Linker.Option;
 import java.util.List;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -24,18 +35,63 @@ public class MainController {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ManufacturerRepository manufacturerRepository;
+    private final OrderRepository orderRepository;
+    private final OrderDetailsRepository orderDetailsRepository;
 
-    public MainController(UserRepository userRepository, ProductRepository productRepository, CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository) {
+    public MainController(UserRepository userRepository, OrderDetailsRepository orderDetailsRepository, ProductRepository productRepository, CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.manufacturerRepository = manufacturerRepository;
+        this.orderRepository = orderRepository;
+        this.orderDetailsRepository = orderDetailsRepository;
     }
 
     @GetMapping("users")
         public List<User> getAllCustomers() {
             return userRepository.findAll();
         }
+
+    @GetMapping("user/check-email/{email}")
+    public Boolean emailDuplicateCheck(@RequestParam String email) {
+        // Check if the email already exists in the database
+        // If it exists, return the true
+        // If it doesn't exist, return false
+        return userRepository.findByEmail(email).isPresent();
+    }
+
+    @GetMapping("user/find-by-email/{email}")
+    public Optional<User> getUserByEmail(@PathVariable String email) {
+        // Check if the email already exists in the database
+        // If it exists, return the true
+        // If it doesn't exist, return false
+        return userRepository.findByEmail(email);
+    }
+    
+    //Only useful for customer service
+    @GetMapping("orders")
+    public List<Order> getOrderById() {
+        return orderRepository.findAll();
+    }
+
+    //Only useful for customer service
+    @GetMapping("order-details")
+    public List<OrderDetails> getOrderDetails() {
+    return orderDetailsRepository.findAll();
+    }
+
+    //Mappings used for customer dashboard
+    @GetMapping("orders/{userID}")
+    public List<Order> getOrdersByUser(@PathVariable int userID) {
+        return orderRepository.findByUserID(userID);
+    }
+
+    @GetMapping("order-details/{userID}/{orderID}")
+    public List<OrderDetails> getOrderDetailsByOrder(@PathVariable int userID, @PathVariable int orderID) {
+        // Check if the order belongs to the user
+        return orderDetailsRepository.findByOrderID(orderID);
+    }
+    
 
     @GetMapping("user/{id}")
     public ResponseEntity<User> getCustomerById(@PathVariable int id) {
@@ -75,6 +131,7 @@ public class MainController {
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
         }
+    
 
     @GetMapping("products")
     public List<Product> getAllProducts() {

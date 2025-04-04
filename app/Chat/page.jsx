@@ -35,7 +35,6 @@ const Chat = () => {
         
         // Subscribe to user-specific message queue
         client.subscribe(`/user/queue/private`, (messageOutput) => {
-          console.log('Received message: ', messageOutput);
           const chatMessage = JSON.parse(messageOutput.body);
           setMessages((prevMessages) => [...prevMessages, chatMessage]);
         });

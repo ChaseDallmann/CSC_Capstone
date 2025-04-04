@@ -4661,16 +4661,6 @@ eval("\nObject.defineProperty(exports, \"__esModule\", ({\n    value: true\n}));
 
 /***/ }),
 
-/***/ "(ssr)/./node_modules/next/font/google/target.css?{\"path\":\"app/Registration/page.jsx\",\"import\":\"Great_Vibes\",\"arguments\":[{\"subsets\":[\"latin\"],\"weight\":\"400\"}],\"variableName\":\"greatVibes\"}":
-/*!*********************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/next/font/google/target.css?{"path":"app/Registration/page.jsx","import":"Great_Vibes","arguments":[{"subsets":["latin"],"weight":"400"}],"variableName":"greatVibes"} ***!
-  \*********************************************************************************************************************************************************************************************/
-/***/ ((module) => {
-
-eval("// Exports\nmodule.exports = {\n\t\"style\": {\"fontFamily\":\"'Great Vibes', 'Great Vibes Fallback'\",\"fontWeight\":400,\"fontStyle\":\"normal\"},\n\t\"className\": \"__className_3081c8\"\n};\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9ub2RlX21vZHVsZXMvbmV4dC9mb250L2dvb2dsZS90YXJnZXQuY3NzP3tcInBhdGhcIjpcImFwcC9SZWdpc3RyYXRpb24vcGFnZS5qc3hcIixcImltcG9ydFwiOlwiR3JlYXRfVmliZXNcIixcImFyZ3VtZW50c1wiOlt7XCJzdWJzZXRzXCI6W1wibGF0aW5cIl0sXCJ3ZWlnaHRcIjpcIjQwMFwifV0sXCJ2YXJpYWJsZU5hbWVcIjpcImdyZWF0VmliZXNcIn0iLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBLFdBQVcsMkZBQTJGO0FBQ3RHO0FBQ0EiLCJzb3VyY2VzIjpbIi9Vc2Vycy9jaGFzZWRhbGxtYW5uL0RvY3VtZW50cy9HaXRIdWIvQ1NDX0NhcHN0b25lL25vZGVfbW9kdWxlcy9uZXh0L2ZvbnQvZ29vZ2xlL3RhcmdldC5jc3M/e1wicGF0aFwiOlwiYXBwL1JlZ2lzdHJhdGlvbi9wYWdlLmpzeFwiLFwiaW1wb3J0XCI6XCJHcmVhdF9WaWJlc1wiLFwiYXJndW1lbnRzXCI6W3tcInN1YnNldHNcIjpbXCJsYXRpblwiXSxcIndlaWdodFwiOlwiNDAwXCJ9XSxcInZhcmlhYmxlTmFtZVwiOlwiZ3JlYXRWaWJlc1wifSJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBFeHBvcnRzXG5tb2R1bGUuZXhwb3J0cyA9IHtcblx0XCJzdHlsZVwiOiB7XCJmb250RmFtaWx5XCI6XCInR3JlYXQgVmliZXMnLCAnR3JlYXQgVmliZXMgRmFsbGJhY2snXCIsXCJmb250V2VpZ2h0XCI6NDAwLFwiZm9udFN0eWxlXCI6XCJub3JtYWxcIn0sXG5cdFwiY2xhc3NOYW1lXCI6IFwiX19jbGFzc05hbWVfMzA4MWM4XCJcbn07XG4iXSwibmFtZXMiOltdLCJpZ25vcmVMaXN0IjpbMF0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(ssr)/./node_modules/next/font/google/target.css?{\"path\":\"app/Registration/page.jsx\",\"import\":\"Great_Vibes\",\"arguments\":[{\"subsets\":[\"latin\"],\"weight\":\"400\"}],\"variableName\":\"greatVibes\"}\n");
-
-/***/ }),
-
 /***/ "(ssr)/./node_modules/next/font/google/target.css?{\"path\":\"app/layout.jsx\",\"import\":\"Geist\",\"arguments\":[{\"variable\":\"--font-geist-sans\",\"subsets\":[\"latin\"]}],\"variableName\":\"geistSans\"}":
 /*!*******************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/next/font/google/target.css?{"path":"app/layout.jsx","import":"Geist","arguments":[{"variable":"--font-geist-sans","subsets":["latin"]}],"variableName":"geistSans"} ***!

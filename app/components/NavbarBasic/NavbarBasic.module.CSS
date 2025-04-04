@@ -19,6 +19,24 @@
   margin-right: 1rem;
 }
 
+.user-profile {
+  color: black;
+  background: none;
+  padding-right: 3%;
+  margin-left: auto;
+  font-weight: 500;
+  transition-property: var(--background) 0.3s;
+}
+
+#user-profile {
+  color: black;
+  background: none;
+  padding-right: 3%;
+  margin-left: auto;
+  font-weight: 500;
+  transition-property: var(--background) 0.3s;
+}
+
 /* Links container */
 .navLinks {
   display: flex;
@@ -35,4 +53,35 @@
 
 .navLinks a:hover {
   color: #007bff;
+}
+
+/* Navbar */
+.navbarBasic {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4rem;
+  background: transparent;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  z-index: 10;
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.navbarBasic.scrolled {
+  background: var(--background);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar Logo */
+.nav-logo {
+  width: 60px;
+  height: auto;
+  margin-right: 1rem;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards; 
+  animation-delay: 0.3s; 
 }

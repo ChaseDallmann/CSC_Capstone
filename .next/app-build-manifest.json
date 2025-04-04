@@ -6,29 +6,11 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/Product/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/Product/page.css",
-      "static/chunks/app/Product/page.js"
-    ],
-    "/Login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/Login/page.css",
-      "static/chunks/app/Login/page.js"
-    ],
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/page.css",
       "static/chunks/app/page.js"
-    ],
-    "/User/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/User/page.css",
-      "static/chunks/app/User/page.js"
     ],
     "/Dashboard/page": [
       "static/chunks/webpack.js",
@@ -36,17 +18,59 @@
       "static/css/app/Dashboard/page.css",
       "static/chunks/app/Dashboard/page.js"
     ],
+    "/Login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Login/page.css",
+      "static/chunks/app/Login/page.js"
+    ],
     "/Dashboard/ChangeInfo/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/Dashboard/ChangeInfo/page.css",
       "static/chunks/app/Dashboard/ChangeInfo/page.js"
     ],
+    "/Login/ForgotPassword/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Login/ForgotPassword/page.css",
+      "static/chunks/app/Login/ForgotPassword/page.js"
+    ],
+    "/Product/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Product/page.css",
+      "static/chunks/app/Product/page.js"
+    ],
     "/Registration/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/Registration/page.css",
       "static/chunks/app/Registration/page.js"
+    ],
+    "/Chat/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Chat/page.css",
+      "static/chunks/app/Chat/page.js"
+    ],
+    "/Dashboard/OrderDetails/[orderID]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Dashboard/OrderDetails/[orderID]/page.css",
+      "static/chunks/app/Dashboard/OrderDetails/[orderID]/page.js"
+    ],
+    "/User/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/User/page.css",
+      "static/chunks/app/User/page.js"
+    ],
+    "/Orders/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Orders/page.css",
+      "static/chunks/app/Orders/page.js"
     ],
     "/_not-found/page": [
       "static/chunks/webpack.js",

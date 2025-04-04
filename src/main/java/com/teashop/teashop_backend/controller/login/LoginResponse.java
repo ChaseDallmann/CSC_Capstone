@@ -23,6 +23,7 @@ public class LoginResponse {
         this.success = true; // Default to true for success
     }
 
+    //More constructors to provide additional details for logging in
     public LoginResponse(String message, String token) {
         this.message = message;
         this.token = token;

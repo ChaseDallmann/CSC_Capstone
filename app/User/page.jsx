@@ -26,6 +26,24 @@ export default function CustomerServiceSearch() {
         }
     }, [isAuthenticated, userRole]);
 
+    const emailSearch = async () => {
+        try {
+            const token = Cookies.get('authToken');
+            const response = await axios.get(
+                `http://localhost:8080/user/find-by-email/${searchTerm}`, {
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            });
+            setUserData(response.data);
+        } catch (error) {
+            console.error('Search failed:', error);
+            setError(error.response?.data?.message || 'User not found');
+        }
+    }
+
     const handleSearch = async (element) => {
         element.preventDefault();
         
@@ -41,6 +59,13 @@ export default function CustomerServiceSearch() {
 
         setIsLoading(true);
 
+        // Perform search based on type
+        if (searchType === 'email') {
+            await emailSearch(searchTerm);
+            return;
+        }
+        // If searchType is 'id', proceed with the ID search
+
         try {
             // Get authentication token
             const token = Cookies.get('authToken');
@@ -49,7 +74,7 @@ export default function CustomerServiceSearch() {
             const searchEndpoint = `http://localhost:8080/user/${searchTerm}`
 
             // Make API call
-            const res = await axios.get(searchEndpoint, {
+            const response = await axios.get(searchEndpoint, {
                 headers: { 
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -57,7 +82,7 @@ export default function CustomerServiceSearch() {
                 withCredentials: true
             });
 
-            setUserData(res.data);
+            setUserData(response.data);
         } catch (error) {
             console.error('Search failed:', error);
             setError(error.response?.data?.message || 'User not found');

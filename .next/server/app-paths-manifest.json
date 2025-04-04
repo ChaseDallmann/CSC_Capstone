@@ -1,9 +1,10 @@
 {
-  "/page": "app/page.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/Dashboard/OrderDetails/[orderID]/page": "app/Dashboard/OrderDetails/[orderID]/page.js",
+  "/page": "app/page.js",
+  "/Orders/page": "app/Orders/page.js",
   "/Dashboard/page": "app/Dashboard/page.js",
-  "/Login/page": "app/Login/page.js",
-  "/Dashboard/ChangeInfo/page": "app/Dashboard/ChangeInfo/page.js",
+  "/User/page": "app/User/page.js",
   "/Product/page": "app/Product/page.js",
-  "/Registration/page": "app/Registration/page.js"
+  "/Chat/page": "app/Chat/page.js"
 }

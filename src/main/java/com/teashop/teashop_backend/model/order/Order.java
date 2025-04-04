@@ -1,18 +1,37 @@
 package com.teashop.teashop_backend.model.order;
 
-public class Order {
-    int orderID;
-    int productID;
-    int customerID;
-    int quantity;
-    float total;
+import java.util.Date;
 
-    public Order(int orderID, int productID, int customerID, int quantity, float total) {
-        this.orderID = orderID;
-        this.productID = productID;
-        this.customerID = customerID;
-        this.quantity = quantity;
-        this.total = total;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "orders")
+public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "orderID")
+    private int orderID;
+
+    @Column(name = "userID", nullable = false)
+    private int userID;
+
+    @Column(name = "orderDate", nullable = false)
+    private Date orderDate;
+
+    @Column(name = "totalAmount", nullable = false)
+    private float totalAmount;
+
+    @Column(name = "status", nullable = true)
+    private String status;
+
+    public Order() {
+    }
+
+    public Order(int userID, Date orderDate, float totalAmount, String status) {
+        this.userID = userID;
+        this.orderDate = orderDate;
+        this.totalAmount = totalAmount;
+        this.status = status;
     }
 
     public int getOrderID() {
@@ -23,46 +42,47 @@ public class Order {
         this.orderID = orderID;
     }
 
-    public int getProductID() {
-        return productID;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public int getCustomerID() {
-        return customerID;
+    public Date getOrderDate() {
+        return orderDate;
     }
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public float getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setTotalAmount(float totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public float getTotal() {
-        return total;
+    public String getStatus() {
+        return status;
     }
 
-    public void setTotal(float total) {
-        this.total = total;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        return "order{" +
+        return "Order{" +
                 "orderID=" + orderID +
-                ", productID=" + productID +
-                ", customerID=" + customerID +
-                ", quantity=" + quantity +
-                ", total=" + total +
+                ", userID=" + userID +
+                ", orderDate=" + orderDate +
+                ", totalAmount=" + totalAmount +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
+

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import Link from "next/link";
 import { AuthContext } from "../Context/AuthContext";
@@ -12,7 +12,14 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginErrors, setLoginErrors] = useState("");
-  const { handleLogin, authenticatedUser } = useContext(AuthContext);
+  const { handleLogin, isAuthenticated } = useContext(AuthContext);
+
+  //Redirecting the user to the dashboard if they are already logged in
+  useEffect(() => {
+      if (isAuthenticated) {
+        redirect('/Dashboard')
+      }
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -72,9 +79,10 @@ const LoginPage = () => {
             <br />
             <div className="text-center">
               <Link href="/Registration">Don't have an account? Sign up</Link>
+              <br />
+              <Link href="/Login/ForgotPassword">Forgot password?</Link>
             </div>
           </form>
-
           {loginErrors && <p className="error">{loginErrors}</p>}
         </div>
       </div>
