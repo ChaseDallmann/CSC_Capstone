@@ -73,6 +73,7 @@ const ProductPage = () => {
                                 filteredProducts.map((product) => (
                                     <DisplayCard 
                                         key={product.productID}
+                                        productID={product.productID}
                                         title={product.productName}
                                         description={product.productDescription}
                                         manufacturer={product.manufacturer?.manufacturerName || "Unknown"}

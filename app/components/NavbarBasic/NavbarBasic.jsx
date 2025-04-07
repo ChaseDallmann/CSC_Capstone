@@ -26,11 +26,11 @@ export default function NavbarBasic() {
       <div className={styles.navLinks}>
         <Link href="/" className={styles.navLink}>Home</Link>
         <Link href="/Product" className={styles.navLink}>Product</Link>
+        <Link href="/Cart">🛒Cart</Link>
         
         {isAuthenticated? (
           <>
             <Link href="/Orders">My Orders</Link>
-            <Link href="/Cart">Cart</Link>
             <button onClick={handleLogout} className="logout-btn">
               Log out
             </button>
