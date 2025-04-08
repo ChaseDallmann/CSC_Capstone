@@ -499,6 +499,36 @@ button:hover {
 .footer-links a:hover {
   color: var(--text);
 }
+
+/* Chat Styles */
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: #e9f4c8;
+  border-radius: 8px;
+}
+
+.chat-box {
+  max-width: 80%;
+  margin: 0.5rem 0;
+  padding: 0.8rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* Checkout Styles */
+.checkout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #e9f4c8;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 5px;
+}
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[2].use[1]!./node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[13].oneOf[2].use[2]!./node_modules/next/font/google/target.css?{"path":"app\\layout.jsx","import":"Geist","arguments":[{"variable":"--font-geist-sans","subsets":["latin"]}],"variableName":"geistSans"} ***!
   \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/

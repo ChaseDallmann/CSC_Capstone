@@ -30,6 +30,7 @@ export default function Navbar() {
           <>
             <Link href="/Orders">My Orders</Link>
             <Link href="/Cart">Cart</Link>
+            <Link href="/Chat">Chat</Link>
             <button onClick={handleLogout} className="logout-btn">
               Log out
             </button>

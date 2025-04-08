@@ -66,7 +66,7 @@ const Cart = () => {
             </div>
           ))}
           <h2>Total: ${totalPrice.toFixed(2)}</h2>
-          <Link href="/checkout">
+          <Link href={`/Checkout?total=${totalPrice.toFixed(2)}`}>
             <button className="checkout-button">Proceed to Checkout</button>
           </Link>
         </>
