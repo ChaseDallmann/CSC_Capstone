@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,10 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.teashop.teashop_backend.controller.login.LoginDto;
 import com.teashop.teashop_backend.controller.login.LoginResponse;
 import com.teashop.teashop_backend.controller.registration.SignUpDto;
+import com.teashop.teashop_backend.model.user.PasswordResetDto;
+import com.teashop.teashop_backend.model.user.PasswordResetToken;
+import com.teashop.teashop_backend.model.user.PasswordResetTokenRepository;
 import com.teashop.teashop_backend.model.user.User;
 import com.teashop.teashop_backend.model.user.UserDto;
+import com.teashop.teashop_backend.model.user.UserRepository;
 import com.teashop.teashop_backend.service.AuthenticationService;
 import com.teashop.teashop_backend.service.JwtService;
+import com.teashop.teashop_backend.service.ResendEmailService;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/auth")
@@ -23,15 +36,40 @@ public class AuthController {
 
     private final AuthenticationService authenticationService;
     private final JwtService jwtService;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordResetTokenRepository tokenRepository;
+    private final ResendEmailService emailService;
 
     @Autowired
-    public AuthController(AuthenticationService authenticationService, JwtService jwtService) {
+    public AuthController(AuthenticationService authenticationService, 
+                         JwtService jwtService, 
+                         UserRepository userRepository,
+                         BCryptPasswordEncoder passwordEncoder,
+                         PasswordResetTokenRepository tokenRepository, ResendEmailService emailService) {
         this.authenticationService = authenticationService;
         this.jwtService = jwtService;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.tokenRepository = tokenRepository;
+        this.emailService = emailService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody SignUpDto signUpDto) {
+        // Check if the email already exists
+        if (userRepository.findByEmail(signUpDto.getEmail()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("message", "Email already exists"));
+        }
+        // Check if any required fields are missing
+        if (signUpDto.getEmail() == null || signUpDto.getFirstName() == null || signUpDto.getLastName() == null ||
+            signUpDto.getAddress() == null || signUpDto.getCity() == null || signUpDto.getZipcode() == null ||
+            signUpDto.getState() == null || signUpDto.getPassword() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("message", "Fields are left blank"));
+        }
+        // Register the user
         User registeredUser = authenticationService.register(signUpDto);
         return ResponseEntity.ok(new UserDto(registeredUser));
     }
@@ -53,5 +91,153 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
             .body(new LoginResponse("Invalid credentials"));
         }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody PasswordResetDto passwordResetDto) {
+        // Validate the token
+        Optional<PasswordResetToken> tokenOptional = tokenRepository.findByToken(passwordResetDto.getToken());
+        if (tokenOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", "Invalid or expired token"));
+        }
+
+        PasswordResetToken token = tokenOptional.get();
+        if (token.isExpired()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", "Token has expired"));
+        }
+
+        // Update the user's password
+        User user = token.getUser();
+        user.setPassword(passwordEncoder.encode(passwordResetDto.getNewPassword()));
+        userRepository.save(user);
+
+        // Delete the token
+        tokenRepository.delete(token);
+
+        return ResponseEntity.ok(Map.of("message", "Password reset successful"));
+    }
+    
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        
+        if (email == null || email.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Email is required"));
+        }
+        
+        // Find the user by email
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            // For security reasons, don't reveal that the email doesn't exist
+            return ResponseEntity.ok(Map.of("message", "If your email exists in our system, you will receive a password reset link shortly"));
+        }
+        
+        User user = userOptional.get();
+        
+        // Generate a token
+        String token = UUID.randomUUID().toString();
+        
+        // Save the token in the database
+        PasswordResetToken resetToken = new PasswordResetToken(token, user);
+        tokenRepository.save(resetToken);
+        
+        // Send the reset email
+        boolean emailSent = emailService.sendPasswordResetEmail(
+            user.getEmail(), 
+            user.getFirstName(), 
+            token
+        );
+        
+        if (!emailSent) {
+            return ResponseEntity.internalServerError().body(Map.of("message", "Failed to send reset email"));
+        }
+        
+        return ResponseEntity.ok(Map.of("message", "Reset email sent successfully"));
+    }
+    
+    @PutMapping("/reset-token")
+    public ResponseEntity<?> createResetToken(@RequestBody Map<String, Object> request) {
+        String email = (String) request.get("email");
+        String token = (String) request.get("token");
+        String expiryDateStr = (String) request.get("expiryDate");
+        
+        if (email == null || token == null) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Email and token are required"));
+        }
+        
+        // Find the user by email
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            // For security reasons, don't reveal that the email doesn't exist
+            return ResponseEntity.ok(Map.of("message", "Token generated"));
+        }
+        
+        User user = userOptional.get();
+        
+        // Check if a token already exists for this user and delete it
+        Optional<PasswordResetToken> existingToken = tokenRepository.findByUser(user);
+        existingToken.ifPresent(tokenRepository::delete);
+        
+        // Create a new token
+        PasswordResetToken resetToken = new PasswordResetToken(token, user);
+        
+        // If expiry date is provided, use it
+        if (expiryDateStr != null) {
+            try {
+                LocalDateTime expiryDate = LocalDateTime.parse(expiryDateStr);
+                resetToken.setExpiryDate(expiryDate);
+            } catch (Exception e) {
+                // If parsing fails, the default expiry will be used
+            }
+        }
+        
+        tokenRepository.save(resetToken);
+        
+        // Send the reset email
+        boolean emailSent = emailService.sendPasswordResetEmail(
+            user.getEmail(), 
+            user.getFirstName(), 
+            token
+        );
+        
+        if (!emailSent) {
+            return ResponseEntity.internalServerError().body(Map.of("message", "Failed to send reset email"));
+        }
+        
+        return ResponseEntity.ok(Map.of("message", "Reset email sent successfully"));
+    }
+    
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String currentPassword = request.get("currentPassword");
+        String newPassword = request.get("newPassword");
+        
+        if (email == null || currentPassword == null || newPassword == null) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Email, current password, and new password are required"));
+        }
+        
+        // Find the user by email
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", "Invalid credentials"));
+        }
+        
+        User user = userOptional.get();
+        
+        // Verify current password
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", "Current password is incorrect"));
+        }
+        
+        // Update the password
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        
+        return ResponseEntity.ok(Map.of("message", "Password changed successfully"));
     }
 }

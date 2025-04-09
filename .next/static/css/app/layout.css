@@ -148,12 +148,47 @@ body {
   background-color: var(--text);
 }
 
-.order-item {
+.order-list-container {
+  max-height: 250px;
+  overflow-y: auto;
   margin-bottom: 1rem;
+  border-radius: 6px;
+  background-color: rgba(220, 228, 198, 0.3);
+  padding: 5px;
+}
+
+.order-list {
+  padding-right: 5px;
+}
+
+.order-list-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.order-list-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.order-list-container::-webkit-scrollbar-thumb {
+  background: var(--background);
+  border-radius: 10px;
+}
+
+.order-list-container::-webkit-scrollbar-thumb:hover {
+  background: var(--text);
+}
+
+.order-item {
+  margin-bottom: 0.75rem;
   padding: 0.75rem;
   border-radius: 6px;
   background-color: var(--lightbackground);
   transition: background-color 0.3s;
+}
+
+.order-item:last-child {
+  margin-bottom: 0;
 }
 
 .order-item:hover {
@@ -164,6 +199,32 @@ body {
   color: var(--text);
   text-decoration: none;
   font-weight: 500;
+}
+
+/* Cart Styles */
+
+/* Cart Styles */
+.cart-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: var(--lightbackground);
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.checkout-button {
+  background-color: var(--text);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
 }
 
 .loading-indicator {
@@ -623,11 +684,11 @@ body {
 }
 
 .login-box {
-  background-color: var(--lightbackground);
+  background-color: white;
   padding: 40px 30px;
   border-radius: 12px;
   width: 100%;
-  max-width: 800px;
+  max-width: 500px;
   box-shadow: var(--card-shadow);
 }
 
@@ -635,14 +696,17 @@ body {
   font-family: "Jim Nightshade", cursive;
   font-weight: 400;
   font-style: normal;
-  font-size: 70px;
+  font-size: 50px;
   color: var(--text);
+  margin-bottom: 5px;
+  text-align: center;
 }
 
 .login-box h2 {
-  font-size: 40px;
-  margin-bottom: 24px;
+  font-size: 22px;
+  margin-bottom: 30px;
   color: var(--text);
+  text-align: center;
 }
 
 .login-box form {
@@ -650,33 +714,109 @@ body {
   flex-direction: column;
 }
 
-.login-box label {
-  margin-bottom: 6px;
-  color: #555;
-  font-size: 14px;
+.text-center {
+  text-align: center;
+  margin-top: 20px;
 }
 
-.login-box input {
-  padding: 10px;
+.text-center a {
+  color: var(--background);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: inline-block;
+  margin: 5px 0;
+}
+
+.text-center a:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.login-box label {
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
+  width: 100%;
+  padding: 12px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 16px;
+  box-sizing: border-box;
 }
 
-.login-box button {
-  padding: 10px;
+.remember-me {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.remember-me input[type="checkbox"] {
+  margin-right: 8px;
+  accent-color: var(--background);
+  width: auto;
+}
+
+.error-message {
+  color: #e53e3e;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.login-box button, .reset-password-btn {
+  padding: 12px;
   background-color: var(--background);
   color: white;
   border: none;
   border-radius: 6px;
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
 }
 
-.login-box button:hover {
+.login-box button:hover, .reset-password-btn:hover {
   background-color: var(--text);
+}
+
+.login-box button:disabled, .reset-password-btn:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.icon-container {
+  position: absolute;
+  right: 10px;
+  top: 35%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
 
 .kettle-ani {

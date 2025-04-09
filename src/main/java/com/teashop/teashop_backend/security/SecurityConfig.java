@@ -48,10 +48,12 @@ public class SecurityConfig {
         configuration.setAllowedHeaders(Arrays.asList(
             "authorization", 
             "content-type", 
+            "accept",
             "x-auth-token",
             "Access-Control-Allow-Origin",
             "Access-Control-Allow-Methods",
-            "Access-Control-Allow-Headers"
+            "Access-Control-Allow-Headers",
+            "Access-Control-Allow-Credentials"
         ));
         configuration.setExposedHeaders(Arrays.asList(
             "authorization", 

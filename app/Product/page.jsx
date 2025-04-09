@@ -1,5 +1,3 @@
-//https://letsreact.org/how-to-fetch-data-from-json-files-in-react-and-display-it-in-a-component/
-
 'use client'
 
 import { useState, useEffect } from "react";
@@ -27,8 +25,8 @@ const ProductPage = () => {
         try {
             const response = await axios.get("http://localhost:8080/products");
             if (response.status === 200) {
-                console.log(response.data);
-                setProducts(response.data); //Setting the products data
+                console.log("API Response:", response.data); // Debugging
+                setProducts(response.data);
             }
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -76,6 +74,7 @@ const ProductPage = () => {
                                     <DisplayCard 
                                         key={product.productID}
                                         imageSrc={product.imageURL}
+                                        productID={product.productID}
                                         title={product.productName}
                                         description={product.productDescription}
                                         manufacturer={product.manufacturer?.manufacturerName || "Unknown"}

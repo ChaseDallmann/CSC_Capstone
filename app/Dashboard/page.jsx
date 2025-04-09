@@ -106,19 +106,21 @@ export default function Dashboard() {
             
             <div className="dashboard-card">
               <h2>My Orders</h2>
-              <div className='order-list'>
-                {userOrders.length > 0 ? (
-                  userOrders.map((order) => (
-                    <div key={order.orderID} className="order-item">
-                      <Link href={`/Dashboard/OrderDetails/${order.orderID}`}>
-                        <p>Order ID: {order.orderID}</p>
-                      </Link>
-                      <p>Status: {order.status}</p>
-                    </div>
-                  ))
-                ) : (
-                  <p>No orders found.</p>
-                )}
+              <div className='order-list-container'>
+                <div className='order-list'>
+                  {userOrders.length > 0 ? (
+                    userOrders.map((order) => (
+                      <div key={order.orderID} className="order-item">
+                        <Link href={`/Dashboard/OrderDetails/${order.orderID}`}>
+                          <p>Order ID: {order.orderID}</p>
+                        </Link>
+                        <p>Status: {order.status}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No orders found.</p>
+                  )}
+                </div>
               </div>
               <br />
               <Link href="/Product">

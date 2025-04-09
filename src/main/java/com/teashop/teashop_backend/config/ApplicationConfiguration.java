@@ -17,13 +17,11 @@ import com.teashop.teashop_backend.model.user.UserRepository;
 @Configuration
 public class ApplicationConfiguration {
 
-    private final UserDetailsService userDetailsService;
     private final static Logger LOGGER = Logger.getLogger(ApplicationConfiguration.class.getName());
     private final UserRepository userRepository;
 
-    public ApplicationConfiguration(UserRepository userRepository, UserDetailsService userDetailsService) {
+    public ApplicationConfiguration(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.userDetailsService = userDetailsService;
     }
 
     @Bean

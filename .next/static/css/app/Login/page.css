@@ -59,7 +59,7 @@
 }
 
 /* Navbar */
-.NavbarBasic_navbar__MU8PV {
+.NavbarBasic_navbarBasic__UOKjz {
   position: fixed;
   top: 0;
   left: 0;
@@ -74,7 +74,7 @@
   transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.NavbarBasic_navbar__MU8PV.NavbarBasic_scrolled__2_Xbo {
+.NavbarBasic_navbarBasic__UOKjz.NavbarBasic_scrolled__2_Xbo {
   background: var(--background);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }

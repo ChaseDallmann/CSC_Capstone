@@ -13,6 +13,8 @@ import com.teashop.teashop_backend.model.order.OrderDetailsRepository;
 import com.teashop.teashop_backend.model.order.OrderRepository;
 import com.teashop.teashop_backend.model.product.Product;
 import com.teashop.teashop_backend.model.product.ProductRepository;
+import com.teashop.teashop_backend.model.user.PasswordResetToken;
+import com.teashop.teashop_backend.model.user.PasswordResetTokenRepository;
 import com.teashop.teashop_backend.model.user.User;
 import com.teashop.teashop_backend.model.user.UserRepository;
 
@@ -37,14 +39,16 @@ public class MainController {
     private final ManufacturerRepository manufacturerRepository;
     private final OrderRepository orderRepository;
     private final OrderDetailsRepository orderDetailsRepository;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
 
-    public MainController(UserRepository userRepository, OrderDetailsRepository orderDetailsRepository, ProductRepository productRepository, CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository, OrderRepository orderRepository) {
+    public MainController(UserRepository userRepository, PasswordResetTokenRepository passwordResetTokenRepository, OrderDetailsRepository orderDetailsRepository, ProductRepository productRepository, CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.manufacturerRepository = manufacturerRepository;
         this.orderRepository = orderRepository;
         this.orderDetailsRepository = orderDetailsRepository;
+        this.passwordResetTokenRepository = null;
     }
 
     @GetMapping("users")
@@ -52,10 +56,10 @@ public class MainController {
             return userRepository.findAll();
         }
 
-    @GetMapping("user/check-email/{email}")
+    @GetMapping("user/check-email")
     public Boolean emailDuplicateCheck(@RequestParam String email) {
         // Check if the email already exists in the database
-        // If it exists, return the true
+        // If it exists, return true
         // If it doesn't exist, return false
         return userRepository.findByEmail(email).isPresent();
     }
@@ -130,7 +134,7 @@ public class MainController {
                     return ResponseEntity.ok(savedUser);
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
-        }
+            }
     
 
     @GetMapping("products")

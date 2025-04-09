@@ -52,7 +52,7 @@ const RegistrationPage = () => {
         router.push("/Login")
       }
     } catch (error) {
-      setRegisterErrors('Invalid info submitted')
+      setRegisterErrors('Invalid information or user already exists in the database')
     }
   };
   return (

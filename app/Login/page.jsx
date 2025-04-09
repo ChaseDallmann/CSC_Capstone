@@ -6,6 +6,7 @@ import { redirect, useRouter } from "next/navigation";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import Link from "next/link";
 import { AuthContext } from "../Context/AuthContext";
+import { Eye, EyeOff } from "lucide-react";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -13,6 +14,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [loginErrors, setLoginErrors] = useState("");
   const { handleLogin, isAuthenticated } = useContext(AuthContext);
+  const [ isView, setIsView ] = useState(false);
 
   //Redirecting the user to the dashboard if they are already logged in
   useEffect(() => {
@@ -51,7 +53,7 @@ const LoginPage = () => {
         <div className="login-box">
           <h1>Welcome Back!</h1>
           <h2>We've put the kettle on for you!</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}> 
             <label htmlFor="email">Email</label>
             <input
               type="text"
@@ -62,28 +64,38 @@ const LoginPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-
+            <div className="password-container">
+              <label htmlFor="password">Password</label>
+              <div className="password-wrapper">
+                <input
+                  type={isView ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <div className="icon-container" onClick={() => setIsView(!isView)}>
+                  {isView ? <EyeOff size={20} /> : <Eye size={20} />}
+                </div>
+              </div>
+            </div>
+            <div className="remember-me">
+              <label>
+                <input type="checkbox" /> Remember me
+              </label>
+            </div>
             <button type="submit">Login</button>
 
             <br />
             <div className="text-center">
               <Link href="/Registration">Don't have an account? Sign up</Link>
               <br />
-              <Link href="/Login/ForgotPassword">Forgot password?</Link>
+              <Link href="/ForgotPassword">Forgot password?</Link>
             </div>
+            {loginErrors && <p className="error-message">{loginErrors}</p>}
           </form>
-          {loginErrors && <p className="error">{loginErrors}</p>}
         </div>
       </div>
     </>

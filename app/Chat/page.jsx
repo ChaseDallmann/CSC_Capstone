@@ -16,6 +16,9 @@ const Chat = () => {
   const [connectionError, setConnectionError] = useState(null);
   const router = useRouter();
 
+  //specific receiver, CSR
+  const csrReceiverUser = 'test@gmail.com';
+
   useEffect(() => {
     if (!isAuthenticated) {
       redirect('/Login'); 
@@ -33,8 +36,10 @@ const Chat = () => {
         setIsConnected(true);
         setConnectionError(null);
         
-        // Subscribe to user-specific message queue
-        client.subscribe(`/user/queue/private`, (messageOutput) => {
+        // Subscribe to the correct queue based on the role
+        const queue = userRole === 'CUSTOMER' ? `/user/${csrReceiverUser}/queue/private` : `/user/${user?.email}/queue/private`;
+        client.subscribe(queue, (messageOutput) => {
+          console.log('Received message: ', messageOutput);
           const chatMessage = JSON.parse(messageOutput.body);
           setMessages((prevMessages) => [...prevMessages, chatMessage]);
         });
@@ -77,18 +82,15 @@ const Chat = () => {
     }
 
     if (stompClient && messageContent.trim()) {
-      // Determine receiver role based on sender's role
-      const receiverRole = userRole === 'CUSTOMER' 
-        ? 'CUSTOMER_SERVICE' 
-        : 'CUSTOMER';
+      //set receiver based on role (customer sends to CSR, CSR sends to customer)
+      const receiver = userRole === 'CUSTOMER' ? csrReceiverUser : user?.email;
 
       const chatMessage = {
         content: messageContent,
         sender: user?.name,
-        // Use the authenticated user's name as the receiver
-        receiver: userRole === 'CUSTOMER_SERVICE' ? 'customer' : user?.name,
+        receiver: receiver,
         senderRole: userRole,
-        receiverRole: receiverRole,
+        receiverRole: userRole === 'CUSTOMER' ? 'customerService' : 'customer',
         status: 'MESSAGE',
       };
 
@@ -98,11 +100,8 @@ const Chat = () => {
           body: JSON.stringify(chatMessage)
         });
 
-        // Optimistically add message to local state
-        setMessages((prevMessages) => [...prevMessages, {
-          ...chatMessage,
-          sender: user?.name
-        }]);
+        // Optimistically add the message to local state
+        setMessages((prevMessages) => [...prevMessages, chatMessage]);
 
         setMessageContent('');
       } catch (error) {

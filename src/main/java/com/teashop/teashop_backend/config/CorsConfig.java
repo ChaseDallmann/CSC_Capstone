@@ -16,11 +16,42 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        // Allow both http and https localhost
+        config.setAllowedOrigins(List.of(
+            "http://localhost:3000", 
+            "https://localhost:3000",
+            "http://127.0.0.1:3000",
+            "https://127.0.0.1:3000"
+        ));
+        
+        // Allow all headers
+        config.setAllowedHeaders(List.of(
+            "Origin", 
+            "Content-Type", 
+            "Accept", 
+            "Authorization", 
+            "X-Requested-With", 
+            "Access-Control-Request-Method", 
+            "Access-Control-Request-Headers"
+        ));
+        
+        // Allow all common HTTP methods
+        config.setAllowedMethods(List.of(
+            "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"
+        ));
+        
+        // Allow credentials (cookies, authorization headers)
         config.setAllowCredentials(true);
+        
+        // Cache preflight response for 1 hour
         config.setMaxAge(3600L);
+        
+        // Expose common headers
+        config.setExposedHeaders(List.of(
+            "Access-Control-Allow-Origin",
+            "Access-Control-Allow-Credentials",
+            "Authorization"
+        ));
 
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
