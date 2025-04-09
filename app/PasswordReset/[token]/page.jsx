@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import NavbarBasic from "../../components/NavbarBasic/NavbarBasic";
@@ -13,9 +13,37 @@ export default function PasswordResetPage({ params }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
+  const [tokenValid, setTokenValid] = useState(true);
   
   const router = useRouter();
-  const { token } = params;
+  // Use React.use to unwrap params as recommended by Next.js
+  const { token } = React.use(params);
+  
+  // Check token validity on component mount
+  useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/auth/verify-token`,
+          {
+            params: { token },
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          }
+        );
+        if (response.status !== 200) {
+          throw new Error('Token verification failed');
+        }
+        setTokenValid(true);
+      } catch (error) {
+        console.error('Token verification error:', error);
+        setTokenValid(false);
+        setError('This password reset link has expired or is invalid. Please request a new one.');
+      }
+    };
+    
+    verifyToken();
+  }, [token]);
   
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -30,7 +58,7 @@ export default function PasswordResetPage({ params }) {
       return;
     }
     
-    if (newPassword.length < 8) {
+    if (newPassword.length < 6) {
       setError('Password must be at least 8 characters long');
       return;
     }
@@ -40,10 +68,15 @@ export default function PasswordResetPage({ params }) {
     
     try {
       const response = await axios.post('http://localhost:8080/auth/reset-password', {
-        email,
-        token,
-        newPassword
-      }, { withCredentials: true });
+        email: email,
+        token: token,
+        newPassword: newPassword
+      }, { 
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
       
       setMessage('Password has been reset successfully!');
       setError('');
@@ -55,75 +88,110 @@ export default function PasswordResetPage({ params }) {
       
     } catch (error) {
       console.error('Reset password error:', error);
-      setError(error.response?.data?.message || 'An error occurred while resetting your password');
+      
+      // Handle specific error for invalid token
+      if (error.response?.status === 401 && error.response?.data?.message?.includes('token')) {
+        setError('This password reset link has expired or is invalid. Please request a new one.');
+        setTokenValid(false);
+      } else {
+        setError(error.response?.data?.message || 'An error occurred while resetting your password');
+      }
     } finally {
       setLoading(false);
     }
   };
   
+  // Render a different UI if the token is invalid
+  if (!tokenValid) {
+    return (
+      <>
+        <NavbarBasic />
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+          <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg">
+            <div className="text-center">
+              <h2 className="mt-6 text-3xl font-bold text-gray-900">Invalid Reset Link</h2>
+              <p className="mt-2 text-sm text-gray-600">
+                {error || 'This password reset link has expired or is invalid.'}
+              </p>
+            </div>
+            
+            <div className="mt-8 text-center">
+              <Link href="/ForgotPassword" className="font-medium text-indigo-600 hover:text-indigo-500">
+                Request a new password reset link
+              </Link>
+            </div>
+            
+            <div className="mt-4 text-center">
+              <Link href="/Login" className="font-medium text-indigo-600 hover:text-indigo-500">
+                Back to login
+              </Link>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+  
   return (
     <>
       <NavbarBasic />
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg">
-          <div className="text-center">
-            <h2 className="mt-6 text-3xl font-bold text-gray-900">Reset Your Password</h2>
-            <p className="mt-2 text-sm text-gray-600">
+      <div className="password-reset-container">
+        <div className="password-reset-box">
+          <div className="password-reset-header">
+            <h2 className="reset-password-h2">Reset Your Password</h2>
+            <p className="reset-password-p">
               Please enter your email and new password below
             </p>
           </div>
           
           {message && (
-            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
+            <div className="resert-password-message">
               {message}
             </div>
           )}
           
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+            <div className="reset-password-error">
               {error}
             </div>
           )}
           
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+          <form className="reset-password-form" onSubmit={handleSubmit}>
+            <div className="reset-password-inputs">
+              <div className="rest-password-email">
+                <label htmlFor="email" className="reset-password-email-label">Email address</label>
                 <input
                   id="email"
                   name="email"
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               
-              <div className="mb-4">
-                <label htmlFor="new-password" className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+              <div className="reset-password-new-password">
+                <label htmlFor="new-password" className="reset-password-new-password-label">New Password</label>
                 <input
                   id="new-password"
                   name="newPassword"
                   type="password"
                   required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="New Password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
               </div>
               
-              <div>
-                <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+              <div className="reset-password-confirm-password">
+                <label htmlFor="confirm-password" className="reset-password-confirm-password-label">Confirm Password</label>
                 <input
                   id="confirm-password"
                   name="confirmPassword"
                   type="password"
                   required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Confirm Password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -141,7 +209,7 @@ export default function PasswordResetPage({ params }) {
               </button>
             </div>
             
-            <div className="text-sm text-center">
+            <div className="text-center">
               <Link href="/Login" className="font-medium text-indigo-600 hover:text-indigo-500">
                 Back to login
               </Link>

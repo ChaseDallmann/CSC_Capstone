@@ -39,10 +39,12 @@ public class User implements UserDetails {
     private Integer zipcode;
     @Column(name = "password")
     private String password;
+    @Column(name = "previousPassword")
+    private String previousPassword;
 
     public User() {}
 
-    public User(Integer userID, String firstName, String lastName, String email, String streetAddress, String city, String state, Integer zipcode, String password) {
+    public User(Integer userID, String firstName, String lastName, String email, String streetAddress, String city, String state, Integer zipcode, String password, String previousPassword) {
         this.userID = userID;
         this.role = Role.CUSTOMER;
         this.firstName = firstName;
@@ -53,6 +55,7 @@ public class User implements UserDetails {
         this.state = state;
         this.zipcode = zipcode;
         this.password = password;
+        this.previousPassword = previousPassword;
     }
 
     @Override
@@ -171,6 +174,14 @@ public class User implements UserDetails {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getPreviousPassword() {
+        return previousPassword;
+    }
+
+    public void setPreviousPassword(String previousPassword) {
+        this.previousPassword = previousPassword;
     }
 
     @Override

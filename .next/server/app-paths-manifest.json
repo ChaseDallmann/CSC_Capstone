@@ -1,9 +1,7 @@
 {
+  "/ForgotPassword/page": "app/ForgotPassword/page.js",
+  "/PasswordReset/[token]/page": "app/PasswordReset/[token]/page.js",
   "/page": "app/page.js",
-  "/Cart/page": "app/Cart/page.js",
-  "/Dashboard/page": "app/Dashboard/page.js",
-  "/Product/page": "app/Product/page.js",
-  "/Checkout/page": "app/Checkout/page.js",
-  "/Dashboard/ChangeInfo/page": "app/Dashboard/ChangeInfo/page.js",
-  "/Login/page": "app/Login/page.js"
+  "/Login/page": "app/Login/page.js",
+  "/Dashboard/page": "app/Dashboard/page.js"
 }

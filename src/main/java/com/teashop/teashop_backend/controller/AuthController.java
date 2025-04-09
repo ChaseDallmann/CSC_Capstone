@@ -7,9 +7,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
 
 import com.teashop.teashop_backend.controller.login.LoginDto;
 import com.teashop.teashop_backend.controller.login.LoginResponse;
@@ -24,11 +28,9 @@ import com.teashop.teashop_backend.service.AuthenticationService;
 import com.teashop.teashop_backend.service.JwtService;
 import com.teashop.teashop_backend.service.ResendEmailService;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/auth")
@@ -112,15 +114,34 @@ public class AuthController {
         User user = token.getUser();
         user.setPassword(passwordEncoder.encode(passwordResetDto.getNewPassword()));
         userRepository.save(user);
-
+        
         // Delete the token
         tokenRepository.delete(token);
 
         return ResponseEntity.ok(Map.of("message", "Password reset successful"));
+}
+
+    @GetMapping("/verify-token")
+    public ResponseEntity<?> verifyToken(@RequestParam String token) {
+        // Check if the token is valid
+        Optional<PasswordResetToken> tokenOptional = tokenRepository.findByToken(token);
+        if (tokenOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", "Invalid or expired token"));
+        }
+
+        PasswordResetToken passwordResetToken = tokenOptional.get();
+        if (passwordResetToken.isExpired()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("message", "Token has expired"));
+        }
+
+        return ResponseEntity.ok(Map.of("message", "Token is valid"));
     }
     
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) {
+        //Mapping the request url to get an email string
         String email = request.get("email");
         
         if (email == null || email.isEmpty()) {
@@ -134,6 +155,7 @@ public class AuthController {
             return ResponseEntity.ok(Map.of("message", "If your email exists in our system, you will receive a password reset link shortly"));
         }
         
+        //Create a user object from the found user from the email search
         User user = userOptional.get();
         
         // Generate a token
@@ -142,6 +164,8 @@ public class AuthController {
         // Save the token in the database
         PasswordResetToken resetToken = new PasswordResetToken(token, user);
         tokenRepository.save(resetToken);
+        user.setPreviousPassword(user.getPassword());
+
         
         // Send the reset email
         boolean emailSent = emailService.sendPasswordResetEmail(
@@ -158,10 +182,10 @@ public class AuthController {
     }
     
     @PutMapping("/reset-token")
-    public ResponseEntity<?> createResetToken(@RequestBody Map<String, Object> request) {
-        String email = (String) request.get("email");
-        String token = (String) request.get("token");
-        String expiryDateStr = (String) request.get("expiryDate");
+    public ResponseEntity<?> saveResetToken(@RequestBody Map<String, String> request) {
+        //Mapping the url request data into a email and token string
+        String email = request.get("email");
+        String token = request.get("token");
         
         if (email == null || token == null) {
             return ResponseEntity.badRequest().body(Map.of("message", "Email and token are required"));
@@ -170,43 +194,30 @@ public class AuthController {
         // Find the user by email
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isEmpty()) {
-            // For security reasons, don't reveal that the email doesn't exist
-            return ResponseEntity.ok(Map.of("message", "Token generated"));
+            return ResponseEntity.ok(Map.of("message", "Reset token processed"));
         }
         
         User user = userOptional.get();
         
-        // Check if a token already exists for this user and delete it
-        Optional<PasswordResetToken> existingToken = tokenRepository.findByUser(user);
-        existingToken.ifPresent(tokenRepository::delete);
+        // Remove any existing tokens for this user
+        tokenRepository.findByUser(user).ifPresent(tokenRepository::delete);
         
-        // Create a new token
+        // Create the reset token
         PasswordResetToken resetToken = new PasswordResetToken(token, user);
         
-        // If expiry date is provided, use it
-        if (expiryDateStr != null) {
-            try {
-                LocalDateTime expiryDate = LocalDateTime.parse(expiryDateStr);
-                resetToken.setExpiryDate(expiryDate);
-            } catch (Exception e) {
-                // If parsing fails, the default expiry will be used
-            }
+        try {
+            //Saving the reset token
+            tokenRepository.save(resetToken);
+            //Setting the previous password to prevent reuse of passwords in the future
+            user.setPreviousPassword(user.getPassword());
+            userRepository.save(user);
+            return ResponseEntity.ok(Map.of("message", "Reset token saved successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of(
+                "message", "Failed to save reset token",
+                "error", e.getMessage()
+            ));
         }
-        
-        tokenRepository.save(resetToken);
-        
-        // Send the reset email
-        boolean emailSent = emailService.sendPasswordResetEmail(
-            user.getEmail(), 
-            user.getFirstName(), 
-            token
-        );
-        
-        if (!emailSent) {
-            return ResponseEntity.internalServerError().body(Map.of("message", "Failed to send reset email"));
-        }
-        
-        return ResponseEntity.ok(Map.of("message", "Reset email sent successfully"));
     }
     
     @PostMapping("/change-password")

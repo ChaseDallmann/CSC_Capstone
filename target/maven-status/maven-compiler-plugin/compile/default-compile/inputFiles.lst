@@ -30,7 +30,10 @@
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/order/OrderRepository.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/product/Product.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/product/ProductRepository.java
+/Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/user/PasswordChangeDto.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/user/PasswordResetDto.java
+/Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/user/PasswordResetToken.java
+/Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/user/PasswordResetTokenRepository.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/user/User.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/user/UserDto.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/user/UserRepository.java
@@ -39,3 +42,4 @@
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/security/UserDetailsServiceImpl.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/service/AuthenticationService.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/service/JwtService.java
+/Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/service/ResendEmailService.java

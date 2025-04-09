@@ -5,7 +5,7 @@ import crypto from 'crypto';
 import React from 'react';
 import { sendEmail } from "./sendEmail"
 import { AuthContext } from "../Context/AuthContext";
-import { ResetPasswordEmailTemplate } from '../../components/email-templates/PasswordResetEmailTemplate';
+import { ResetPasswordEmailTemplate } from '../../components/email-templates/ResetEmailPasswordTemplate';
 import axios from 'axios';
 import { ArrowUpSquare } from 'lucide-react';
 

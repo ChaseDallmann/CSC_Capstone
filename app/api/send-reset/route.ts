@@ -14,7 +14,6 @@ export async function POST(req: NextRequest) {
     
     const result = await sendResetEmail(
       email,
-      firstName || 'User',
       token
     );
     

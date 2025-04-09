@@ -24,40 +24,17 @@
       "static/css/app/ForgotPassword/page.css",
       "static/chunks/app/ForgotPassword/page.js"
     ],
-    "/api/send-reset/route": [
+    "/PasswordReset/[token]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/send-reset/route.js"
-    ],
-    "/Cart/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/Cart/page.css",
-      "static/chunks/app/Cart/page.js"
+      "static/css/app/PasswordReset/[token]/page.css",
+      "static/chunks/app/PasswordReset/[token]/page.js"
     ],
     "/Dashboard/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/Dashboard/page.css",
       "static/chunks/app/Dashboard/page.js"
-    ],
-    "/Product/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/Product/page.css",
-      "static/chunks/app/Product/page.js"
-    ],
-    "/Dashboard/ChangeInfo/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/Dashboard/ChangeInfo/page.css",
-      "static/chunks/app/Dashboard/ChangeInfo/page.js"
-    ],
-    "/Checkout/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/Checkout/page.css",
-      "static/chunks/app/Checkout/page.js"
     ]
   }
 }

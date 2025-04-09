@@ -15,7 +15,7 @@ const SendEmailButton = ({ emailTo, user }: SendEmailButtonProps) => {
             from: "Modern Web Development <no-reply@ace-teas.com>",
             to: [emailTo],
             subject: "You Clicked It!",
-            react: EmailTemplate({ firstName: `${user?.firstName}` })
+            react: EmailTemplate({ firstName: `${user?.firstName}`, resetToken: "example-reset-token" })
         });
     }
 

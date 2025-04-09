@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 08, 2025 at 09:13 PM
+-- Generation Time: Apr 09, 2025 at 03:49 PM
 -- Server version: 8.0.39
 -- PHP Version: 8.2.23
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `teashop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `cartID` int NOT NULL,
+  `userID` int NOT NULL,
+  `productID` int NOT NULL,
+  `quantity` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -153,22 +166,15 @@ INSERT INTO `orders` (`orderID`, `userID`, `orderDate`, `totalAmount`, `status`)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_reset_token`
+-- Table structure for table `passwordResetToken`
 --
 
-CREATE TABLE `password_reset_token` (
+CREATE TABLE `passwordResetToken` (
   `id` bigint NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `userID` int NOT NULL,
   `expiryDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `password_reset_token`
---
-
-INSERT INTO `password_reset_token` (`id`, `token`, `userID`, `expiryDate`) VALUES
-(4, 'e73c9ad1-9030-40d6-b466-bc2ff8097f9c', 35, '2025-04-08 23:58:32');
 
 -- --------------------------------------------------------
 
@@ -218,32 +224,39 @@ CREATE TABLE `user` (
   `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `zipcode` int NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `previousPassword` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userID`, `role`, `firstName`, `lastName`, `email`, `streetAddress`, `city`, `state`, `zipcode`, `password`) VALUES
-(1, 'CUSTOMER', 'Natasha', 'Czaplewski', 'czaplewn@csp.edu', '123 Main Street', 'Winona', 'Minnesota', 55987, 'admin'),
-(11, 'CUSTOMER', 'FRYPD', 'RKROL', 'VI938@hotmail.com', '732 QQRX', 'VMMVF', 'NFE', 28785, 'QDXBU395'),
-(13, 'CUSTOMER', 'REOPK', 'OAUVT', 'WZ567@hotmail.com', '163 TWNS', 'QCNKR', 'BYZ', 93872, 'KRZTM782'),
-(15, 'CUSTOMER', 'NZMEM', 'HZXMY', 'ZN289@yahoo.com', '496 LWJP', 'NNYSF', 'RUP', 67386, 'IFOVZ038'),
-(17, 'CUSTOMER', 'UPLSN', 'LTRGA', 'ZQ929@hotmail.com', '256 DNIQ', 'GFHGB', 'RCB', 70480, 'DMWBP584'),
-(19, 'CUSTOMER', 'IOGKY', 'XEIDG', 'WX881@aol.com', '511 EKNW', 'EHCFY', 'SXO', 90761, 'TEWKS239'),
-(27, 'CUSTOMER_SERVICE', 'Chase', 'Test', 'test123@csp.edu', '', '', 'MN', 55449, '$2a$10$jgA2/T/iCH3kornkHbOzLu0kRPKDmFLlZSazE5jxBDNkbxKVs3rnK'),
-(28, 'CUSTOMER', 'Chase', 'Dallmann', 'testuser@csp.edu', '11720 Vermillion St Ne Unit D', 'Blaine', 'MN', 55449, '$2a$10$BdPlZ4fgbbHu3TtdinBF0eL/JZ4VojF77aymvdoYU.jwVOarg0kfi'),
-(29, 'CUSTOMER_SERVICE', 'Test', 'User', 'testuser@yahoo.com', '1234 Fake St ', 'Blaine', 'MN', 55449, '$2a$10$cE/yLg6XNmvSVHSiknyVX.7iql3sNtcsfY0ZhraTH/7/2brVnLAGW'),
-(30, 'CUSTOMER', 'John', 'Doe', 'trial@aceteas.com', '1234 Fake St Unit D', 'MINNEAPOLIS', 'MN', 55112, '$2a$10$Woaw7TYtdUzXrSbtVvwEC.Ay0gISsohakq3RloxZx6lmBbkfADpqO'),
-(31, 'CUSTOMER', 'John', 'Doe', 'fake@csp.edu', '', '', 'MN', 55449, '$2a$10$EeMQ6XFfNIxBMa28mQf8xeVx4v.yFREo7fpRQvkvtWycFmz1n/GwW'),
-(33, 'CUSTOMER', 'Chase', 'Test', 'trial@test.com', '1234 Fake St Unit D', 'MINNEAPOLIS', 'MN', 55113, '$2a$10$BoU.vRlFGmk2oXvCkKHHpu2mIPJbP3VJuMNLkjuoJ1UK9OZd9sdMS'),
-(35, 'CUSTOMER_SERVICE', 'Chase', 'Dallmann', 'dallmanc@csp.edu', '11720 Vermillion St Ne Unit D ', 'Blaine', 'MN', 55449, '$2a$10$XAVUSi2XXP4ADK8Wg1HD5uwoZnAMDyYdqLSXmwO0ZZqVtycXm2hyG'),
-(36, 'CUSTOMER', 'Chase', 'Dallmann', 'blastoff@csp.edu', '11720 Vermillion St Ne D', 'Blaine', 'MN', 55449, '$2a$10$XAVUSi2XXP4ADK8Wg1HD5uwoZnAMDyYdqLSXmwO0ZZqVtycXm2hyG');
+INSERT INTO `user` (`userID`, `role`, `firstName`, `lastName`, `email`, `streetAddress`, `city`, `state`, `zipcode`, `password`, `previousPassword`) VALUES
+(1, 'CUSTOMER', 'Natasha', 'Czaplewski', 'czaplewn@csp.edu', '123 Main Street', 'Winona', 'Minnesota', 55987, 'admin', NULL),
+(11, 'CUSTOMER', 'FRYPD', 'RKROL', 'VI938@hotmail.com', '732 QQRX', 'VMMVF', 'NFE', 28785, 'QDXBU395', NULL),
+(13, 'CUSTOMER', 'REOPK', 'OAUVT', 'WZ567@hotmail.com', '163 TWNS', 'QCNKR', 'BYZ', 93872, 'KRZTM782', NULL),
+(15, 'CUSTOMER', 'NZMEM', 'HZXMY', 'ZN289@yahoo.com', '496 LWJP', 'NNYSF', 'RUP', 67386, 'IFOVZ038', NULL),
+(17, 'CUSTOMER', 'UPLSN', 'LTRGA', 'ZQ929@hotmail.com', '256 DNIQ', 'GFHGB', 'RCB', 70480, 'DMWBP584', NULL),
+(19, 'CUSTOMER', 'IOGKY', 'XEIDG', 'WX881@aol.com', '511 EKNW', 'EHCFY', 'SXO', 90761, 'TEWKS239', NULL),
+(27, 'CUSTOMER_SERVICE', 'Chase', 'Test', 'test123@csp.edu', '', '', 'MN', 55449, '$2a$10$jgA2/T/iCH3kornkHbOzLu0kRPKDmFLlZSazE5jxBDNkbxKVs3rnK', NULL),
+(28, 'CUSTOMER', 'Chase', 'Dallmann', 'testuser@csp.edu', '11720 Vermillion St Ne Unit D', 'Blaine', 'MN', 55449, '$2a$10$BdPlZ4fgbbHu3TtdinBF0eL/JZ4VojF77aymvdoYU.jwVOarg0kfi', NULL),
+(29, 'CUSTOMER_SERVICE', 'Test', 'User', 'testuser@yahoo.com', '1234 Fake St ', 'Blaine', 'MN', 55449, '$2a$10$cE/yLg6XNmvSVHSiknyVX.7iql3sNtcsfY0ZhraTH/7/2brVnLAGW', NULL),
+(30, 'CUSTOMER', 'John', 'Doe', 'trial@aceteas.com', '1234 Fake St Unit D', 'MINNEAPOLIS', 'MN', 55112, '$2a$10$Woaw7TYtdUzXrSbtVvwEC.Ay0gISsohakq3RloxZx6lmBbkfADpqO', NULL),
+(31, 'CUSTOMER', 'John', 'Doe', 'fake@csp.edu', '', '', 'MN', 55449, '$2a$10$EeMQ6XFfNIxBMa28mQf8xeVx4v.yFREo7fpRQvkvtWycFmz1n/GwW', NULL),
+(33, 'CUSTOMER', 'Chase', 'Test', 'trial@test.com', '1234 Fake St Unit D', 'MINNEAPOLIS', 'MN', 55113, '$2a$10$BoU.vRlFGmk2oXvCkKHHpu2mIPJbP3VJuMNLkjuoJ1UK9OZd9sdMS', NULL),
+(35, 'CUSTOMER_SERVICE', 'Chase', 'Dallmann', 'dallmanc@csp.edu', '11720 Vermillion St Ne Unit D ', 'Blaine', 'MN', 55449, '$2a$10$ULFJv2pv6KIbtpCqmsRvf.a0Q1VVP/XobM2JrbREljwTdPx9iOjGe', NULL),
+(36, 'CUSTOMER', 'Chase', 'Dallmann', 'blastoff@csp.edu', '11720 Vermillion St Ne D', 'Blaine', 'MN', 55449, '$2a$10$XAVUSi2XXP4ADK8Wg1HD5uwoZnAMDyYdqLSXmwO0ZZqVtycXm2hyG', NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`cartID`);
 
 --
 -- Indexes for table `category`
@@ -279,9 +292,9 @@ ALTER TABLE `orders`
   ADD KEY `fk_customer` (`userID`);
 
 --
--- Indexes for table `password_reset_token`
+-- Indexes for table `passwordResetToken`
 --
-ALTER TABLE `password_reset_token`
+ALTER TABLE `passwordResetToken`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uk_token` (`token`),
   ADD KEY `fk_user` (`userID`);
@@ -303,6 +316,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `cartID` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -335,10 +354,10 @@ ALTER TABLE `orders`
   MODIFY `orderID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `password_reset_token`
+-- AUTO_INCREMENT for table `passwordResetToken`
 --
-ALTER TABLE `password_reset_token`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `passwordResetToken`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -370,9 +389,9 @@ ALTER TABLE `orders`
   ADD CONSTRAINT `fk_customer` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`);
 
 --
--- Constraints for table `password_reset_token`
+-- Constraints for table `passwordResetToken`
 --
-ALTER TABLE `password_reset_token`
+ALTER TABLE `passwordResetToken`
   ADD CONSTRAINT `fk_user` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
 --

@@ -78,6 +78,13 @@ public class MainController {
         return orderRepository.findAll();
     }
 
+    @GetMapping("user/check-password")
+    public Optional<User> getUserPreviousPassword(@RequestParam String email, @RequestParam String password) {
+        //Passing through a password to check if it matches the previous password
+        return userRepository.findByEmail(email)
+                .filter(user -> !user.getPreviousPassword().equals(password));
+    }
+
     //Only useful for customer service
     @GetMapping("order-details")
     public List<OrderDetails> getOrderDetails() {
