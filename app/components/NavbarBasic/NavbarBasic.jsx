@@ -13,7 +13,8 @@ export default function NavbarBasic() {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, 
+[]);
 
   return (
     <nav className={`${styles.navbarBasic} ${scrolled ? styles.scrolled : ""}`}>
@@ -22,26 +23,40 @@ export default function NavbarBasic() {
         alt="Tea Logo"
         className={`${styles.logoImg} ${scrolled ? styles.fadeIn : styles.hidden}`}
       />
-      {/* Navigation links */}
-      <div className={styles.navLinks}>
-        <Link href="/" className={styles.navLink}>Home</Link>
-        <Link href="/Product" className={styles.navLink}>Product</Link>
-        <Link href="/Cart">🛒Cart</Link>
-        
-        {isAuthenticated? (
-          <>
-            <Link href="/Orders">My Orders</Link>
-            <button onClick={handleLogout} className="logout-btn">
+
+      <div className={styles.navContainer}>
+        <div className={`${styles.navLeft} ${styles.navLinks}`}>
+          <Link href="/" className={styles.navLink}>Home</Link>
+          <Link href="/Product" className={styles.navLink}>Product</Link>
+          <Link href="/Cart" className={styles.navLink}>Cart</Link>
+          <Link href="/Chat">Chat</Link>
+
+          {isAuthenticated && (
+            <>
+              <Link href="/Orders" className={styles.navLink}>My Orders</Link>
+              {userRole === "CUSTOMER_SERVICE" && (
+                <Link href="/customerService/User" className={styles.navLink}>Find User</Link>
+              )}
+            </>
+          )}
+
+          {!isAuthenticated && (
+            <>
+              <Link href="/Login" className={styles.navLink}>Login</Link>
+              <Link href="/Registration" className={styles.navLink}>Register</Link>
+            </>
+          )}
+        </div>
+
+        {isAuthenticated && (
+          <div className={`${styles.navRight} ${styles.navLinks}`}>
+            <Link id="user-profile" href="/Dashboard" className={`${styles.navLink} user-profile`}>
+              Welcome, {user?.name || "User"}
+            </Link>
+            <a onClick={handleLogout} className={styles.navLink} role="button">
               Log out
-            </button>
-            {userRole === "CUSTOMER_SERVICE" && <Link href="/customerService/User">Find User</Link>}
-            <Link id="user-profile" href="/Dashboard" className="user-profile">Welcome, {user?.name || "User"}</Link>
-          </>
-        ) : (
-          <>
-            <Link href="/Login">Login</Link>
-            <Link href="/Registration">Register</Link>
-          </>
+            </a>
+          </div>
         )}
       </div>
     </nav>

@@ -1,31 +1,58 @@
-/* Navbar */
+/* Navbar Container */
 .navbarBasic {
-  position: relative;
+  position: sticky;
   top: 0;
-  left: 0;
   width: 100%;
   height: 4rem;
   background: var(--background);
-  box-shadow: none;
   display: flex;
   align-items: center;
-  padding: 0 2rem;
+  justify-content: space-between;
+  padding: 0 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
 }
 
-/* Navbar Logo */
+/* Logo */
 .logoImg {
   width: 60px;
   height: auto;
   margin-right: 1rem;
 }
 
-/* Links container */
-.navLinks {
+.navContainer {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.navLeft {
+  display: flex;
+  align-items: center;
   gap: 1.5rem;
 }
 
-/* Links styling */
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: auto;
+}
+
+.userProfile {
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
 .navLinks a {
   text-decoration: none;
   color: black;

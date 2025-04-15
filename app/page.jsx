@@ -43,7 +43,7 @@ export default function Home() {
           <img
             src="/tea-logo2.png"
             alt="Website logo"
-            className="main.logo"
+            className="main-logo"
           ></img>
         </div>
         <div>

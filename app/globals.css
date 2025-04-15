@@ -31,41 +31,6 @@ body {
   background: rgba(0, 0, 0, 0.3);
   transition: backdrop-filter 0.5s ease;
 }
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-  width: 100%;
-}
-
-.spacer {
-  flex-grow: 1;
-}
-
-.user-profile {
-  color: black;
-  background: none;
-  padding-right: 3%;
-  margin-left: auto;
-  font-weight: 500;
-  transition-property: var(--background) 0.3s;
-}
-
-.logout-btn {
-  background: none;
-  margin-top: auto;
-  margin-bottom: auto;
-  border: none;
-  color: black;
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 0;
-  transition: background 0.2s;
-}
-
-.logout-btn:hover {
-  color: none;
-}
 
 .blur {
   backdrop-filter: blur(5px);
@@ -92,6 +57,13 @@ body {
   height: auto;
   transition: all 0.5s ease-in-out;
   z-index: 20;
+}
+
+.main-logo{
+  width: 300px;
+  height: auto;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .shrink {
@@ -130,7 +102,7 @@ body {
   box-shadow: none;
   display: flex;
   align-items: center;
-  padding: 0 2rem;
+  padding: 0 1rem;
   z-index: 10;
   transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
@@ -163,17 +135,11 @@ body {
   animation-play-state: running;
 }
 
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-  transition: margin-left 0.5s ease-in-out;
-}
-
 /* Links styling */
 .nav-links {
   display: flex;
   gap: 1.5rem;
-  transition: margin-left 0.4s ease-in-out;
+  align-items: center;
 }
 
 .nav-links a {
@@ -185,6 +151,36 @@ body {
 
 .nav-links a:hover {
   color: #007bff;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 3rem;
+  box-sizing: border-box;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: auto;
+}
+
+
+.user-profile {
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
 }
 
 /* Storefront Section */
