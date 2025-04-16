@@ -25,6 +25,8 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 3rem;
   box-sizing: border-box;
 }
 

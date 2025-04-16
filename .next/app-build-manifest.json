@@ -6,23 +6,17 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/Product/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/Product/page.css",
-      "static/chunks/app/Product/page.js"
-    ],
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/page.css",
       "static/chunks/app/page.js"
     ],
-    "/Chat/page": [
+    "/Product/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/Chat/page.css",
-      "static/chunks/app/Chat/page.js"
+      "static/css/app/Product/page.css",
+      "static/chunks/app/Product/page.js"
     ],
     "/Login/page": [
       "static/chunks/webpack.js",
@@ -30,10 +24,11 @@
       "static/css/app/Login/page.css",
       "static/chunks/app/Login/page.js"
     ],
-    "/_not-found/page": [
+    "/Chat/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
+      "static/css/app/Chat/page.css",
+      "static/chunks/app/Chat/page.js"
     ]
   }
 }
