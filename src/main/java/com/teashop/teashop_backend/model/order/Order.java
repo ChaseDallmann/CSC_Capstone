@@ -19,7 +19,7 @@ public class Order {
     private Date orderDate;
 
     @Column(name = "totalAmount", nullable = false)
-    private float totalAmount;
+    private double totalAmount;
 
     @Column(name = "status", nullable = true)
     private String status;
@@ -58,11 +58,11 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public float getTotalAmount() {
+    public double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(float totalAmount) {
+    public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
 

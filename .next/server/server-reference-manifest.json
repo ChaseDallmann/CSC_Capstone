@@ -1,17 +1,5 @@
 {
-  "node": {
-    "60ec42e7bfec3de3d4782062ab88d13d43e288c184": {
-      "workers": {
-        "app/ForgotPassword/page": {
-          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fchasedallmann%2FDocuments%2FGitHub%2FCSC_Capstone%2Fapp%2FActions%2FEmails%2FsendResetEmail.ts%22%2C%5B%7B%22id%22%3A%2260ec42e7bfec3de3d4782062ab88d13d43e288c184%22%2C%22exportedName%22%3A%22sendResetEmail%22%7D%5D%5D%5D&__client_imported__=true!",
-          "async": false
-        }
-      },
-      "layer": {
-        "app/ForgotPassword/page": "action-browser"
-      }
-    }
-  },
+  "node": {},
   "edge": {},
   "encryptionKey": "fA/KUB/RuFYVTcAzQso9Qqn9N946BEtZQ733C8UEX6o="
 }

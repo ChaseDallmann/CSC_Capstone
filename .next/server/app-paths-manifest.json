@@ -1,7 +1,10 @@
 {
-  "/ForgotPassword/page": "app/ForgotPassword/page.js",
-  "/PasswordReset/[token]/page": "app/PasswordReset/[token]/page.js",
+  "/Orders/page": "app/Orders/page.js",
+  "/Cart/page": "app/Cart/page.js",
   "/page": "app/page.js",
-  "/Login/page": "app/Login/page.js",
-  "/Dashboard/page": "app/Dashboard/page.js"
+  "/User/page": "app/User/page.js",
+  "/Dashboard/page": "app/Dashboard/page.js",
+  "/Dashboard/OrderDetails/[orderID]/page": "app/Dashboard/OrderDetails/[orderID]/page.js",
+  "/Product/page": "app/Product/page.js",
+  "/Login/page": "app/Login/page.js"
 }

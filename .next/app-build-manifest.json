@@ -12,29 +12,53 @@
       "static/css/app/page.css",
       "static/chunks/app/page.js"
     ],
+    "/Product/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Product/page.css",
+      "static/chunks/app/Product/page.js"
+    ],
+    "/Cart/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Cart/page.css",
+      "static/chunks/app/Cart/page.js"
+    ],
     "/Login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/Login/page.css",
       "static/chunks/app/Login/page.js"
     ],
-    "/ForgotPassword/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/ForgotPassword/page.css",
-      "static/chunks/app/ForgotPassword/page.js"
-    ],
-    "/PasswordReset/[token]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/PasswordReset/[token]/page.css",
-      "static/chunks/app/PasswordReset/[token]/page.js"
-    ],
     "/Dashboard/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/Dashboard/page.css",
       "static/chunks/app/Dashboard/page.js"
+    ],
+    "/Orders/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Orders/page.css",
+      "static/chunks/app/Orders/page.js"
+    ],
+    "/Checkout/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Checkout/page.css",
+      "static/chunks/app/Checkout/page.js"
+    ],
+    "/Dashboard/OrderDetails/[orderID]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/Dashboard/OrderDetails/[orderID]/page.css",
+      "static/chunks/app/Dashboard/OrderDetails/[orderID]/page.js"
+    ],
+    "/User/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/User/page.css",
+      "static/chunks/app/User/page.js"
     ]
   }
 }

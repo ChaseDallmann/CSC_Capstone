@@ -34,7 +34,7 @@ export default function NavbarBasic() {
             <button onClick={handleLogout} className="logout-btn">
               Log out
             </button>
-            {userRole === "CUSTOMER_SERVICE" && <Link href="/customerService/User">Find User</Link>}
+            {userRole === "CUSTOMER_SERVICE" && <Link href="/User">Find User</Link>}
             <Link id="user-profile" href="/Dashboard" className="user-profile">Welcome, {user?.name || "User"}</Link>
           </>
         ) : (

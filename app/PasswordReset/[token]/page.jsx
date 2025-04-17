@@ -44,9 +44,34 @@ export default function PasswordResetPage({ params }) {
     
     verifyToken();
   }, [token]);
+
+  const checkPreviousPassword = async () => {
+    if (!email || !newPassword) return; // Don't check if either field is empty
+    
+    try {
+      const response = await axios.get(`http://localhost:8080/user/check-password`, {
+        params: {
+          email: email,
+          password: newPassword
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      
+      // Check if the password has been used before
+      if (response.data === false) {
+        setError('This password has been used before. Please choose a different one.');
+      }
+    }
+    catch (error) {
+      console.error('Password check error:', error);
+    }
+  };
   
   const handleSubmit = async (event) => {
     event.preventDefault();
+    checkPreviousPassword();
     
     if (!email) {
       setError('Please enter your email address');

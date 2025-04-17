@@ -21,11 +21,6 @@ import com.teashop.teashop_backend.model.user.UserRepository;
 import java.util.Optional;
 import java.lang.foreign.Linker.Option;
 import java.util.List;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -39,16 +34,14 @@ public class MainController {
     private final ManufacturerRepository manufacturerRepository;
     private final OrderRepository orderRepository;
     private final OrderDetailsRepository orderDetailsRepository;
-    private final PasswordResetTokenRepository passwordResetTokenRepository;
 
-    public MainController(UserRepository userRepository, PasswordResetTokenRepository passwordResetTokenRepository, OrderDetailsRepository orderDetailsRepository, ProductRepository productRepository, CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository, OrderRepository orderRepository) {
+    public MainController(UserRepository userRepository, OrderDetailsRepository orderDetailsRepository, ProductRepository productRepository, CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.manufacturerRepository = manufacturerRepository;
         this.orderRepository = orderRepository;
         this.orderDetailsRepository = orderDetailsRepository;
-        this.passwordResetTokenRepository = null;
     }
 
     @GetMapping("users")
@@ -79,10 +72,10 @@ public class MainController {
     }
 
     @GetMapping("user/check-password")
-    public Optional<User> getUserPreviousPassword(@RequestParam String email, @RequestParam String password) {
-        //Passing through a password to check if it matches the previous password
-        return userRepository.findByEmail(email)
-                .filter(user -> !user.getPreviousPassword().equals(password));
+    public Boolean checkPreviousPassword(@RequestParam String email, @RequestParam String password) {
+    return userRepository.findByEmail(email)
+            .map(user -> !user.getPreviousPassword().equals(password))
+            .orElse(true);
     }
 
     //Only useful for customer service

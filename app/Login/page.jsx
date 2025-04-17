@@ -37,6 +37,7 @@ const LoginPage = () => {
       );
 
       if (response.status === 200 && response.data) {
+        localStorage.removeItem("guestCart");
         handleLogin(response.data.user, response.data.token);
         router.push("/");
       }

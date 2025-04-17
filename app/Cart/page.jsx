@@ -5,11 +5,13 @@ import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import Link from "next/link";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
+import Cookies from "js-cookie";
 
 const Cart = () => {
   const { user } = useContext(AuthContext);
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const token = Cookies.get('authToken');
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -17,12 +19,17 @@ const Cart = () => {
         // Fetch cart from backend if logged in
         try {
           const response = await axios.get(`http://localhost:8080/cart/${user?.id}`, {
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            },
             withCredentials: true
           });
           
           if (response.data && Array.isArray(response.data)) {
             // Transform backend data to match the expected format if needed
             const formattedItems = response.data.map(item => ({
+              cartID: item.cartID,
               productID: item.product?.productID || item.productId || 0,
               title: item.product?.productName || item.title || "Unknown Product",
               price: item.product?.price || item.price || 0,
@@ -60,34 +67,39 @@ const Cart = () => {
     };
 
     fetchCart();
-  }, [user]);
+  }, [user, token]);
 
   // delete item from cart
-  const removeItem = (productID) => {
+  const removeItem = async (productID) => {
     if (user) {
       // Find the cart item with the correct ID to get its cartId for deletion
       const cartItem = cartItems.find(item => item.productID === productID);
       const cartID = cartItem?.cartID;
       
       if (cartID) {
-        // If we have a cartID, delete from server
-        axios.delete(`http://localhost:8080/cart/remove/${cartID}`, {
-          withCredentials: true
-        })
-          .then(() => {
-            setCartItems(cartItems.filter(item => item.productID !== productID));
-          })
-          .catch(error => {
-            console.error("Error removing item:", error);
-            
-            // Fallback to local storage if server fails
-            const userCart = JSON.parse(localStorage.getItem(`userCart_${user.id}`) || "[]");
-            const updatedUserCart = userCart.filter(item => item.productID !== productID);
-            localStorage.setItem(`userCart_${user.id}`, JSON.stringify(updatedUserCart));
-            
-            // Update UI
-            setCartItems(cartItems.filter(item => item.productID !== productID));
+        try {
+          // If we have a cartID, delete from server
+          await axios.delete(`http://localhost:8080/cart/remove/${cartID}`, {
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            },
+            withCredentials: true
           });
+          
+          // Remove from local state
+          setCartItems(cartItems.filter(item => item.productID !== productID));
+        } catch (error) {
+          console.error("Error removing item:", error);
+          
+          // Fallback to local storage if server fails
+          const userCart = JSON.parse(localStorage.getItem(`userCart_${user.id}`) || "[]");
+          const updatedUserCart = userCart.filter(item => item.productID !== productID);
+          localStorage.setItem(`userCart_${user.id}`, JSON.stringify(updatedUserCart));
+          
+          // Update UI
+          setCartItems(cartItems.filter(item => item.productID !== productID));
+        }
       } else {
         // If no cartId, just update local storage and UI
         const userCart = JSON.parse(localStorage.getItem(`userCart_${user.id}`) || "[]");
@@ -137,5 +149,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
-//get authicated user working -- adjust stock number when added to cart -- fix css -- fix delete function

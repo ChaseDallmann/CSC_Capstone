@@ -73,7 +73,7 @@ export default function Orders() {
                 ) : (
                     <ul>
                         {userOrders.map((order) => (
-                            <li key={order.id}>
+                            <li key={order.orderID} className="order-item">
                                 <p>Order ID: {order.orderID}</p>
                                 <p>Status: {order.status}</p>
                                 <p>Total Amount: ${order.totalAmount.toFixed(2)}</p>

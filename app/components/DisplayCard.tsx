@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 import Cookies from "js-cookie";
-
 
 type DisplayCardProps = {
   title: string;
@@ -23,14 +22,15 @@ export default function DisplayCard({
   price, 
   description, 
   manufacturer, 
-  stock,
+  stock: initialStock,
   productID
 }: DisplayCardProps) {
-  const { user } = useContext(AuthContext);
+  const { user, isAuthenticated } = useContext(AuthContext);
   const token = Cookies.get("authToken");
   const defaultImageUrl = "/smithTea.png";
+  const [currentStock, setCurrentStock] = useState(initialStock);
 
-  const addToCart = () => {
+  const addToCart = async () => {
     // Create item object for cart
     const numericPrice = typeof price === 'string' 
       ? parseFloat(price.replace(/[$,]/g, '')) 
@@ -41,27 +41,31 @@ export default function DisplayCard({
       title: title,
       price: numericPrice,
       quantity: 1,
-      stock: stock
+      stock: currentStock - 1 // Reduce stock locally for immediate UI update
     };
 
-    if (user) {
+    if (isAuthenticated && user) {
       // Authenticated user - add to database cart
-      axios.post(`http://localhost:8080/cart/add`, {
-        userID: user.id,
-        productID: productID,
-        quantity: 1
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        withCredentials: true
-      })
-      .then(response => {
+      try {
+        const response = await axios.post(`http://localhost:8080/cart/add`, {
+          userID: user.id,
+          productID,
+          quantity: 1
+        }, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          withCredentials: true
+        });
+        
         console.log("Item added to server cart:", response.data);
+        
+        // Update local stock display
+        setCurrentStock(prev => prev - 1);
+        
         alert("Item added to cart");
-      })
-      .catch(error => {
+      } catch (error) {
         console.error("Error adding to cart:", error);
         
         // Fallback to localStorage for authenticated users if server fails
@@ -78,8 +82,12 @@ export default function DisplayCard({
         }
         
         localStorage.setItem(`userCart_${user.id}`, JSON.stringify(userCart));
+        
+        // Update local stock display anyway for UI consistency
+        setCurrentStock(prev => prev - 1);
+        
         alert("Item added to local cart (server unavailable)");
-      });
+      }
     } else {
       // Guest user - add to localStorage
       const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
@@ -98,6 +106,10 @@ export default function DisplayCard({
       }
       
       localStorage.setItem("guestCart", JSON.stringify(guestCart));
+      
+      // Update local stock display
+      setCurrentStock(prev => prev - 1);
+      
       console.log("Item added to guest cart:", item);
       alert("Item added to cart");
     }
@@ -121,13 +133,13 @@ export default function DisplayCard({
       <p className="product-description">Description: {description}</p>
       <p className="product-manufacturer">{manufacturer}</p>
       <p className="product-price">Price: {price}</p>
-      <p className="product-stock">Stock: {stock}</p>
+      <p className="product-stock">Stock: {currentStock}</p>
       <button 
         className="product-button"
         onClick={addToCart}
-        disabled={stock <= 0}
+        disabled={currentStock <= 0}
       >
-        {stock > 0 ? "Add to cart" : "Out of stock"}
+        {currentStock > 0 ? "Add to cart" : "Out of stock"}
       </button>
     </div>
   );
