@@ -10,11 +10,12 @@ import { Eye, EyeOff } from "lucide-react";
 
 const LoginPage = () => {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginErrors, setLoginErrors] = useState("");
-  const { handleLogin, isAuthenticated } = useContext(AuthContext);
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("");
+  const [ loginErrors, setLoginErrors ] = useState("");
+  const { handleLogin, isAuthenticated, handleSavedLogin } = useContext(AuthContext);
   const [ isView, setIsView ] = useState(false);
+  const [ rememberMe, setRememberMe ] = useState(false);
 
   //Redirecting the user to the dashboard if they are already logged in
   useEffect(() => {
@@ -23,8 +24,17 @@ const LoginPage = () => {
       }
   });
 
+  const handleCheckboxChange = (event) => {
+    setRememberMe(event.target.checked);
+  };
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (rememberMe) {
+      localStorage.setItem("token", {})
+    }
 
     try {
       const response = await axios.post(
@@ -38,7 +48,11 @@ const LoginPage = () => {
 
       if (response.status === 200 && response.data) {
         localStorage.removeItem("guestCart");
-        handleLogin(response.data.user, response.data.token);
+        handleLogin(response.data.user);
+        if (rememberMe) {
+          localStorage.setItem("token", response.data.token)
+          handleSavedLogin(response.data.user, response.data.token);
+        }
         router.push("/");
       }
     } catch (error) {
@@ -84,7 +98,7 @@ const LoginPage = () => {
             </div>
             <div className="remember-me">
               <label>
-                <input type="checkbox" /> Remember me
+                <input type="checkbox" checked= {rememberMe} onChange={handleCheckboxChange} /> Remember me
               </label>
             </div>
             <button type="submit">Login</button>

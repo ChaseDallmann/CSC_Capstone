@@ -9,7 +9,7 @@ const Checkout = () => {
     const { user } = useContext(AuthContext);
     const searchParams = useSearchParams();
     const router = useRouter();
-    const total = searchParams.get('total');
+    const total = parseFloat(searchParams.get('total') || '0.00');
     const token = Cookies.get('authToken');
     const [loading, setLoading] = useState(false);
     const [orderSuccess, setOrderSuccess] = useState(false);
@@ -29,14 +29,21 @@ const Checkout = () => {
     const addOrder = async () => {
         try {
             setLoading(true);
+            let response;
+            if (!user) {
+                //TODO: In the future create a temp guest each time and add it to the database with endpoints
+                response = await axios.put(`http://localhost:8080/cart/add-order/-1`, {}, {
+                });
+            } else {
             // Call the backend endpoint to create an order from cart items
-            const response = await axios.put(`http://localhost:8080/cart/add-order/${user?.id}`, {}, {
+            response = await axios.put(`http://localhost:8080/cart/add-order/${user?.id}`, {}, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
                 withCredentials: true
             });
+            }
             
             if (response.status === 200) {
                 console.log("Order added successfully", response.data);
@@ -67,6 +74,9 @@ const Checkout = () => {
                 withCredentials: true
             });
             if (response.status === 200) {
+                if (localStorage.getItem('guestCart')) {
+                    localStorage.removeItem('guestCart')
+                }
                 console.log("Cart items removed successfully");
             } else {
                 console.error("Failed to remove cart items");
@@ -99,19 +109,19 @@ const Checkout = () => {
         }
     }
 
-    // Redirect if user is not logged in
+    // Removing user check so a guest can checkout. Possible rework the logic for guest checkout later
     useEffect(() => {
-        if (!user && !loading) {
-            router.push('/login?redirect=checkout');
+        if (orderSuccess) {
+            removeCartItems();
         }
-    }, [user, loading, router]);
+    }, [ loading, router ]);
 
     if (orderSuccess) {
         return (
             <div className="checkout-success">
                 <h1>Order Placed Successfully!</h1>
                 <p>Thank you for your purchase.</p>
-                <button onClick={() => router.push('/')}>Continue Shopping</button>
+                <button onClick={() => router.push('/Product')}>Continue Shopping</button>
             </div>
         );
     }
@@ -129,7 +139,7 @@ const Checkout = () => {
                         style={{ layout: "vertical" }}
                         createOrder={(data, actions) => onCreateOrder(data, actions)}
                         onApprove={(data, actions) => onApproveOrder(data, actions)}
-                        disabled={!user}
+                        disabled= {loading}
                     />
                 </>
             )}

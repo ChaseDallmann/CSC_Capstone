@@ -7,12 +7,17 @@
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/config/WebSocketConfig.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/controller/AuthController.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/controller/MainController.java
+/Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/controller/cart/CartController.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/controller/chat/ChatController.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/controller/chat/Message.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/controller/chat/MessageController.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/controller/login/LoginDto.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/controller/login/LoginResponse.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/controller/registration/SignUpDto.java
+/Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/cart/Cart.java
+/Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/cart/CartRepository.java
+/Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/cart/CartRequest.java
+/Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/cart/CartUpdateRequest.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/category/Category.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/category/CategoryRepository.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/model/chat/ChatMessage.java
@@ -41,5 +46,6 @@
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/security/UserDetailsImpl.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/security/UserDetailsServiceImpl.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/service/AuthenticationService.java
+/Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/service/CartService.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/service/JwtService.java
 /Users/chasedallmann/Documents/GitHub/CSC_Capstone/src/main/java/com/teashop/teashop_backend/service/ResendEmailService.java

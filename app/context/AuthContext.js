@@ -31,8 +31,10 @@ export function AuthProvider({ children }) {
   }, []);
 
   const checkAuthStatus = () => {
+
+//Checking to see if the user has a session or they had the rememberMe box selected to find the token
     const session = getClientSession();
-    if (session) {
+    if (session || localStorage.getItem("token")) {
       try {
         const decoded = jwtDecode(session.token);
         
@@ -53,18 +55,27 @@ export function AuthProvider({ children }) {
     }
   };
 
-  //Handling a user Login
-  const handleLogin = (userData, token) => {
+  //Handling a user login that is not saved
+  const handleLogin = (userData) => {
+    setUser(userData);
+    setUserRole(userData.role);
+    setIsAuthenticated(true);
+  }
+
+  //Handling a user Login that is saved
+  const handleSavedLogin = (userData, token) => {
     createClientSession(userData, token);
     setUser(userData);
     setUserRole(userData.role);
     setIsAuthenticated(true);
-    router.push("/");
   };
 
   //Handling a user Logout
   const handleLogout = () => {
     deleteClientSession();
+    if (localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+    };
     setUser(null);
     setUserRole(null);
     setIsAuthenticated(false);
@@ -76,7 +87,8 @@ export function AuthProvider({ children }) {
       user, 
       isAuthenticated, 
       userRole,
-      handleLogin, 
+      handleLogin,
+      handleSavedLogin, 
       handleLogout 
     }}>
       {children}

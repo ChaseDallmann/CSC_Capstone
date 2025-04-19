@@ -8,14 +8,14 @@ import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import Cookies from "js-cookie";
 
 const Cart = () => {
-  const { user } = useContext(AuthContext);
+  const { user, isAuthenticated } = useContext(AuthContext);
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = Cookies.get('authToken');
 
   useEffect(() => {
     const fetchCart = async () => {
-      if (user) {
+      if (isAuthenticated) {
         // Fetch cart from backend if logged in
         try {
           const response = await axios.get(`http://localhost:8080/cart/${user?.id}`, {
@@ -120,6 +120,7 @@ const Cart = () => {
   // Calculate total price
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+  //If the cart has 0 items return cart is empty, otherwise show the items price and quantity
   return (
     <>
     <NavbarBasic />
