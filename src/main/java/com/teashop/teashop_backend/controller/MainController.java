@@ -24,12 +24,16 @@ public class MainController {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ManufacturerRepository manufacturerRepository;
+    private final OrderRepository orderRepository;
+    private final OrderDetailsRepository orderDetailsRepository;
 
-    public MainController(UserRepository userRepository, ProductRepository productRepository, CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository) {
+    public MainController(UserRepository userRepository, OrderDetailsRepository orderDetailsRepository, ProductRepository productRepository, CategoryRepository categoryRepository, ManufacturerRepository manufacturerRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.manufacturerRepository = manufacturerRepository;
+        this.orderRepository = orderRepository;
+        this.orderDetailsRepository = orderDetailsRepository;
     }
 
     @GetMapping("users")
@@ -37,7 +41,55 @@ public class MainController {
             return userRepository.findAll();
         }
 
-    @GetMapping("users/{id}")
+    @GetMapping("user/check-email")
+    public Boolean emailDuplicateCheck(@RequestParam String email) {
+        // Check if the email already exists in the database
+        // If it exists, return true
+        // If it doesn't exist, return false
+        return userRepository.findByEmail(email).isPresent();
+    }
+
+    @GetMapping("user/find-by-email/{email}")
+    public Optional<User> getUserByEmail(@PathVariable String email) {
+        // Check if the email already exists in the database
+        // If it exists, return the true
+        // If it doesn't exist, return false
+        return userRepository.findByEmail(email);
+    }
+    
+    //Only useful for customer service
+    @GetMapping("orders")
+    public List<Order> getOrderById() {
+        return orderRepository.findAll();
+    }
+
+    @GetMapping("user/check-password")
+    public Boolean checkPreviousPassword(@RequestParam String email, @RequestParam String password) {
+    return userRepository.findByEmail(email)
+            .map(user -> !user.getPreviousPassword().equals(password))
+            .orElse(true);
+    }
+
+    //Only useful for customer service
+    @GetMapping("order-details")
+    public List<OrderDetails> getOrderDetails() {
+    return orderDetailsRepository.findAll();
+    }
+
+    //Mappings used for customer dashboard
+    @GetMapping("orders/{userID}")
+    public List<Order> getOrdersByUser(@PathVariable int userID) {
+        return orderRepository.findByUserID(userID);
+    }
+
+    @GetMapping("order-details/{userID}/{orderID}")
+    public List<OrderDetails> getOrderDetailsByOrder(@PathVariable int userID, @PathVariable int orderID) {
+        // Check if the order belongs to the user
+        return orderDetailsRepository.findByOrderID(orderID);
+    }
+    
+
+    @GetMapping("user/{id}")
     public ResponseEntity<User> getCustomerById(@PathVariable int id) {
         return userRepository.findById(id)
             .map(ResponseEntity::ok)

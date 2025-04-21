@@ -7,12 +7,26 @@ public class Order {
     int quantity;
     float total;
 
-    public Order(int orderID, int productID, int customerID, int quantity, float total) {
-        this.orderID = orderID;
-        this.productID = productID;
-        this.customerID = customerID;
-        this.quantity = quantity;
-        this.total = total;
+    @Column(name = "userID", nullable = false)
+    private int userID;
+
+    @Column(name = "orderDate", nullable = false)
+    private Date orderDate;
+
+    @Column(name = "totalAmount", nullable = false)
+    private double totalAmount;
+
+    @Column(name = "status", nullable = true)
+    private String status;
+
+    public Order() {
+    }
+
+    public Order(int userID, Date orderDate, float totalAmount, String status) {
+        this.userID = userID;
+        this.orderDate = orderDate;
+        this.totalAmount = totalAmount;
+        this.status = status;
     }
 
     public int getOrderID() {
@@ -39,12 +53,12 @@ public class Order {
         this.customerID = customerID;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public double getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public float getTotal() {
