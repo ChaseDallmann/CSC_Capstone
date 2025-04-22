@@ -7,6 +7,7 @@ import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import { AuthContext } from '../Context/AuthContext';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import Checkout from '../components/Checkout/Checkout';
+import { Suspense } from 'react';
 
 
 /* Insert client-id from Paypal sandbox*/
@@ -18,12 +19,15 @@ const initialOptions = {
 
 const CheckoutPage = () => {
     return (
-        <>
-            <NavbarBasic />
-            <PayPalScriptProvider options={initialOptions}>
-                <Checkout />
-            </PayPalScriptProvider>
-        </>
+      <>
+        <NavbarBasic />
+        <PayPalScriptProvider options={initialOptions}>
+          <Suspense fallback={<div>Loading checkout...</div>}>
+            <Checkout />
+          </Suspense>
+        </PayPalScriptProvider>
+      </>
     );
-};
+  };
+  
 export default CheckoutPage;

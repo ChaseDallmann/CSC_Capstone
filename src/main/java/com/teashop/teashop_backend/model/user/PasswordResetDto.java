@@ -1,5 +1,10 @@
 package com.teashop.teashop_backend.model.user;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class PasswordResetDto {
     private String email;
     private String newPassword;

@@ -11,14 +11,12 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-import com.teashop.teashop_backend.controller.AuthController;
 import com.teashop.teashop_backend.service.JwtService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,8 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
 
-    private AuthenticationManager authenticationManager;
-    private final AuthController authController;
     private final JwtService jwtService;
     private final ApplicationConfiguration applicationConfiguration;
 
@@ -101,5 +97,4 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
             .setAllowedOriginPatterns("*")
             .withSockJS();
         }
-
 }

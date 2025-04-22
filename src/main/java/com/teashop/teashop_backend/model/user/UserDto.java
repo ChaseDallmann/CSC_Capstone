@@ -3,7 +3,11 @@ package com.teashop.teashop_backend.model.user;
 import com.teashop.teashop_backend.model.user.User.Role;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Data
 public class UserDto {
     private Integer id;

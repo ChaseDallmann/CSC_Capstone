@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from "react";
-import { useRouter, usePathname, redirect } from "next/navigation";
+import React, { useState, useEffect, useCallback } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import { 
   createClientSession, 
@@ -25,26 +25,31 @@ export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null);
 
-  // Check authentication on mount and route changes
-  useEffect(() => {
-    checkAuthStatus();
+
+  // Handling a user Logout
+  const handleLogout = useCallback(() => {
+    deleteClientSession();
+    if (localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+    }
+    setUser(null);
+    setUserRole(null);
+    setIsAuthenticated(false);
   }, []);
 
-  const checkAuthStatus = () => {
-
-//Checking to see if the user has a session or they had the rememberMe box selected to find the token
+  // Check authentication on mount and route changes
+  const checkAuthStatus = useCallback(() => {
     const session = getClientSession();
     if (session || localStorage.getItem("token")) {
       try {
         const decoded = jwtDecode(session.token);
-        
+
         // Check token expiration
         if (decoded.exp * 1000 < Date.now()) {
           handleLogout();
           return;
         }
 
-        //Setting the user values from the session cookie
         setUser(session.user);
         setUserRole(session.user.role);
         setIsAuthenticated(true);
@@ -53,16 +58,20 @@ export function AuthProvider({ children }) {
         handleLogout();
       }
     }
-  };
+  }, [handleLogout]);
 
-  //Handling a user login that is not saved
+  useEffect(() => {
+    checkAuthStatus();
+  }, [checkAuthStatus]);
+
+  // Handling a user login that is not saved
   const handleLogin = (userData) => {
     setUser(userData);
     setUserRole(userData.role);
     setIsAuthenticated(true);
-  }
+  };
 
-  //Handling a user Login that is saved
+  // Handling a user Login that is saved
   const handleSavedLogin = (userData, token) => {
     createClientSession(userData, token);
     setUser(userData);
@@ -70,25 +79,13 @@ export function AuthProvider({ children }) {
     setIsAuthenticated(true);
   };
 
-  //Handling a user Logout
-  const handleLogout = () => {
-    deleteClientSession();
-    if (localStorage.getItem("token")) {
-      localStorage.removeItem("token");
-    };
-    setUser(null);
-    setUserRole(null);
-    setIsAuthenticated(false);
-  };
-
-  //Returning the context to be used throughout react
   return (
     <AuthContext.Provider value={{ 
       user, 
       isAuthenticated, 
       userRole,
       handleLogin,
-      handleSavedLogin, 
+      handleSavedLogin,
       handleLogout 
     }}>
       {children}

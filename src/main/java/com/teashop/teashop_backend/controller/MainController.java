@@ -13,13 +13,10 @@ import com.teashop.teashop_backend.model.order.OrderDetailsRepository;
 import com.teashop.teashop_backend.model.order.OrderRepository;
 import com.teashop.teashop_backend.model.product.Product;
 import com.teashop.teashop_backend.model.product.ProductRepository;
-import com.teashop.teashop_backend.model.user.PasswordResetToken;
-import com.teashop.teashop_backend.model.user.PasswordResetTokenRepository;
 import com.teashop.teashop_backend.model.user.User;
 import com.teashop.teashop_backend.model.user.UserRepository;
 
 import java.util.Optional;
-import java.lang.foreign.Linker.Option;
 import java.util.List;
 
 

@@ -1,5 +1,10 @@
 package com.teashop.teashop_backend.model.user;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class PasswordChangeDto {
     private int userId;
     private String currentPassword;

@@ -130,10 +130,10 @@ export default function DisplayCard({
         />
       </div>
       <h3 className="product-title">{title}</h3>
-      <p className="product-description">Description: {description}</p>
+      <p className="product-description">{description}</p>
       <p className="product-manufacturer">{manufacturer}</p>
-      <p className="product-price">Price: {price}</p>
-      <p className="product-stock">Stock: {currentStock}</p>
+      <p className="product-price"> ${price}</p>
+      <p className="product-stock">Quantity On Hand:{currentStock}</p>
       <button 
         className="product-button"
         onClick={addToCart}

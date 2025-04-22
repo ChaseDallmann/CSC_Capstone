@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { AuthContext } from '../../Context/AuthContext';

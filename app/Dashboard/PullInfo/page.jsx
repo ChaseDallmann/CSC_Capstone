@@ -6,25 +6,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import NavbarBasic from "../../components/NavbarBasic/NavbarBasic";
 import { redirect, useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
-
-export const fetchAccountInfo = async (userId) => {
-    const token = Cookies.get('authToken');
-
-    try {
-        const response = await axios.get(`http://localhost:8080/user/${userId}`, {
-            headers: { 
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            withCredentials: true
-        });
-        
-        return response.data;
-    } catch (error) {
-        console.error('Failed to fetch account info:', error);
-        throw error;
-    }
-};
+import { fetchAccountInfo } from "../../components/FetchAccountInfo/FetchAccountInfo";
 
 const AccountInfo = () => {
     const [accountInfo, setAccountInfo] = useState(null);

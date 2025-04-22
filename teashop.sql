@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 09, 2025 at 03:49 PM
+-- Generation Time: Apr 19, 2025 at 08:56 PM
 -- Server version: 8.0.39
 -- PHP Version: 8.2.23
 
@@ -137,7 +137,9 @@ INSERT INTO `orderDetails` (`orderDetailID`, `orderID`, `productID`, `qty`, `ord
 (1, 1, 2, 1, 3.99),
 (2, 2, 2, 1, 13.49),
 (3, 4, 4, 1, 13.99),
-(4, 4, 5, 3, 23.99);
+(4, 4, 5, 3, 23.99),
+(5, 5, 3, 1, 14.99),
+(6, 5, 6, 1, 14.99);
 
 -- --------------------------------------------------------
 
@@ -161,7 +163,9 @@ INSERT INTO `orders` (`orderID`, `userID`, `orderDate`, `totalAmount`, `status`)
 (1, 35, '2025-04-02 07:49:48', 3.99, 'pending'),
 (2, 35, '2025-04-03 10:40:37', 13.49, 'completed'),
 (3, 35, '2025-04-07 12:24:52', 74.99, 'processing'),
-(4, 35, '2025-04-07 12:25:11', 74.99, 'processing');
+(4, 35, '2025-04-07 12:25:11', 74.99, 'processing'),
+(5, 35, '2025-04-16 16:45:02', 29.98, 'Paid'),
+(10, -1, '2025-04-18 12:20:12', 0.00, 'Paid');
 
 -- --------------------------------------------------------
 
@@ -175,6 +179,13 @@ CREATE TABLE `passwordResetToken` (
   `userID` int NOT NULL,
   `expiryDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `passwordResetToken`
+--
+
+INSERT INTO `passwordResetToken` (`id`, `token`, `userID`, `expiryDate`) VALUES
+(24, 'SiheNzVGsX_yCArODO2BWrAdLTl0oA9NbeZKXO_bzP4', 35, '2025-04-10 20:13:26');
 
 -- --------------------------------------------------------
 
@@ -198,11 +209,11 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`productID`, `productName`, `productDescription`, `price`, `imageURL`, `productInventory`, `categoryid`, `manufacturerid`) VALUES
-(1, 'Boba Tea', 'A delicious boba tea', 10.99, 'https://insanelygoodrecipes.com/wp-content/uploads/2023/05/Refreshing-Boba-Milk-Tea-with-Pearls.jpg', 10, 2, 1),
-(2, 'Organic Turmeric', 'Loose Leaf 2 OZ', 11.99, 'https://static.trotcdn.com/images/1000/V20245_2.jpg', 10, 2, 1),
+(1, 'Boba Tea', 'A delicious boba tea with chewy tapioca pearls', 10.99, 'https://insanelygoodrecipes.com/wp-content/uploads/2023/05/Refreshing-Boba-Milk-Tea-with-Pearls.jpg', 10, 2, 1),
+(2, 'Organic Turmeric', 'Loose Leaf 2 OZ', 11.99, 'https://static.trotcdn.com/images/1000/V20245_2.jpg', 11, 2, 1),
 (3, 'Organic Earl Grey', 'Loose Leaf 2 OZ', 14.99, 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.YLWIAJb-2IC3PxfUznIzJgHaE7%26pid%3DApi&f=1&ipt=8d60c862465f0b505fb6d48da32d340311efc806c03be9a8633c9cc750a806d5&ipo=images', 10, 1, 1),
 (4, 'Vanilla', 'Loose Leaf 2 OZ', 12.99, 'https://www.kroger.com/product/images/large/back/0007231000165', 10, 1, 1),
-(5, 'Organic Oolong', 'Loose Leaf 2 OZ', 16.99, 'https://n4.sdlcdn.com/imgs/h/2/3/Teafloor-Organic-Oolong-Tea-Loose-SDL775610821-2-2f99c.jpg', 10, 4, 1),
+(5, 'Organic Oolong', 'A fragrant and floral oolong tea', 16.99, 'https://n4.sdlcdn.com/imgs/h/2/3/Teafloor-Organic-Oolong-Tea-Loose-SDL775610821-2-2f99c.jpg', 10, 4, 1),
 (6, 'Organic Royal Oolong', 'Loose Leaf 2 OZ', 14.99, 'https://www.organicfacts.net/wp-content/uploads/oolongtea-1.jpg', 10, 4, 1),
 (7, 'Mutan White', 'Loose Leaf 1.5 OZ ', 11.00, 'https://uptownteashop.com/cdn/shop/files/uptown-tea-shop-fb-organic-mutan-white-tea_1500x.jpg?v=1710343364', 10, 3, 3),
 (8, 'Chamomile Tea Bags', '8 OZ', 7.99, 'https://www.bestofhungary.co.uk/cdn/shop/files/ChamomileTeaBags.jpg?crop=center&height=1500&v=1716715128&width=1500', 10, 5, 2),
@@ -233,6 +244,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userID`, `role`, `firstName`, `lastName`, `email`, `streetAddress`, `city`, `state`, `zipcode`, `password`, `previousPassword`) VALUES
+(-1, 'CUSTOMER', 'Guest', 'User', 'guestuser@ace-teas.com', '1234 Fake St', 'Fake', 'Fake', 12345, NULL, NULL),
 (1, 'CUSTOMER', 'Natasha', 'Czaplewski', 'czaplewn@csp.edu', '123 Main Street', 'Winona', 'Minnesota', 55987, 'admin', NULL),
 (11, 'CUSTOMER', 'FRYPD', 'RKROL', 'VI938@hotmail.com', '732 QQRX', 'VMMVF', 'NFE', 28785, 'QDXBU395', NULL),
 (13, 'CUSTOMER', 'REOPK', 'OAUVT', 'WZ567@hotmail.com', '163 TWNS', 'QCNKR', 'BYZ', 93872, 'KRZTM782', NULL),
@@ -245,7 +257,7 @@ INSERT INTO `user` (`userID`, `role`, `firstName`, `lastName`, `email`, `streetA
 (30, 'CUSTOMER', 'John', 'Doe', 'trial@aceteas.com', '1234 Fake St Unit D', 'MINNEAPOLIS', 'MN', 55112, '$2a$10$Woaw7TYtdUzXrSbtVvwEC.Ay0gISsohakq3RloxZx6lmBbkfADpqO', NULL),
 (31, 'CUSTOMER', 'John', 'Doe', 'fake@csp.edu', '', '', 'MN', 55449, '$2a$10$EeMQ6XFfNIxBMa28mQf8xeVx4v.yFREo7fpRQvkvtWycFmz1n/GwW', NULL),
 (33, 'CUSTOMER', 'Chase', 'Test', 'trial@test.com', '1234 Fake St Unit D', 'MINNEAPOLIS', 'MN', 55113, '$2a$10$BoU.vRlFGmk2oXvCkKHHpu2mIPJbP3VJuMNLkjuoJ1UK9OZd9sdMS', NULL),
-(35, 'CUSTOMER_SERVICE', 'Chase', 'Dallmann', 'dallmanc@csp.edu', '11720 Vermillion St Ne Unit D ', 'Blaine', 'MN', 55449, '$2a$10$ULFJv2pv6KIbtpCqmsRvf.a0Q1VVP/XobM2JrbREljwTdPx9iOjGe', NULL),
+(35, 'CUSTOMER_SERVICE', 'Chase', 'Dallmann', 'dallmanc@csp.edu', '11720 Vermillion St Ne Unit D ', 'Blaine', 'MN', 55449, '$2a$10$wxCHJmwY6hutMzRi8U1Yius0rbbKzD7.znGTmBxZvK0CRx9tZb20G', '$2a$10$wxCHJmwY6hutMzRi8U1Yius0rbbKzD7.znGTmBxZvK0CRx9tZb20G'),
 (36, 'CUSTOMER', 'Chase', 'Dallmann', 'blastoff@csp.edu', '11720 Vermillion St Ne D', 'Blaine', 'MN', 55449, '$2a$10$XAVUSi2XXP4ADK8Wg1HD5uwoZnAMDyYdqLSXmwO0ZZqVtycXm2hyG', NULL);
 
 --
@@ -321,7 +333,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cartID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `cartID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -345,19 +357,19 @@ ALTER TABLE `manufacturer`
 -- AUTO_INCREMENT for table `orderDetails`
 --
 ALTER TABLE `orderDetails`
-  MODIFY `orderDetailID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `orderDetailID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `orderID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `passwordResetToken`
 --
 ALTER TABLE `passwordResetToken`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `product`

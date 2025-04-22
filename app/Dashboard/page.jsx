@@ -5,7 +5,7 @@ import { redirect, useRouter } from 'next/navigation';
 import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
 import Link from 'next/link';
 import { AuthContext } from '../Context/AuthContext';
-import { fetchAccountInfo } from '../Dashboard/PullInfo/page';
+import { fetchAccountInfo } from '../components/FetchAccountInfo/FetchAccountInfo';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
