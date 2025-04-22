@@ -16,14 +16,12 @@ import com.teashop.teashop_backend.config.JwtAuthenticationFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final ApplicationConfiguration applicationConfiguration;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
 
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, AuthenticationProvider authenticationProvider, ApplicationConfiguration applicationConfiguration) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.authenticationProvider = authenticationProvider;
-        this.applicationConfiguration = applicationConfiguration;
     }
 
     @Bean

@@ -61,11 +61,17 @@ export default function DisplayCard({ productID, title, imageSrc, price, descrip
         <p>No image available</p>
       )}
       <h3 className="product-title">{title}</h3>
-      <p className="product-description">Description: {description}</p>
+      <p className="product-description">{description}</p>
       <p className="product-manufacturer">{manufacturer}</p>
-      <p className="product-price">Price: {price}</p>
-      <p className="product-stock">Stock: {stock}</p>
-      <button onClick={handleAddToCart} className="product-button">Add to cart</button>
+      <p className="product-price"> ${price}</p>
+      <p className="product-stock">Quantity On Hand:{currentStock}</p>
+      <button 
+        className="product-button"
+        onClick={addToCart}
+        disabled={currentStock <= 0}
+      >
+        {currentStock > 0 ? "Add to cart" : "Out of stock"}
+      </button>
     </div>
   );
 }

@@ -4,7 +4,10 @@ import React, { useContext, useEffect } from 'react';
 import { redirect, useRouter } from 'next/navigation';
 import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
 import Link from 'next/link';
-import { AuthContext, AuthProvider } from '../Context/AuthContext';
+import { AuthContext } from '../Context/AuthContext';
+import { fetchAccountInfo } from '../components/FetchAccountInfo/FetchAccountInfo';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default function Dashboard() {
   const { loggedInStatus, authenticatedUser, user, userRole, handleLogout } = React.useContext(AuthContext);

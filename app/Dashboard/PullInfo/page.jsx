@@ -4,6 +4,9 @@ import axios from "axios";
 import { AuthContext } from "../../Context/AuthContext";
 import React, { useEffect, useState, useContext } from 'react';
 import NavbarBasic from "../../components/NavbarBasic/NavbarBasic";
+import { redirect, useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+import { fetchAccountInfo } from "../../components/FetchAccountInfo/FetchAccountInfo";
 
 const AccountInfo = () => {
     const [accountInfo, setAccountInfo] = useState([]);

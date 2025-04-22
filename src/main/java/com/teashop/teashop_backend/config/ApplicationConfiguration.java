@@ -1,7 +1,5 @@
 package com.teashop.teashop_backend.config;
 
-import java.util.logging.Logger;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,8 +15,6 @@ import com.teashop.teashop_backend.model.user.UserRepository;
 @Configuration
 public class ApplicationConfiguration {
 
-    private final UserDetailsService userDetailsService;
-    private final static Logger LOGGER = Logger.getLogger(ApplicationConfiguration.class.getName());
     private final UserRepository userRepository;
 
     public ApplicationConfiguration(UserRepository userRepository, UserDetailsService userDetailsService) {
