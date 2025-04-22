@@ -1,0 +1,46 @@
+Password Reset:
+https://sumansourabh.in/how-to-create-a-password-reset-flow-in-next-js/
+https://medium.com/@sanyamm/complete-guide-password-reset-and-authentication-in-next-js-with-auth-js-nextauth-v5-fcf540b2a8fb
+
+JWT cookie storage:
+https://medium.com/@ryanchenkie_40935/react-authentication-how-to-store-jwt-in-a-cookie-346519310e81
+
+CRUD w/React and MYSQL:
+https://medium.com/@vishnukvka/crud-app-using-react-and-mysql-ddf19f032b40
+https://github.com/dhanavishnu13/CRUD_with_React_Node.js_MySQL/tree/main
+
+CORS handling/References:
+https://www.baeldung.com/spring-cors
+
+React session managemet and authentication:
+https://nextjs.org/docs/app/building-your-application/authentication
+https://dev.to/miracool/how-to-manage-user-authentication-with-react-js-3ic5
+https://github.com/jordanhudgens/react-auth-app
+https://www.youtube.com/watch?v=1BwBPgAauP0&list=PLeDFPvjs51fOVWt4q_UjNNo9JW6QSQ43O&index=2
+
+Database changes via nextJS and springboot:
+https://medium.com/@karlos-b/database-project-e-commerce-order-management-system-with-sql-d986b044d92
+https://docs.spring.io/spring-data/jpa/docs/1.6.0.RELEASE/reference/html/jpa.repositories.html
+
+
+https://www.devglan.com/online-tools/hmac-sha256-online
+CSC450
+teashop
+sha256
+
+Sending emails via React:
+https://dev.to/shahmir049/how-to-send-emails-using-nextjs-14-resend-and-react-email-2b7g
+
+Scrollball implementation:
+https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar
+
+Springboot backend development:
+https://www.fullstackbook.com/blog/full-stack-spring-boot-nextjs-tutorial
+https://www.youtube.com/watch?v=31KTdfRH6nY
+
+
+Bug fix resources:
+https://javascript.plainenglish.io/next-js-14-how-to-redirect-without-flashing-the-page-for-a-moment-5b202bc60cb9 redirect without flash
+https://medium.com/@poojithairosha/spring-boot-3-authenticate-websocket-connections-with-jwt-tokens-2b4ff60532b6 JWT websocket auth
+
+

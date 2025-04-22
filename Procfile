@@ -1,0 +1,1 @@
+web: java -Dspring.profiles.active=prod -jar target/teashop-backend-0.0.1-SNAPSHOT.jar

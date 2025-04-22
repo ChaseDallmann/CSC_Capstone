@@ -1,0 +1,50 @@
+{
+  "name": "capstone-prj",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@next/swc-darwin-arm64": "^15.2.2",
+    "@paypal/react-paypal-js": "^8.8.2",
+    "@react-email/components": "^0.0.36",
+    "@react-email/render": "^1.0.6",
+    "@stomp/stompjs": "^7.1.0",
+    "axios": "^1.8.3",
+    "bcrypt": "^5.1.1",
+    "framer-motion": "^12.4.3",
+    "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.487.0",
+    "next": "^15.2.4",
+    "nodemailer": "^6.10.0",
+    "paypal": "^1.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-email": "^4.0.4",
+    "react-paypal-js": "^0.0.1-security",
+    "react-router-dom": "^7.3.0",
+    "resend": "^4.2.0",
+    "sockjs": "^0.3.24",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/cookie": "^0.6.0",
+    "@types/estree": "^1.0.6",
+    "@types/js-cookie": "^3.0.6",
+    "@types/json-schema": "^7.0.15",
+    "@types/json5": "^0.0.30",
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.10",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.7",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}
