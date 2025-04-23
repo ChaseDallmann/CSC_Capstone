@@ -33,6 +33,9 @@
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3"
   },
+  "optionalDependencies": {
+  "@next/swc-linux-x64-gnu": "15.2.4"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@swc/cli": "^0.7.3",
