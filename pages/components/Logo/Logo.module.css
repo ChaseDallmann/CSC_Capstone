@@ -1,0 +1,11 @@
+.logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem;
+  }
+  
+  .logoImage {
+    width: 220px;
+    height: auto;
+  }
