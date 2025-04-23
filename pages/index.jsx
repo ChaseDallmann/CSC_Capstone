@@ -7,7 +7,7 @@ import Storefront from "./components/Storefront";
 import Hero from "./components/Hero";
 import MissionCard from "./components/MissionCard/MissionCard";
 import { AuthContext, AuthProvider } from './Context/AuthContext';
-import Router, { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 export default function Home() {
   const router = useRouter();
@@ -17,7 +17,7 @@ export default function Home() {
 
   useEffect(() => {
     { userRole === "CUSTOMER_SERVICE" &&
-      router.refresh;
+      router.push('/Dashboard');
     }
     const handleScroll = () => {
       setScrolled(window.scrollY > 300);
