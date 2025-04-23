@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useContext, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { AuthContext } from "../Context/AuthContext";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import axios from "axios";
@@ -30,7 +30,7 @@ export default function CustomerServiceSearch() {
         try {
             const token = Cookies.get('authToken');
             const response = await axios.get(
-                `http://localhost:8080/user/find-by-email/${searchTerm}`, {
+                `${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080'}/user/find-by-email/${searchTerm}`, {
                 headers: { 
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -71,7 +71,8 @@ export default function CustomerServiceSearch() {
             const token = Cookies.get('authToken');
 
             // Determine search endpoint based on search type
-            const searchEndpoint = `http://localhost:8080/user/${searchTerm}`
+            const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
+            const searchEndpoint = `${apiUrl}/user/${searchTerm}`
 
             // Make API call
             const response = await axios.get(searchEndpoint, {
