@@ -1,0 +1,29 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install --no-optional
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+  customHeaders:
+    - pattern: '**/*'
+      headers:
+        - key: 'Cache-Control'
+          value: 'public, max-age=0, must-revalidate'
+    - pattern: 'static/**/*'
+      headers:
+        - key: 'Cache-Control'
+          value: 'public, max-age=31536000, immutable'
+  environment:
+    variables:
+      BACKEND_URL: http://teashop-backend.eba-pmfpikpv.us-east-1.elasticbeanstalk.com
+      NEXT_PUBLIC_BACKEND_URL: http://teashop-backend.eba-pmfpikpv.us-east-1.elasticbeanstalk.com
