@@ -6,13 +6,6 @@ import { useRouter } from 'next/navigation';
 import NavbarBasic from "../../components/NavbarBasic/NavbarBasic";
 import Link from 'next/link';
 
-// Add this function to generate static paths for the static export
-export function generateStaticParams() {
-  // For static exports, return an empty array or placeholders
-  // Since you can't know all possible tokens at build time
-  return [];
-}
-
 export default function PasswordResetPage({ params }) {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -23,14 +16,22 @@ export default function PasswordResetPage({ params }) {
   const [tokenValid, setTokenValid] = useState(true);
   
   const router = useRouter();
-  // Use props instead of React.use for params to avoid issues with static generation
-  const token = params.token;
+  // Get token from params
+  const token = params?.token;
   
   // Check token validity on component mount
   useEffect(() => {
     const verifyToken = async () => {
+      if (!token) {
+        setTokenValid(false);
+        setError('Invalid password reset link.');
+        return;
+      }
+      
       try {
-        const response = await axios.get(`http://localhost:8080/auth/verify-token`,
+        // Replace with your API URL in production
+        const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+        const response = await axios.get(`${apiBaseUrl}/auth/verify-token`,
           {
             params: { token },
             headers: {
@@ -49,38 +50,11 @@ export default function PasswordResetPage({ params }) {
       }
     };
     
-    if (token) {
-      verifyToken();
-    }
+    verifyToken();
   }, [token]);
 
-  const checkPreviousPassword = async () => {
-    if (!email || !newPassword) return; // Don't check if either field is empty
-    
-    try {
-      const response = await axios.get(`http://localhost:8080/user/check-password`, {
-        params: {
-          email: email,
-          password: newPassword
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      
-      // Check if the password has been used before
-      if (response.data === false) {
-        setError('This password has been used before. Please choose a different one.');
-      }
-    }
-    catch (error) {
-      console.error('Password check error:', error);
-    }
-  };
-  
   const handleSubmit = async (event) => {
     event.preventDefault();
-    checkPreviousPassword();
     
     if (!email) {
       setError('Please enter your email address');
@@ -92,7 +66,7 @@ export default function PasswordResetPage({ params }) {
       return;
     }
     
-    if (newPassword.length < 6) {
+    if (newPassword.length < 8) { // Changed from 6 to 8 to match error message
       setError('Password must be at least 8 characters long');
       return;
     }
@@ -101,7 +75,9 @@ export default function PasswordResetPage({ params }) {
     setError('');
     
     try {
-      const response = await axios.post('http://localhost:8080/auth/reset-password', {
+      // Replace with your API URL in production
+      const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+      const response = await axios.post(`${apiBaseUrl}/auth/reset-password`, {
         email: email,
         token: token,
         newPassword: newPassword
@@ -127,7 +103,12 @@ export default function PasswordResetPage({ params }) {
       if (error.response?.status === 401 && error.response?.data?.message?.includes('token')) {
         setError('This password reset link has expired or is invalid. Please request a new one.');
         setTokenValid(false);
-      } else {
+      } 
+      // Handle specific error for previous password
+      else if (error.response?.status === 400 && error.response?.data?.message?.includes('used before')) {
+        setError('This password has been used before. Please choose a different one.');
+      }
+      else {
         setError(error.response?.data?.message || 'An error occurred while resetting your password');
       }
     } finally {
