@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/swc-darwin-arm64": "^15.2.2",
     "@paypal/react-paypal-js": "^8.8.2",
     "@react-email/components": "^0.0.36",
     "@react-email/render": "^1.0.6",
@@ -35,6 +34,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@swc/cli": "^0.7.3",
+    "@swc/core": "^1.11.21",
     "@types/cookie": "^0.6.0",
     "@types/estree": "^1.0.6",
     "@types/js-cookie": "^3.0.6",
