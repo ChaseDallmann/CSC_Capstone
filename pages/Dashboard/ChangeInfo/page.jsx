@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useContext, useEffect } from 'react';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { AuthContext, AuthProvider } from '../../Context/AuthContext';

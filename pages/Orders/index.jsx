@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useContext, useEffect, useState } from 'react';
-import { redirect, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
 import Link from 'next/link';
 import { AuthContext } from '../Context/AuthContext';
@@ -34,7 +34,7 @@ export default function Orders() {
         try {
             const token = Cookies.get('authToken');
             const response = await axios.get(
-                `http://localhost:8080/orders/${user?.id}`, {
+                `${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080'}/orders/${user?.id}`, {
                 headers: { 
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ export default function Orders() {
 
     useEffect(() => {
         if (!isAuthenticated) {
-            redirect('/');
+            router.push('/');
         } else if (user?.id) {
             loadUserData();
             showUserOrders();
