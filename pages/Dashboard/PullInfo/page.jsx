@@ -4,7 +4,7 @@ import axios from "axios";
 import { AuthContext } from "../../Context/AuthContext";
 import React, { useEffect, useState, useContext } from 'react';
 import NavbarBasic from "../../components/NavbarBasic/NavbarBasic";
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import { fetchAccountInfo } from "../../components/FetchAccountInfo/FetchAccountInfo";
 
@@ -37,7 +37,7 @@ const AccountInfo = () => {
             loadAccountInfo();
         } else {
             setIsLoading(false);
-            redirect('/Login');
+            router.push('/Login');
         }
     }, [isAuthenticated, user]);
 

@@ -2,7 +2,7 @@
 'use client';
 
 import React from 'react';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import { AuthContext } from '../Context/AuthContext';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';

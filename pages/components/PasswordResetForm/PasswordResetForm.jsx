@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 export default function PasswordResetForm({ token }) {
@@ -19,7 +19,8 @@ export default function PasswordResetForm({ token }) {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/auth/verify-token`, {
+        const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
+        const response = await axios.get(`${apiUrl}/auth/verify-token`, {
           params: { token },
           headers: { 'Content-Type': 'application/json' }
         });
@@ -40,7 +41,8 @@ export default function PasswordResetForm({ token }) {
     if (!email || !newPassword) return;
 
     try {
-      const response = await axios.get(`http://localhost:8080/user/check-password`, {
+      const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
+      const response = await axios.get(`${apiUrl}/user/check-password`, {
         params: { email, password: newPassword },
         headers: { 'Content-Type': 'application/json' }
       });
@@ -76,7 +78,8 @@ export default function PasswordResetForm({ token }) {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/reset-password', {
+      const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
+      const response = await axios.post(`${apiUrl}/auth/reset-password`, {
         email,
         token,
         newPassword
