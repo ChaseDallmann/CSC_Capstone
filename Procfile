@@ -1,1 +1,1 @@
-web: java -jar target/teashop-backend.war
+web: java -jar app.jar

@@ -1,0 +1,22 @@
+IMPORTANT: READ THIS BEFORE DEPLOYING
+
+You'll need to create an environment with these variables in AWS Elastic Beanstalk:
+
+SPRING_PROFILES_ACTIVE=prod
+SERVER_PORT=5000
+JWT_SECRET_KEY=a6f494dc548b1f7b4daf4e4e1fe6b2fa45c9a08612a0a1e8d429ca7a0d17cd9d
+FRONTEND_URL=http://localhost:3000
+RESEND_API_KEY=re_hsBbHELG_4yUt569fziLCWPA3bZ21LfpB
+RDS_HOSTNAME=teashop.ce2iyzc1nkh9.us-east-1.rds.amazonaws.com
+RDS_PORT=3306
+RDS_DB_NAME=teashop
+RDS_USERNAME=admin
+RDS_PASSWORD=TeaShop!1234
+JAVA_TOOL_OPTIONS=-Xms512m -Xmx1g -XX:+UseG1GC -XX:+UseContainerSupport
+
+When creating the environment:
+1. Choose Corretto 21
+2. Upload the JAR file (target/teashop-backend.jar)
+3. Configure the environment variables above
+4. Use t2.small instance type for adequate memory
+5. Configure your desired networking/security settings
