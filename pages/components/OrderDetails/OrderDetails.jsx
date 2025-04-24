@@ -1,11 +1,14 @@
 
+'use client'
+
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import NavbarBasic from '../../components/NavbarBasic/NavbarBasic';
-import { AuthContext } from '../../Context/AuthContext';
+import NavbarBasic from '../../../components/NavbarBasic/NavbarBasic';
+import { AuthContext } from '../../../utils/auth-context';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 export default function OrderDetails() {
   const router = useRouter();
