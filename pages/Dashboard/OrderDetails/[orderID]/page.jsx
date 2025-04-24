@@ -1,4 +1,4 @@
-import OrderDetails from '../../OrderDetails/OrderDetails';
+import OrderDetails from '../../../components/OrderDetails/OrderDetails';
 import NavbarBasic from '../../../components/NavbarBasic/NavbarBasic';
 
 export const dynamic = 'force-dynamic';

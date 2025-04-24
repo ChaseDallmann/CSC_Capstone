@@ -1,17 +1,16 @@
-'use client';
 
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import NavbarBasic from '../../../components/NavbarBasic/NavbarBasic';
-import { AuthContext } from '../../../Context/AuthContext';
+import { useRouter } from 'next/router';
+import NavbarBasic from '../../components/NavbarBasic/NavbarBasic';
+import { AuthContext } from '../../Context/AuthContext';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 
 export default function OrderDetails() {
-  const { orderID } = useParams();
-  const { isAuthenticated, user } = useContext(AuthContext);
   const router = useRouter();
+  const { orderID } = router.query;
+  const { isAuthenticated, user } = useContext(AuthContext);
   const [orderDetails, setOrderDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,8 +28,16 @@ export default function OrderDetails() {
     const fetchProductsMap = async () => {
       try {
         const token = Cookies.get('authToken');
+        
+        // Ensure API URL has https:// prefix
+        let apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+        if (apiUrl && !apiUrl.startsWith('http')) {
+          apiUrl = 'https://' + apiUrl;
+        }
+        
+        console.log('Fetching products from:', `${apiUrl}/products`);
         const response = await axios.get(
-          `http://localhost:8080/products`, {
+          `${apiUrl}/products`, {
           headers: { 
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -53,8 +60,16 @@ export default function OrderDetails() {
     const showUserOrders = async () => {
       try {
         const token = Cookies.get('authToken');
+        
+        // Ensure API URL has https:// prefix
+        let apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+        if (apiUrl && !apiUrl.startsWith('http')) {
+          apiUrl = 'https://' + apiUrl;
+        }
+        
+        console.log('Fetching user orders from:', `${apiUrl}/orders/${user?.id}`);
         const response = await axios.get(
-          `http://localhost:8080/orders/${user?.id}`, {
+          `${apiUrl}/orders/${user?.id}`, {
           headers: { 
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -86,8 +101,16 @@ export default function OrderDetails() {
       try {
         setIsLoading(true);
         const token = Cookies.get('authToken');
+        
+        // Ensure API URL has https:// prefix
+        let apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+        if (apiUrl && !apiUrl.startsWith('http')) {
+          apiUrl = 'https://' + apiUrl;
+        }
+        
+        console.log('Fetching order details from:', `${apiUrl}/order-details/${user?.id}/${orderID}`);
         const response = await axios.get(
-          `http://localhost:8080/order-details/${user?.id}/${orderID}`, {
+          `${apiUrl}/order-details/${user?.id}/${orderID}`, {
           headers: { 
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
