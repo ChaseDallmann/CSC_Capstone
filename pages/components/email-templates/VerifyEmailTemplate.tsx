@@ -1,18 +1,6 @@
-import * as React from 'react';
+// This is a placeholder component to satisfy Next.js expectations
+// The real functionality has been moved to /utils/emails/verify-email-template.tsx
 
-interface VerifyEmailEmailTemplateProps {
-    email: string;
-    emailVerificationToken: string;
+export default function VerifyEmailTemplatePage() {
+  return null;
 }
-
-export const VerifyEmailEmailTemplate: React.FC<Readonly<VerifyEmailEmailTemplateProps>> = ({ email, emailVerificationToken }) => (
-    <div>
-        <h1>Verify email for <b>{email}</b></h1>
-        <p>
-            To verify your email, click on this link:
-        </p>
-        <a href={`http://localhost:3000/auth/verify-email?token=${emailVerificationToken}`}>
-            Click here to verify your email
-        </a>
-    </div>
-);

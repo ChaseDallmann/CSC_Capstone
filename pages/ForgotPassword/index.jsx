@@ -6,9 +6,9 @@ import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
 import Link from 'next/link';
 import axios from 'axios';
 import crypto from 'crypto';
-import { AuthContext } from '../Context/AuthContext';
+import { AuthContext } from '../../utils/auth-context';
 import Cookies from 'js-cookie';
-import { sendResetEmail } from '../Actions/Emails/sendResetEmail';
+import { sendResetEmail } from '../../lib/actions/send-reset-email';
 
 export default function ForgotPassword() {
   const { user } = React.useContext(AuthContext);

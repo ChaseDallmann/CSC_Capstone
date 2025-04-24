@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sendResetEmail } from '../../Actions/Emails/sendResetEmail';
+import { sendResetEmail } from '../../../lib/actions/send-reset-email';
 
 export async function POST(req: NextRequest) {
   try {
