@@ -3,6 +3,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./Context/AuthContext";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,9 +29,9 @@ export default function RootLayout({ children }) {
             <div className="footer-content">
               <p>&copy; {new Date().getFullYear()} Ace Teas. All rights reserved.</p>
               <div className="footer-links">
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
-                <a href="/privacy">Privacy Policy</a>
+                <Link href="/About">About</Link>
+                <Link href="/Contact">Contact</Link>
+                <Link href="/PrivacyPolicy">Privacy Policy</Link>
               </div>
             </div>
           </footer>

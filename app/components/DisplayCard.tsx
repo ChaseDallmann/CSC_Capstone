@@ -69,7 +69,7 @@ export default function DisplayCard({ productID, title, imageSrc, price, descrip
         className="product-button"
         onClick={addToCart}
         disabled={currentStock <= 0}
-      >
+        >
         {currentStock > 0 ? "Add to cart" : "Out of stock"}
       </button>
     </div>
