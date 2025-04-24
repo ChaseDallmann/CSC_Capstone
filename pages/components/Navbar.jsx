@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../../utils/auth-context";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);

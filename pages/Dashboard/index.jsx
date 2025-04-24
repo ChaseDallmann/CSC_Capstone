@@ -1,11 +1,10 @@
-'use client';
 
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
 import Link from 'next/link';
-import { AuthContext } from '../Context/AuthContext';
-import { fetchAccountInfo } from '../components/FetchAccountInfo/FetchAccountInfo';
+import { AuthContext } from '../../utils/auth-context';
+import { fetchAccountInfo } from '../../utils/fetch-account-info';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
@@ -21,8 +20,12 @@ export default function Dashboard() {
     try {
       setIsLoading(true);
       if (user?.id) {
+        console.log('Fetching user data for ID:', user.id);
         const data = await fetchAccountInfo(user.id);
+        console.log('Received user data:', data);
         setUserData(data);
+      } else {
+        console.log('No user ID available');
       }
     } catch (error) {
       console.error('Failed to fetch user data:', error);
@@ -34,18 +37,37 @@ export default function Dashboard() {
   const showUserOrders = async () => {
     try {
       const token = Cookies.get('authToken');
-      const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
+      if (!token) {
+        console.error('No auth token available');
+        return;
+      }
+      
+      if (!user?.id) {
+        console.error('No user ID available');
+        return;
+      }
+      
+      // Ensure API URL has https:// prefix
+      let apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+      if (apiUrl && !apiUrl.startsWith('http')) {
+        apiUrl = 'https://' + apiUrl;
+      }
+      console.log('Fetching orders from:', `${apiUrl}/orders/${user.id}`);
+      
       const response = await axios.get(
-        `${apiUrl}/orders/${user?.id}`, {
+        `${apiUrl}/orders/${user.id}`, {
         headers: { 
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         withCredentials: true
       });
+      
+      console.log('Received orders data:', response.data);
       setUserOrders(response.data);
     } catch (error) {
       console.error('Failed to fetch user orders:', error);
+      console.error('Error details:', error.response?.data || error.message);
     }
   };
 
@@ -59,6 +81,12 @@ export default function Dashboard() {
       showUserOrders();
     }
   }, [isAuthenticated, user?.id, router]);
+  
+  // Debug logging
+  useEffect(() => {
+    console.log('Auth state:', { isAuthenticated, userData, userOrders, user });
+    console.log('API URL:', process.env.NEXT_PUBLIC_API_URL);
+  }, [isAuthenticated, userData, userOrders, user]);
 
   // Create a refresh button handler
   const handleRefresh = () => {

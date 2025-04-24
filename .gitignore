@@ -16,3 +16,6 @@ target/
 .amplify
 amplify_outputs*
 amplifyconfiguration*
+
+# Deployment folder (temporary solution)
+CSC_Capstone_Deployment/
