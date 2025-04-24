@@ -19,3 +19,10 @@ amplifyconfiguration*
 
 # Deployment folder (temporary solution)
 CSC_Capstone_Deployment/
+
+# Large binary files
+*.jar
+*.war
+
+# Sensitive files
+*.pem
