@@ -21,14 +21,16 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "app/Actions/Emails/sendResetEmail.jsx"  ],
+    "**/*.tsx",
+    "app/Actions/Emails/sendResetEmail.jsx"
+  ],
   "exclude": [
     "node_modules"
   ]

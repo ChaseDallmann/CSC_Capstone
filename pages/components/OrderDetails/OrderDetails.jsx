@@ -3,12 +3,13 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import NavbarBasic from '../../../components/NavbarBasic/NavbarBasic';
-import { AuthContext } from '../../../utils/auth-context';
+import NavbarBasic from '../NavbarBasic/NavbarBasic';
+import { AuthContext } from '../../Context/AuthContext';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { redirect } from 'next/navigation';
 
 export default function OrderDetails() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function OrderDetails() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/');
+      redirect('/');
       return;
     }
 

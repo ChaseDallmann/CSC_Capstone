@@ -20,8 +20,8 @@ phases:
 
 artifacts:
   files:
-    - target/teashop-backend-0.0.1-SNAPSHOT.jar
+    - target/teashop-backend.war
     - Procfile
     - .ebextensions/**/*
-    - out/**/*
+    - .platform/**/*
   discard-paths: no
