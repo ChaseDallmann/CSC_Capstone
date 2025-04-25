@@ -30,7 +30,7 @@
     "**/*.ts",
     "**/*.tsx",
     "app/Actions/Emails/sendResetEmail.jsx"
-  ],
+, "pages/components/DisplayCard.tsx"  ],
   "exclude": [
     "node_modules"
   ]

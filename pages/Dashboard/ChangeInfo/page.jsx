@@ -4,7 +4,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { AuthContext, AuthProvider } from '../../Context/AuthContext';
+import { AuthContext, AuthProvider } from '../../../utils/auth-context';
 import NavbarBasic from '../../components/NavbarBasic/NavbarBasic';
 
 const ChangeInfoPage = () => {

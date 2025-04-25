@@ -8,7 +8,7 @@ import {
   getClientSession, 
   deleteClientSession,
   updateClientSession 
-} from "../utils/session";
+} from "./session";
 
 export const AuthContext = React.createContext({
   user: null,

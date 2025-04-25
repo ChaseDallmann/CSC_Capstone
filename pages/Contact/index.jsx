@@ -1,7 +1,7 @@
 'use client'
 
 import React from "react";
-import styles from "./contact.module.css";
+import styles from './contact.module.css';
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 
 export default function Contact() {

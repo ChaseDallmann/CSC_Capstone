@@ -4,6 +4,7 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../../utils/auth-context";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { u } from "framer-motion/dist/types.d-DUA-weyD";
 
 type DisplayCardProps = {
   title: string;
@@ -70,7 +71,7 @@ export default function DisplayCard({
         console.error("Error adding to cart:", error);
         
         // Fallback to localStorage for authenticated users if server fails
-        const userCart = JSON.parse(localStorage.getItem(`userCart_${user.id}`) || "[]");
+        const userCart = JSON.parse(localStorage.getItem(`userCart_${user?.id}`) || "[]");
         
         const existingItemIndex = userCart.findIndex(
           (cartItem: any) => cartItem.productID === productID
@@ -82,7 +83,7 @@ export default function DisplayCard({
           userCart.push(item);
         }
         
-        localStorage.setItem(`userCart_${user.id}`, JSON.stringify(userCart));
+        localStorage.setItem(`userCart_${user?.id}`, JSON.stringify(userCart));
         
         // Update local stock display anyway for UI consistency
         setCurrentStock(prev => prev - 1);

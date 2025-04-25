@@ -2,7 +2,7 @@
 
 import React, { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../../utils/auth-context";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import axios from "axios";
 import Cookies from 'js-cookie';
