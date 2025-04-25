@@ -1,14 +1,16 @@
 // Helper to manage API URLs and ensure they work in all environments
 export const getApiUrl = (path = '') => {
-  // Get the base URL from environment variables
-  let baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
+  // In development, use the environment variable
+  let baseUrl = '';
   
-  // Use default EC2 URL as a fallback for all environments
-  const ec2Url = 'http://44.204.26.211:5000';
-  
-  // Convert relative paths to direct EC2 URL to avoid mixed content issues
-  if ((baseUrl === '/backend' || !baseUrl.startsWith('http')) && typeof window !== 'undefined') {
-    baseUrl = ec2Url;
+  // When running locally but connecting to EC2
+  if (process.env.NODE_ENV === 'development') {
+    baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
+  } 
+  // In production on EC2, use relative URLs
+  else {
+    // Empty base URL means it will use relative paths
+    baseUrl = '';
   }
   
   // Add leading slash to path if needed
