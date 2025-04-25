@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
 import { AuthContext } from "../../utils/auth-context";
 import Link from "next/link";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import Cookies from "js-cookie";
+import apiClient from "../../utils/api-helper";
 
 const Cart = () => {
   const { user, isAuthenticated } = useContext(AuthContext);
@@ -18,8 +18,7 @@ const Cart = () => {
       if (isAuthenticated) {
         // Fetch cart from backend if logged in
         try {
-          const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
-          const response = await axios.get(`${apiUrl}/cart/${user?.id}`, {
+          const response = await apiClient.get(`/cart/${user?.id}`, {
             headers: {
               "Content-Type": "application/json",
               "Authorization": `Bearer ${token}`
@@ -80,8 +79,7 @@ const Cart = () => {
       if (cartID) {
         try {
           // If we have a cartID, delete from server
-          const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
-          await axios.delete(`${apiUrl}/cart/remove/${cartID}`, {
+          await apiClient.delete(`/cart/remove/${cartID}`, {
             headers: {
               "Content-Type": "application/json",
               "Authorization": `Bearer ${token}`

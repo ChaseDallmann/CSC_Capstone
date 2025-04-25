@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import React from "react";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import DisplayCard from "../components/DisplayCard";
-import axios from "axios";
 import { AuthContext } from "../../utils/auth-context";
+import apiClient, { getApiUrl } from "../../utils/api-helper";
 
 const categoryMap = {
     1: "Black Tea",
@@ -23,8 +23,8 @@ const ProductPage = () => {
 
     const getProducts = async () => {
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
-            const response = await axios.get(`${apiUrl}/products`);
+            console.log("Using API URL:", getApiUrl('/products')); // Debug the actual URL used
+            const response = await apiClient.get('/products');
             if (response.status === 200) {
                 console.log("API Response:", response.data); // Debugging
                 setProducts(response.data);
