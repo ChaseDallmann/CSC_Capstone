@@ -29,9 +29,10 @@ frontend:
           value: 'public, max-age=31536000, immutable'
   environment:
     variables:
-      BACKEND_URL: /backend
-      NEXT_PUBLIC_BACKEND_URL: /backend
-      NEXT_PUBLIC_API_URL: /backend
+      # Direct EC2 URL to avoid mixed content issues
+      BACKEND_URL: http://44.204.26.211:5000
+      NEXT_PUBLIC_BACKEND_URL: http://44.204.26.211:5000
+      NEXT_PUBLIC_API_URL: http://44.204.26.211:5000
       NEXT_PUBLIC_APP_URL: https://deployment.d2cb7n4tfzbtvj.amplifyapp.com
       NEXT_BUILD_SKIP_TYPECHECKING: 1
       NEXT_BUILD_IGNORE_TYPESCRIPT_ERRORS: 1

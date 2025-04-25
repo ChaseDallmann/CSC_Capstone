@@ -10,12 +10,20 @@ const nextConfig = {
   useFileSystemPublicRoutes: true,
   // Add configuration for API to connect to backend
   async rewrites() {
+    // Only apply rewrites if we're not using direct URLs
+    // This helps avoid mixed content issues in production
+    const backendUrl = process.env.BACKEND_URL || 'http://44.204.26.211:5000';
+    
+    // If we're using a direct URL (starts with http), don't use rewrites
+    if (backendUrl.startsWith('http')) {
+      return [];
+    }
+    
     return [
       {
         source: '/api/:path*',
-        destination: process.env.BACKEND_URL || 'http://teashop-backend.eba-pmfpikpv.us-east-1.elasticbeanstalk.com/:path*',
+        destination: 'http://44.204.26.211:5000/:path*',
       },
-      // Add proxy for the EC2 backend
       {
         source: '/backend/:path*',
         destination: 'http://44.204.26.211:5000/:path*',

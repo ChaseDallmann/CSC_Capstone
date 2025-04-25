@@ -3,14 +3,23 @@ export const getApiUrl = (path = '') => {
   // Get the base URL from environment variables
   let baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
   
-  // For Amplify deployment, convert /backend to direct EC2 URL
-  if (baseUrl === '/backend' && typeof window !== 'undefined') {
-    baseUrl = 'http://44.204.26.211:5000';
+  // Use default EC2 URL as a fallback for all environments
+  const ec2Url = 'http://44.204.26.211:5000';
+  
+  // Convert relative paths to direct EC2 URL to avoid mixed content issues
+  if ((baseUrl === '/backend' || !baseUrl.startsWith('http')) && typeof window !== 'undefined') {
+    baseUrl = ec2Url;
   }
   
   // Add leading slash to path if needed
   if (path && !path.startsWith('/')) {
     path = '/' + path;
+  }
+  
+  // Full URL handling
+  if (baseUrl.endsWith('/') && path.startsWith('/')) {
+    // Avoid double slashes
+    path = path.substring(1);
   }
   
   return `${baseUrl}${path}`;
