@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { sendEmail } from '../Actions/Emails/sendEmail';
+import { sendEmail } from '../../lib/actions/send-email';
 import EmailTemplate from '../components/email-template';
 import axios from 'axios';
 

@@ -1,7 +1,7 @@
 'use client'
 
 import axios from "axios";
-import { AuthContext } from "../../Context/AuthContext";
+import { AuthContext } from "../../../utils/auth-context";
 import React, { useEffect, useState, useContext } from 'react';
 import NavbarBasic from "../../components/NavbarBasic/NavbarBasic";
 import { useRouter } from 'next/router';

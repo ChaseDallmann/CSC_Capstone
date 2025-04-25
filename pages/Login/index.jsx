@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
 import Link from "next/link";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../../utils/auth-context";
 import { Eye, EyeOff } from "lucide-react";
 
 const LoginPage = () => {

@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
-import DisplayCard from "../components/DisplayCard/DisplayCard";
+import DisplayCard from "../components/DisplayCard";
 import axios from "axios";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../../utils/auth-context";
 
 const categoryMap = {
     1: "Black Tea",

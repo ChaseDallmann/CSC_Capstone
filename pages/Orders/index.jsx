@@ -4,8 +4,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
 import Link from 'next/link';
-import { AuthContext } from '../Context/AuthContext';
-import { fetchAccountInfo } from '../components/FetchAccountInfo/FetchAccountInfo';
+import { AuthContext } from '../../utils/auth-context';
+import { fetchAccountInfo } from '../../utils/fetch-account-info';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 

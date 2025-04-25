@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { PayPalButtons } from "@paypal/react-paypal-js";
-import { AuthContext } from '../../Context/AuthContext';
+import dynamic from 'next/dynamic';
+import { AuthContext } from '../../../utils/auth-context';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+
+// Dynamic import of PayPal components to prevent SSR issues
+const PayPalScriptProvider = dynamic(() => import('@paypal/react-paypal-js').then(mod => mod.PayPalScriptProvider), { ssr: false });
+const PayPalButtons = dynamic(() => import('@paypal/react-paypal-js').then(mod => mod.PayPalButtons), { ssr: false });
 
 const Checkout = () => {
     const { user } = useContext(AuthContext);
@@ -143,6 +147,29 @@ const Checkout = () => {
         );
     }
 
+    // Define a client-side only component
+    const PayPalCheckout = () => {
+        return (
+            <PayPalScriptProvider options={{ 
+                "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "test" 
+            }}>
+                <PayPalButtons 
+                    style={{ layout: "vertical" }}
+                    createOrder={(data, actions) => onCreateOrder(data, actions)}
+                    onApprove={(data, actions) => onApproveOrder(data, actions)}
+                    disabled={loading}
+                />
+            </PayPalScriptProvider>
+        );
+    };
+
+    // Render the component with client-side detection
+    const [isBrowser, setIsBrowser] = useState(false);
+    
+    useEffect(() => {
+        setIsBrowser(true);
+    }, []);
+
     return (
         <div className="checkout">
             <h1>Checkout Page</h1>
@@ -152,12 +179,7 @@ const Checkout = () => {
             ) : (
                 <>
                     <p>Secure your payment with PayPal</p>
-                    <PayPalButtons 
-                        style={{ layout: "vertical" }}
-                        createOrder={(data, actions) => onCreateOrder(data, actions)}
-                        onApprove={(data, actions) => onApproveOrder(data, actions)}
-                        disabled= {loading}
-                    />
+                    {isBrowser && <PayPalCheckout />}
                 </>
             )}
         </div>
