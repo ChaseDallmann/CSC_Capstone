@@ -28,6 +28,6 @@ frontend:
       BACKEND_URL: /backend
       NEXT_PUBLIC_BACKEND_URL: /backend
       NEXT_PUBLIC_API_URL: /backend
-      NEXT_PUBLIC_APP_URL: https://master.d2cb7n4tfzbtvj.amplifyapp.com
+      NEXT_PUBLIC_APP_URL: https://deployment.d2cb7n4tfzbtvj.amplifyapp.com
       NEXT_BUILD_SKIP_TYPECHECKING: 1
       NEXT_BUILD_IGNORE_TYPESCRIPT_ERRORS: 1
