@@ -19,6 +19,10 @@ frontend:
       headers:
         - key: 'Cache-Control'
           value: 'public, max-age=0, must-revalidate'
+        - key: 'Content-Security-Policy'
+          value: "default-src 'self'; connect-src 'self' http://44.204.26.211:5000 ws:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:;"
+        - key: 'Upgrade-Insecure-Requests'
+          value: '1'
     - pattern: 'static/**/*'
       headers:
         - key: 'Cache-Control'
