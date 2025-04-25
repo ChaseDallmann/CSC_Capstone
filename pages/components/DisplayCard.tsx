@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../../utils/auth-context";
 import axios from "axios";
 import Cookies from "js-cookie";
 
