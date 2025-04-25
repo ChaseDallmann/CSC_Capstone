@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
-import DisplayCard from "../components/DisplayCard";
+import DisplayCard from "../components/DisplayCard/DisplayCard";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 
