@@ -11,20 +11,26 @@ server {
     listen 80;
     server_name _;
 
-    # Serve the Next.js frontend
+    # Root for static files
+    root /home/ec2-user/frontend;
+    
+    # Serve Next.js frontend
     location / {
-        root /home/ec2-user/frontend/.next/server/pages;
-        try_files $uri $uri.html $uri/index.html =404;
+        # Check if the file exists in the .next/server/pages directory
+        try_files /public$uri /public$uri/ /.next/server/pages$uri /.next/server/pages$uri.html /.next/server/pages$uri/index.html /.next/server/pages/index.html =404;
     }
 
-    # Serve static files
-    location /_next/static/ {
-        alias /home/ec2-user/frontend/.next/static/;
-        expires 1y;
-        add_header Cache-Control "public, max-age=31536000, immutable";
+    # Handle Next.js API routes - forward to the Next.js server
+    location /_next/ {
+        proxy_pass http://localhost:3000/_next/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
     }
-
-    # Proxy requests to the Spring Boot backend
+    
+    # Proxy all /api requests to the Spring Boot backend
     location /api/ {
         proxy_pass http://localhost:5000/;
         proxy_http_version 1.1;
