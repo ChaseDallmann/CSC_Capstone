@@ -1,7 +1,9 @@
 // Helper to manage API URLs and ensure they work in all environments
 export const getApiUrl = (path = '') => {
-  // Always use localhost since frontend and backend are on same EC2 instance
-  let baseUrl = 'http://localhost:8080';
+  // Use environment variable or fallback to localhost for development
+  let baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+  
+  console.log('Using API base URL:', baseUrl);
   
   // Add leading slash to path if needed
   if (path && !path.startsWith('/')) {

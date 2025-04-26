@@ -48,7 +48,8 @@ export default function DisplayCard({
     if (isAuthenticated && user) {
       // Authenticated user - add to database cart
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+        console.log('Adding to cart using API URL:', apiUrl);
         const response = await axios.post(`${apiUrl}/cart/add`, {
           userID: user.id,
           productID,

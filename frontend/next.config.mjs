@@ -10,11 +10,13 @@ const nextConfig = {
   useFileSystemPublicRoutes: true,
   // Add configuration for API to connect to backend
   async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+    console.log('Rewrites using API URL:', apiUrl);
     // Always proxy API calls to the Spring Boot backend
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:8080/:path*', // Spring Boot on EC2
+        destination: `${apiUrl}/:path*`, // Spring Boot on EC2
       },
     ];
   },
