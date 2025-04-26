@@ -33,7 +33,9 @@ public class CorsConfig {
                 "https://127.0.0.1:3000",
                 // Allow access from same EC2 instance with public IP and from external users
                 "http://54.236.247.218:3000",
-                "http://ec2-54-236-247-218.compute-1.amazonaws.com:3000"
+                "http://ec2-54-236-247-218.compute-1.amazonaws.com:3000",
+                "https://backend.ace-teas.com"
+
             ));
         }
         
