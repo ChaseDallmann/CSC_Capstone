@@ -19,7 +19,7 @@ const pusher = new Pusher({
   useTLS: true
 });
 
-app.set('PORT', process.env.PORT || 5000);
+app.set('PORT', 5000);
 
 // Chat message endpoint
 app.post('/message', (req, res) => {
@@ -28,6 +28,6 @@ app.post('/message', (req, res) => {
   res.send(payload);
 });
 
-app.listen(app.get('PORT'), () =>
-  console.log(`Server running on port ${app.get('PORT')}`)
+app.listen(app.get(PORT), () =>
+  console.log(`Server running on port ${app.get(PORT)}`)
 );

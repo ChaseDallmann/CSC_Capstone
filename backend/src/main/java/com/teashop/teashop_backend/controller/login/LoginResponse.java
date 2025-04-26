@@ -15,12 +15,12 @@ public class LoginResponse {
     // Constructor for error responses
     public LoginResponse(String message) {
         this.message = message;
-        this.success = false; // Changed to false for error responses
+        this.success = false;
     }
 
     // Constructor for successful logins
     public LoginResponse() {
-        this.success = true; // Default to true for success
+        this.success = true;
     }
 
     //More constructors to provide additional details for logging in

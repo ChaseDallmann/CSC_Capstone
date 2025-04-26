@@ -16,7 +16,7 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        // Get allowed origins from environment variable or use defaults
+        //Get allowed origins from environment variable or use defaults
         String corsAllowedOrigins = System.getenv("CORS_ALLOWED_ORIGINS");
         if (corsAllowedOrigins != null && !corsAllowedOrigins.isEmpty()) {
             // Split by comma if multiple origins
@@ -25,7 +25,7 @@ public class CorsConfig {
                 config.addAllowedOrigin(origin.trim());
             }
         } else {
-            // Default to localhost origins and EC2 public IP
+            //Default to localhost origins and EC2 public IP
             config.setAllowedOrigins(List.of(
                 "http://localhost:3000", 
                 "https://localhost:3000",
@@ -39,7 +39,7 @@ public class CorsConfig {
             ));
         }
         
-        // Allow all headers
+        //Allow all headers
         config.setAllowedHeaders(List.of(
             "Origin", 
             "Content-Type", 
@@ -50,18 +50,18 @@ public class CorsConfig {
             "Access-Control-Request-Headers"
         ));
         
-        // Allow all common HTTP methods
+        //Allow all common HTTP methods
         config.setAllowedMethods(List.of(
             "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"
         ));
         
-        // Allow credentials (cookies, authorization headers)
+        //Allow credentials (cookies, authorization headers)
         config.setAllowCredentials(true);
         
-        // Cache preflight response for 1 hour
+        //Cache preflight response for 1 hour
         config.setMaxAge(3600L);
         
-        // Expose common headers
+        //Expose common headers
         config.setExposedHeaders(List.of(
             "Access-Control-Allow-Origin",
             "Access-Control-Allow-Credentials",

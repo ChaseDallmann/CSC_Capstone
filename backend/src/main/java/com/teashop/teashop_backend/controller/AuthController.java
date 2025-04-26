@@ -71,6 +71,7 @@ public class AuthController {
         return ResponseEntity.ok(new UserDto(registeredUser));
     }
 
+    //Login endpoint
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
     try {
@@ -90,6 +91,7 @@ public class AuthController {
         }
     }
 
+    //Reset password endpoint
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody PasswordResetDto passwordResetDto) {
         // Validate the token
@@ -105,17 +107,18 @@ public class AuthController {
                 .body(Map.of("message", "Token has expired"));
         }
 
-        // Update the user's password
+        //Update the user's password
         User user = token.getUser();
         user.setPassword(passwordEncoder.encode(passwordResetDto.getNewPassword()));
         userRepository.save(user);
         
-        // Delete the token
+        //Delete the token
         tokenRepository.delete(token);
 
         return ResponseEntity.ok(Map.of("message", "Password reset successful"));
-}
+    }
 
+    //Verify token endpoint
     @GetMapping("/verify-token")
     public ResponseEntity<?> verifyToken(@RequestParam String token) {
         // Check if the token is valid
@@ -134,6 +137,7 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("message", "Token is valid"));
     }
     
+    //Send password reset email endpoint
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) {
         //Mapping the request url to get an email string
@@ -176,6 +180,7 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("message", "Reset email sent successfully"));
     }
     
+    //Save the reset token endpoint
     @PutMapping("/reset-token")
     public ResponseEntity<?> saveResetToken(@RequestBody Map<String, String> request) {
         //Mapping the url request data into a email and token string
@@ -215,6 +220,7 @@ public class AuthController {
         }
     }
     
+    //Change password endpoint
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody Map<String, String> request) {
         String email = request.get("email");

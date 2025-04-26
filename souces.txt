@@ -43,4 +43,12 @@ Bug fix resources:
 https://javascript.plainenglish.io/next-js-14-how-to-redirect-without-flashing-the-page-for-a-moment-5b202bc60cb9 redirect without flash
 https://medium.com/@poojithairosha/spring-boot-3-authenticate-websocket-connections-with-jwt-tokens-2b4ff60532b6 JWT websocket auth
 
+Pusher:
+https://pusher.com/tutorials/react-websockets/#introduction
+
+PayPal Checkout Sandbox:
+
+EC2/PM2 Deployment:
+https://medium.com/@asttle1997/deploying-your-next-js-app-to-ec2-with-nginx-and-pm2-7afc6d878f5b
+
 

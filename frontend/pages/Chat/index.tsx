@@ -38,20 +38,7 @@ export default function ChatPage() {
         message: text,
       };
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
-      
-      axios.post(`${apiUrl}/message`, payload, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-      .then(() => {
-        setText('');
-      })
-      .catch(error => {
-        console.error('Error sending message:', error);
-        // Still clear the input to improve UX
+      axios.post('http://localhost:5000/message', payload).then(() => {
         setText('');
       });
     } else {

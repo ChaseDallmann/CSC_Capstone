@@ -57,7 +57,7 @@ public class CartController {
             order.setStatus("Paid");
             order.setOrderDate(new java.util.Date());
             
-            // Special handling for guest user (userID = -1)
+            //Special handling for guest user (userID = -1)
             if (userID == -1 && requestBody != null && requestBody.containsKey("totalAmount")) {
                 //Get the total from the request body
                 double totalAmount = Double.parseDouble(requestBody.get("totalAmount").toString());
@@ -66,7 +66,7 @@ public class CartController {
                 // Save order to get generated ID
                 Order savedOrder = orderRepository.save(order);
                 
-                // Loop through cart items in the cart
+                //Loop through cart items in the cart
                 if (requestBody.containsKey("cartItems") && requestBody.get("cartItems") instanceof List) {
                     List<Map<String, Object>> cartItems = (List<Map<String, Object>>) requestBody.get("cartItems");
                     
@@ -88,16 +88,16 @@ public class CartController {
                 
                 return ResponseEntity.ok(savedOrder);
             } else {
-                // Regular user flow
+                //Regular user flow
                 order.setTotalAmount(cartService.getTotalPrice(userID));
                 
-                // Save order to get generated ID
+                //Save order to get generated ID
                 Order savedOrder = orderRepository.save(order);
                 
-                // Get cart items
+                //Get cart items
                 List<Cart> cartItems = cartService.getCartItems(userID);
                 
-                // Create order details for each cart item
+                //Create order details for each cart item
                 for (Cart cartItem : cartItems) {
                     OrderDetails orderDetails = new OrderDetails();
                     orderDetails.setOrderID(savedOrder.getOrderID());
@@ -106,7 +106,7 @@ public class CartController {
                     orderDetails.setPrice(cartItem.getProduct().getPrice());
                     orderDetailsRepository.save(orderDetails);
                     
-                    // Remove item from cart after adding to order
+                    //Remove item from cart after adding to order
                     cartService.removeFromCart(cartItem.getCartID());
                 }
                 
@@ -117,6 +117,7 @@ public class CartController {
         }
     }
 
+    //Add a single item to the cart
     @PostMapping("/add")
     public ResponseEntity<?> addToCart(@RequestBody CartRequest request) {
         try {
@@ -157,6 +158,7 @@ public class CartController {
         }
     }
 
+    //Update the quantity of a cart item
     @PutMapping("/update")
     public ResponseEntity<?> updateQuantity(@RequestBody CartUpdateRequest request) {
         try {
