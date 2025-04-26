@@ -46,6 +46,9 @@ https://medium.com/@poojithairosha/spring-boot-3-authenticate-websocket-connecti
 Pusher:
 https://pusher.com/tutorials/react-websockets/#introduction
 
+Resend:
+https://resend.com/java
+
 PayPal Checkout Sandbox:
 
 EC2/PM2 Deployment:
