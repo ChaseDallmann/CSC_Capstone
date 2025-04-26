@@ -1,0 +1,79 @@
+{
+  "name": "capstone-prj",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "prebuild": "node -e \"process.exit(0)\"",
+    "dev": "next dev",
+    "build": "next build",
+    "export": "next export || true",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@paypal/checkout-server-sdk": "^1.0.3",
+    "@paypal/react-paypal-js": "^8.8.2",
+    "@react-email/components": "^0.0.36",
+    "@react-email/render": "^1.0.6",
+    "@stomp/stompjs": "^7.1.0",
+    "aws-amplify": "^6.14.3",
+    "axios": "^1.8.3",
+    "bcrypt": "^5.1.1",
+    "framer-motion": "^12.4.3",
+    "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.487.0",
+    "next": "^15.3.1",
+    "nodemailer": "^6.10.0",
+    "paypal": "^1.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-email": "^4.0.4",
+    "react-paypal-js": "^0.0.1-security",
+    "react-router-dom": "^7.3.0",
+    "resend": "^4.2.0",
+    "sockjs": "^0.3.24",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3"
+  },
+  "optionalDependencies": {
+    "@next/swc-linux-x64-gnu": "15.2.4"
+  },
+  "devDependencies": {
+    "@aws-amplify/backend": "^1.14.3",
+    "@aws-amplify/backend-cli": "^1.5.0",
+    "@eslint/eslintrc": "^3",
+    "@swc/cli": "^0.7.3",
+    "@swc/core": "^1.11.21",
+    "@types/cookie": "^0.6.0",
+    "@types/estree": "^1.0.6",
+    "@types/js-cookie": "^3.0.6",
+    "@types/json-schema": "^7.0.15",
+    "@types/json5": "^0.0.30",
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.10",
+    "aws-cdk": "^2.1003.0",
+    "aws-cdk-lib": "^2.180.0",
+    "constructs": "^10.4.2",
+    "esbuild": "^0.25.3",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.7",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  },
+  "overrides": {
+    "next": {
+      "@next/swc-darwin-arm64": "15.3.1",
+      "@next/swc-darwin-x64": "15.3.1",
+      "@next/swc-linux-arm64-gnu": "15.3.1",
+      "@next/swc-linux-arm64-musl": "15.3.1",
+      "@next/swc-linux-x64-gnu": "15.3.1",
+      "@next/swc-linux-x64-musl": "15.3.1",
+      "@next/swc-win32-arm64-msvc": "15.3.1",
+      "@next/swc-win32-ia32-msvc": "15.3.1",
+      "@next/swc-win32-x64-msvc": "15.3.1"
+    }
+  }
+}
