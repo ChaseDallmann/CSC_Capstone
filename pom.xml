@@ -93,6 +93,13 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
+		<!-- Pusher for chat -->
+		<dependency>
+			<groupId>com.pusher</groupId>
+			<artifactId>pusher-http-java</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		
 		<!-- H2 Database (For testing only) -->
 		<dependency>
 			<groupId>com.h2database</groupId>
