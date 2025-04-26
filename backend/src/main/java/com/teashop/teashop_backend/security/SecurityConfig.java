@@ -41,7 +41,8 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(Arrays.asList(
             "http://localhost:3000",
             "https://localhost:3000",
-            "https://deployment.d2cb7n4tfzbtvj.amplifyapp.com"
+            "https://deployment.d2cb7n4tfzbtvj.amplifyapp.com",
+            "http://3.91.31.77/"
         ));
         configuration.setAllowedMethods(Arrays.asList(
             "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"
