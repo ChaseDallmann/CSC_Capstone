@@ -1,156 +1,67 @@
 'use client';
 
-import React, { useContext, useState, useEffect } from 'react';
-import { redirect, useRouter } from 'next/navigation';
-import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
-import { AuthContext } from '../Context/AuthContext';
-import SockJS from 'sockjs-client';
-import { Client } from '@stomp/stompjs';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Pusher from 'pusher-js';
+import NavbarBasic from "../components/NavbarBasic/NavbarBasic";
+import ChatList from '../components/ChatList';
+import ChatBox from '../components/ChatBox';
 
-const Chat = () => {
-  const { isAuthenticated, user, token, userRole } = useContext(AuthContext);
-  const [messages, setMessages] = useState([]);
-  const [messageContent, setMessageContent] = useState('');
-  const [stompClient, setStompClient] = useState(null);
-  const [isConnected, setIsConnected] = useState(false);
-  const [connectionError, setConnectionError] = useState(null);
-  const router = useRouter();
-
-  //specific receiver, CSR
-  const csrReceiverUser = 'test@gmail.com';
+export default function ChatPage() {
+  const [text, setText] = useState('');
+  const [username, setUsername] = useState('');
+  const [chats, setChats] = useState([]);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      redirect('/Login'); 
-      return;
-    }
+    const user = window.prompt('Enter your username:', 'Anonymous');
+    setUsername(user);
 
-    const socket = new SockJS('http://localhost:8080/ws');
-    const client = new Client({
-      webSocketFactory: () => socket,
-      connectHeaders: {
-        Authorization: `Bearer ${token}`
-      },
-      onConnect: (frame) => {
-        console.log('STOMP Connected successfully: ', frame);
-        setIsConnected(true);
-        setConnectionError(null);
-        
-        // Subscribe to the correct queue based on the role
-        const queue = userRole === 'CUSTOMER' ? `/user/${csrReceiverUser}/queue/private` : `/user/${user?.email}/queue/private`;
-        client.subscribe(queue, (messageOutput) => {
-          console.log('Received message: ', messageOutput);
-          const chatMessage = JSON.parse(messageOutput.body);
-          setMessages((prevMessages) => [...prevMessages, chatMessage]);
-        });
-      },
-      onStompError: (frame) => {
-        console.error('STOMP Broker Error: ', frame);
-        setConnectionError('STOMP Connection Error: ' + frame.headers['message']);
-        setIsConnected(false);
-      },
-      onWebSocketError: (error) => {
-        console.error('WebSocket Error: ', error);
-        setConnectionError('WebSocket Connection Error');
-        setIsConnected(false);
-      },
-      onDisconnect: (frame) => {
-        console.log('STOMP Disconnected: ', frame);
-        setIsConnected(false);
-      }
+    const pusher = new Pusher('6024a3eb434904f0d50c', {
+      cluster: 'us2',
+      encrypted: true,
     });
 
-    try {
-      client.activate();
-      setStompClient(client);
-    } catch (error) {
-      console.error('Error activating client: ', error);
-      setConnectionError('Failed to activate STOMP client');
-    }
+    const channel = pusher.subscribe('chat');
+    channel.bind('message', (data) => {
+      setChats((prevChats) => [...prevChats, data]);
+    });
 
     return () => {
-      if (client) {
-        client.deactivate();
-      }
+      channel.unbind_all();
+      channel.unsubscribe();
     };
-  }, [isAuthenticated, token, router]);
+  }, []);
 
-  const sendMessage = () => {
-    if (!isConnected) {
-      console.error('WebSocket is not connected');
-      return;
-    }
-
-    if (stompClient && messageContent.trim()) {
-      //set receiver based on role (customer sends to CSR, CSR sends to customer)
-      const receiver = userRole === 'CUSTOMER' ? csrReceiverUser : user?.email;
-
-      const chatMessage = {
-        content: messageContent,
-        sender: user?.name,
-        receiver: receiver,
-        senderRole: userRole,
-        receiverRole: userRole === 'CUSTOMER' ? 'customerService' : 'customer',
-        status: 'MESSAGE',
+  const handleTextChange = (e) => {
+    if (e.key === 'Enter' && text.trim()) {
+      const payload = {
+        username,
+        message: text,
       };
 
-      try {
-        stompClient.publish({
-          destination: '/app/chat.sendMessage',
-          body: JSON.stringify(chatMessage)
-        });
-
-        // Optimistically add the message to local state
-        setMessages((prevMessages) => [...prevMessages, chatMessage]);
-
-        setMessageContent('');
-      } catch (error) {
-        console.error('Error sending message:', error);
-      }
+      axios.post('http://localhost:5000/message', payload).then(() => {
+        setText('');
+      });
+    } else {
+      setText(e.target.value);
     }
   };
 
   return (
     <>
-      <NavbarBasic />
-      <div className="chat-container">
-        <h1>
-          {userRole === 'CUSTOMER' 
-            ? 'Chat with Customer Service' 
-            : 'Customer Chat'}
-        </h1>
-        {connectionError && (
-          <div style={{ color: 'red', marginBottom: '10px' }}>
-            {connectionError}
-          </div>
-        )}
-        <div className="chat-box">
-          {messages.map((msg, index) => (
-            <div
-              key={index}
-              className={`message ${msg.sender === user?.name ? 'sent' : 'received'}`}
-            >
-              <strong>{msg.sender}:</strong> {msg.content}
-            </div>
-          ))}
-        </div>
-        <input
-          type="text"
-          value={messageContent}
-          onChange={(e) => setMessageContent(e.target.value)}
-          placeholder="Type a message"
-          disabled={!isConnected}
+    <NavbarBasic />
+    <div className="chat-app">
+      <header>
+        <h1>Ace Teas Chat Group</h1>
+      </header>
+      <main>
+        <ChatList chats={chats} />
+        <ChatBox
+          text={text}
+          username={username}
+          handleTextChange={handleTextChange}
         />
-        <button 
-          onClick={sendMessage} 
-          disabled={!isConnected}
-        >
-          {isConnected ? 'Send' : 'Connecting...'}
-        </button>
-        {!isConnected && <p>Attempting to connect...</p>}
-      </div>
-    </>
+      </main>
+    </div></>
   );
-};
-
-export default Chat;
+}
