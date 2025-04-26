@@ -1,11 +1,9 @@
 // Helper to manage API URLs and ensure they work in all environments
 export const getApiUrl = (path = '') => {
-  // Use environment variable or fallback to localhost for development
+  // Use ace-teas domain or fallback to localhost for development
   let baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
   
-  console.log('Using API base URL:', baseUrl);
-  
-  // Add leading slash to path if needed
+  // Add leading slash to path if needed to prevent some errors
   if (path && !path.startsWith('/')) {
     path = '/' + path;
   }
@@ -27,7 +25,7 @@ const apiClient = axios.create();
 // Add request interceptor to modify URLs
 apiClient.interceptors.request.use((config) => {
   // Extract path from the URL
-  const url = new URL(config.url, 'http://placeholder.com');
+  const url = new URL(config.url, 'https://ace-teas.com');
   const path = url.pathname;
   
   // Replace the URL with our helper function

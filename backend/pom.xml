@@ -71,6 +71,8 @@
 			<version>2.2.1</version>  <!-- Updated to a valid version -->
 		</dependency>
 
+		<!-- Pusher Chat-->
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-jackson</artifactId>
@@ -83,6 +85,13 @@
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Pusher for chat -->
+		<dependency>
+			<groupId>com.pusher</groupId>
+			<artifactId>pusher-http-java</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 
 		<!-- WebJars (Updated versions) -->
