@@ -2,17 +2,19 @@
 
 import { Resend } from 'resend';
 
-// Make sure your API key is properly set in .env.local
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY || '');
-console.log('Resend instance created');
+// Use environment variable for API key
+const apiKey = "re_hsBbHELG_4yUt569fziLCWPA3bZ21LfpB";
+const resend = new Resend(apiKey);
 
 export async function sendResetEmail(email: string, resetPasswordToken: string) {
   try {
     // For debugging
     console.log('Sending reset email to:', email);
     
-    // Create a new Resend instance for each send to ensure fresh connection
-    const resendInFunction = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
+    // Check if email is valid
+    if (!email || !email.includes('@')) {
+      throw new Error('Invalid email address');
+    }
     
     // Simple HTML to reduce potential issues
     const htmlContent = `
@@ -33,7 +35,7 @@ export async function sendResetEmail(email: string, resetPasswordToken: string) 
       setTimeout(() => reject(new Error('Email request timed out')), 10000)
     );
 
-    const emailPromise = resendInFunction.emails.send({
+    const emailPromise = resend.emails.send({
       from: 'Tea Shop <no-reply@ace-teas.com>',
       to: [email],
       subject: 'Reset your Tea Shop password',
