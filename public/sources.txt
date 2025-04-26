@@ -15,3 +15,8 @@ https://medium.com/@ryanchenkie_40935/react-authentication-how-to-store-jwt-in-a
 Building the teashop_backend
 
 https://github.com/jordanhudgens/react-auth-app/blob/master/src/components/app.js
+
+Chat with Pusher platform:
+https://pusher.com/tutorials/react-websockets/#parent-container-component-appjs
+https://www.youtube.com/watch?v=uaJvhmtz0bI
+
