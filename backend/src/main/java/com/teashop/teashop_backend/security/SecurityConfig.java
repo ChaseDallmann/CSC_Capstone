@@ -1,4 +1,4 @@
-package com.teashop.teashop_backend.security;
+package com.teashop.backend.security;
 
 import java.util.Arrays;
 
@@ -13,9 +13,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.teashop.backend.config.ApplicationConfiguration;
+import com.teashop.backend.config.JwtAuthenticationFilter;
+
 import org.springframework.security.authentication.AuthenticationProvider;
-import com.teashop.teashop_backend.config.ApplicationConfiguration;
-import com.teashop.teashop_backend.config.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -42,7 +44,8 @@ public class SecurityConfig {
             "http://localhost:3000",
             "https://localhost:3000",
             "https://deployment.d2cb7n4tfzbtvj.amplifyapp.com",
-            "http://3.91.31.77/"
+            "http://3.91.31.77",
+            "https://ace-teas.com"
         ));
         configuration.setAllowedMethods(Arrays.asList(
             "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"
