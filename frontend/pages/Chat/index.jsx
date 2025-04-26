@@ -3,7 +3,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { redirect, useRouter } from 'next/navigation';
 import NavbarBasic from '../components/NavbarBasic/NavbarBasic';
-import { AuthContext } from '../Context/AuthContext';
+import { AuthContext } from '../../utils/auth-context';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 
