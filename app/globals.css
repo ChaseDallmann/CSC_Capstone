@@ -522,3 +522,54 @@ button:hover {
   font-family: Arial, Helvetica, sans-serif;
   border-radius: 5px;
 }
+
+/* Chatbox */
+.greetings {
+  margin-top: 90px;
+  text-align:center;
+}
+
+/* ChatList */
+ul {
+  list-style-type: none;
+}
+.chat {
+  margin-top: 50px;
+}
+.chatMessage {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: rgb(184, 202, 132);
+  border-radius: 10px;
+  max-width: 60%;
+  word-wrap: break-word;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+.box {
+  background-color: rgb(184, 202, 132);
+  padding: 20px;
+  border-bottom: 1px solid #cccccc;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Chat input styling */
+.chat-box-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.chat-box {
+  width: 30%;
+  min-height: 40px;
+  max-height: 200px;
+  padding: 10px;
+  font-size: 1rem;
+  resize: vertical;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+}
