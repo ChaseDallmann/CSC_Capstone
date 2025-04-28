@@ -8,7 +8,7 @@ import axios from 'axios';
 import crypto from 'crypto';
 import { AuthContext } from '../../utils/auth-context';
 import Cookies from 'js-cookie';
-import { sendResetEmail } from '../../lib/actions/send-reset-email';
+// Remove the import since we're using axios directly to call the API route
 
 export default function ForgotPassword() {
   const { user } = React.useContext(AuthContext);
@@ -34,17 +34,20 @@ export default function ForgotPassword() {
       const expirationDate = new Date(today);
       expirationDate.setDate(today.getDate() + 1);
       
-      // Format date properly for ISO string (ensure no milliseconds for better compatibility)
+      //Format the expiration date with no milliseconds
       const formattedExpiry = expirationDate.toISOString().split('.')[0];
 
       console.log('Sending email to:', email);
       console.log('With token:', resetPasswordToken);
 
-      // First send email using server action (now with only two parameters)
-      const emailResult = await sendResetEmail(email, resetPasswordToken);
+      // First send email using API route instead of server action
+      const emailResponse = await axios.post('/api/send-reset-email', {
+        email,
+        resetPasswordToken
+      });
 
-      if (!emailResult.success) {
-        console.error('Email sending failed:', emailResult.error);
+      if (!emailResponse.data.success) {
+        console.error('Email sending failed:', emailResponse.data.error);
         throw new Error('Failed to send reset email');
       }
       
@@ -63,8 +66,7 @@ export default function ForgotPassword() {
           { 
             withCredentials: true,
             headers: {
-              'Content-Type': 'application/json',
-              'Origin': process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000'
+              'Content-Type': 'application/json'
             }
           }
         );
@@ -73,8 +75,6 @@ export default function ForgotPassword() {
         console.error('Error saving token in database:', error.response?.data || error.message);
         throw error;
       }
-
-      console.log('Request successful:', email, resetPasswordToken, formattedExpiry);
       
       setMessage("If your email exists in our system, you will receive a password reset link shortly.");
       setEmail('');

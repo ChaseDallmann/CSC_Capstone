@@ -1,6 +1,6 @@
 'use server';
 
-import { pusherServer } from "../pusher";
+import { pusherServer } from "../../lib/pusher";
 
 export const sendMessage = async (message: string) => {
     try {

@@ -5,7 +5,7 @@ import { Button } from "./Button";
 import { Send } from "lucide-react";
 import Message from "./Message";
 import { pusherClient } from "../../../lib/pusher";
-import { sendMessage } from "../../../lib/actions/message.action";
+import { sendMessage } from "../../actions/message.action";
 
 const Conversation = () => {
   const [messages, setMessages] = useState<string[]>([]);
