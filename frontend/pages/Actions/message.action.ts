@@ -5,7 +5,7 @@ import { pusherServer } from "../../lib/pusher";
 export const sendMessage = async (message: string) => {
     try {
         // This function runs on the server
-        await pusherServer.trigger('teashop', 'user-message', {
+        await pusherServer.trigger('chat', 'user-message', {
             message,
         });
         

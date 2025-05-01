@@ -1,6 +1,6 @@
 import React from "react";
 
-const ChatBox = ({ text, username, handleTextChange }) => (
+export default ({ text, username, handleTextChange }) => (
   <div>
     <div className="row">
     <div className="col-xs-12">
@@ -22,5 +22,3 @@ const ChatBox = ({ text, username, handleTextChange }) => (
   </div>
 </div>
 );
-
-export default ChatBox;
